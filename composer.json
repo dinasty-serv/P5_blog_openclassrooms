@@ -1,0 +1,11 @@
+{
+    "name": "blog/openclassrooms",
+    "description": "Projet 5 Formation openclassrooms",
+    "authors": [
+        {
+            "name": "Nicolas de Fontaine",
+            "email": "nicodu22300@hotmail.fr"
+        }
+    ],
+    "require": {}
+}
