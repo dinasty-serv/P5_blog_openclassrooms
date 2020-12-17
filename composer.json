@@ -1,11 +1,13 @@
 {
-    "name": "blog/openclassrooms",
-    "description": "Projet 5 Formation openclassrooms",
+    "name": "shadow/blog",
     "authors": [
         {
             "name": "Nicolas de Fontaine",
-            "email": "nicodu22300@hotmail.fr"
+            "email": "nicolas.defontaine@apizee.com"
         }
     ],
-    "require": {}
+    "require": {
+        "doctrine/orm": "^2.8",
+        "twig/twig": "^3.1"
+    }
 }
