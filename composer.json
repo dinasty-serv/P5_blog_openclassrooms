@@ -6,8 +6,16 @@
             "email": "nicolas.defontaine@apizee.com"
         }
     ],
+    "autoload": {
+        "psr-4": {
+            "Framework\\": "core",
+            "App\\": "src"
+        }
+    },
     "require": {
         "doctrine/orm": "^2.8",
-        "twig/twig": "^3.1"
+        "twig/twig": "^3.1",
+        "squizlabs/php_codesniffer": "*",
+        "zendframework/zend-expressive-fastroute": "1.2.0"
     }
 }
