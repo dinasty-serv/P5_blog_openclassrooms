@@ -13,9 +13,7 @@
         }
     },
     "require": {
-        "doctrine/orm": "^2.8",
         "twig/twig": "^3.1",
-        "squizlabs/php_codesniffer": "*",
-        "zendframework/zend-expressive-fastroute": "1.2.0"
+        "squizlabs/php_codesniffer": "*"
     }
 }
