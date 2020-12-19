@@ -6,9 +6,9 @@ use PDO;
 use Framework\App;
 use Framework\config\Config;
 use Framework\Entity;
+
 class bdd extends Config
 {
-
     private $pdo;
 
 
@@ -48,32 +48,28 @@ class bdd extends Config
         }
     }
 
-    public function getAll($table){
-        $entity = New Entity(); 
+    public function getAll($table)
+    {
+        $entity = new Entity();
         $sql = "SELECT * FROM ".$table;
         
-       $entity->getPathEntity($table);
-
+        $path = $entity->getPathEntity($table);
+       
      
-     return $this->execSql($sql,$entity->getPathEntity($table));
-
-
+        return $this->execSql($sql, $entity->getPathEntity($table));
     }
 
 
 
-    private function preparSql($sql){
+    private function preparSql($sql)
+    {
         $sth = $this->pdo->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
         return $sth;
-
     }
 
-    public function execSql($sql,$pathEntity){
-        var_dump($pathEntity);
-         $res =$this->pdo->query($sql, $pathEntity);
-         return $res;
+    public function execSql($sql, $pathEntity)
+    {
+        $res =$this->pdo->query($sql);
+        return $res->fetchAll(PDO::FETCH_CLASS, $pathEntity);
     }
-
-
-   
 }

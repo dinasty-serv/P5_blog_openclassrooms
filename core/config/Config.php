@@ -9,15 +9,15 @@ namespace Framework\config;
 class Config
 {
     private $dbParams = array(
-      'user'     => 'root',
-      'password' => '',
+      'user'     => 'admin',
+      'password' => 'Apizee22',
       'dbname'   => 'blog',
       'host'     => 'localhost'
    );
     /**
      * Config path entity
      */
-    private $paths_entity = 'src/entity';
+    private $paths_entity = 'App\entity';
 
     /**
      * Config path view
@@ -60,7 +60,7 @@ class Config
 
     public function getPathsEntityConfig():string
     {
-        $path = $this->getGlobalPath().'/'.$this->paths_entity;
+        $path = $this->paths_entity;
         return $path;
     }
 
@@ -71,6 +71,6 @@ class Config
      */
     public function getPathsViewConfig():string
     {
-        return $this->paths_view;
+        return dirname(dirname(__DIR__)).'/'.$this->paths_view;
     }
 }

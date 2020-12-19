@@ -3,7 +3,8 @@ namespace Framework;
 
 use Framework\config\Config;
 
-class Entity extends Config {
+class Entity extends Config
+{
 
 
  /**
@@ -15,11 +16,9 @@ class Entity extends Config {
     public function getPathEntity($entity)
     {
         $modelname = ucwords($entity);
-        $path = $this->getPathsEntityConfig().'/'.$modelname.'.php';
-        $path = $this->entityExist($path);
+        $path = $this->getPathsEntityConfig()."\\".$modelname;
 
         return $path;
-        
     }
     /**
      * Verify entity file exists
@@ -35,9 +34,5 @@ class Entity extends Config {
         } catch (\Exception $e) {
             die('Erreur  : '.$e->getMessage());
         }
-        
     }
-
-
-
 }

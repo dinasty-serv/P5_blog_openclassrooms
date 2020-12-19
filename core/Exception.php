@@ -1,10 +1,6 @@
 <?php
 namespace Framework;
 
-class Exception
+class Exception extends \Exception
 {
-    public function generateExeption($error)
-    {
-        throw new \Exception($error);
-    }
 }
