@@ -5,9 +5,11 @@ use Exception;
 use PDO;
 use Framework\App;
 use Framework\config\Config;
-
+use Framework\Entity;
 class bdd extends Config
 {
+
+    private $pdo;
 
 
     /**
@@ -24,7 +26,7 @@ class bdd extends Config
         $this->db_baseName = $db_params['dbname'];
         
         
-        return $this->initMysql();
+        $this->pdo = $this->initMysql();
     }
 
     /**
@@ -42,37 +44,36 @@ class bdd extends Config
             );
             return $pdo;
         } catch (Exception $e) {
-            die('Erreur : '.$e->getMessage());
+            die('Erreur Mysql init : '.$e->getMessage());
         }
     }
-    /**
-     * Return obsolute path entity file
-     *
-     * @param string $entity : Name entity
-     * @return void
-     */
-    public function getPathEntity($entity)
-    {
-        $modelname = ucwords($entity);
 
-        var_dump($this->getPathsEntityConfig());
+    public function getAll($table){
+        $entity = New Entity(); 
+        $sql = "SELECT * FROM ".$table;
+        
+       $entity->getPathEntity($table);
 
-        //$path = $this->config->getPathsEntityConfig().'/'.$modelname.'.php';
-       
-        //return $path;
+     
+     return $this->execSql($sql,$entity->getPathEntity($table));
+
+
     }
-    /**
-     * Verify entity file exists
-     *
-     * @param string $path: absolute path entity file
-     * @return string|null
-     */
-    private function entityExist($path): ?string
-    {
-        if (file_exists($path)) {
-            return $path;
-        } else {
-            return false;
-        }
+
+
+
+    private function preparSql($sql){
+        $sth = $this->pdo->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+        return $sth;
+
     }
+
+    public function execSql($sql,$pathEntity){
+        var_dump($pathEntity);
+         $res =$this->pdo->query($sql, $pathEntity);
+         return $res;
+    }
+
+
+   
 }

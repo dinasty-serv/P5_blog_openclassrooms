@@ -9,8 +9,8 @@ namespace Framework\config;
 class Config
 {
     private $dbParams = array(
-      'user'     => 'admin',
-      'password' => 'Apizee22',
+      'user'     => 'root',
+      'password' => '',
       'dbname'   => 'blog',
       'host'     => 'localhost'
    );
@@ -30,7 +30,7 @@ class Config
 
     public function __construct()
     {
-        $this->globalPath = dirname(dirname(__DIR__));
+        $this->globalPath;
     }
     
     /**
@@ -49,6 +49,7 @@ class Config
     */
     public function getGlobalPath():string
     {
+        $this->globalPath = dirname(dirname(__DIR__));
         return $this->globalPath;
     }
     /**
