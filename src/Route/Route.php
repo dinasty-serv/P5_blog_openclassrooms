@@ -12,4 +12,3 @@ $router->post('/post/:id', function ($id) {
     echo 'article:'.$id;
 });
 
-$router->run();

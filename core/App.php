@@ -26,7 +26,7 @@ class App
     protected $config;
     protected $entity;
     protected $twig;
-    protected $router;
+    public $router;
 
     public function __construct()
     {
@@ -40,6 +40,16 @@ class App
 
     public function run()
     {
+        $this->getRoutes();
+        $this->router->run();
+    }
+
+    public function getRoutes(){
+
+       $this->router->get('/', "Home:index", 'Home.index');
+       
+       $this->router->get('/post/:slug-:id', "Posts:show", 'posts.show')->with('slug', '[a-z0-9]+')->with('id', '[0-9]+');
+
     }
     /**
      * Init twig
@@ -52,7 +62,7 @@ class App
         return new \Twig\Environment(
             $loader,
             [
-            'cache' => $this->config->getGlobalPath().'/cache/twig',
+            
             ]
         );
     }

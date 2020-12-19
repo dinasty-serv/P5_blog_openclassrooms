@@ -48,14 +48,18 @@ class bdd extends Config
         }
     }
 
-    public function getAll($table)
+    public function getAll($table, $params = [])
     {
         $entity = new Entity();
-        $sql = "SELECT * FROM ".$table;
-        
+        $sql = "SELECT * FROM `".$table."` ";
+        if(!empty($params)){
+          $sql .=  $this->constructSql($params);
+
+        }
+
         $path = $entity->getPathEntity($table);
        
-     
+       
         return $this->execSql($sql, $entity->getPathEntity($table));
     }
 
@@ -72,4 +76,26 @@ class bdd extends Config
         $res =$this->pdo->query($sql);
         return $res->fetchAll(PDO::FETCH_CLASS, $pathEntity);
     }
+
+    private function constructSql(array $params):string
+    {
+        $sql = "";
+        foreach ($params as $k => $v) {
+            if($k === 'where'){
+
+            }
+
+            if($k != 'limit'){
+                $sql .= "`$k` = `$v` ";
+            }else{
+                $sql .= "LIMIT $v ";
+            }
+        }
+
+        return $sql;
+
+    }
+
+    
+    
 }

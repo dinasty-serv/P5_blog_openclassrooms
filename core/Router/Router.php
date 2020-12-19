@@ -16,6 +16,7 @@ class Router
         $this->url = $url;
     }
 
+    
     public function get($path, $callable, $name = null):Route
     {
         return $this->addRoute($path, $callable, $name, 'GET');

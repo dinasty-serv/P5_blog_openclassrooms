@@ -7,13 +7,9 @@ class PostsController extends Controller
 {
     public function index()
     {
-        $posts = $this->bdd->getAll('posts');
+       
 
-        $this->renderview('front/home.html.twig', ['posts' => $posts]);
-    }
-
-    public function addPosts($request)
-    {
+        $this->renderview('front/home.html.twig');
     }
 
     public function show($slug, $id)
