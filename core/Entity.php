@@ -2,37 +2,90 @@
 namespace Framework;
 
 use Framework\config\Config;
+use Framework\Database\Query;
+use Framework\Database\Bdd;
 
-class Entity extends Config
+class Entity
 {
+    private $table;
+    public $query;
+    private $database;
+    public $entity;
+    private $sql;
+    private $config;
+    
+    public function __construct(Config $config)
+    {
+        $this->config = $config;
+        $this->query = new Query();
+        $this->database = new Bdd($this->config->getDatabaseConfig(), $this->config->getPathsEntityConfig());
+    }
 
-
- /**
+    /**
      * Return obsolute path entity file
      *
-     * @param string $entity : Name entity
+     * @param  string $entity : Name entity
      * @return void
      */
-    public function getPathEntity($entity)
+    public function getPathEntity()
     {
-        $modelname = ucwords($entity);
-        $path = $this->getPathsEntityConfig()."\\".$modelname;
+        $modelname = ucwords($this->table);
+        $path = $this->config->getPathsEntityConfig()."\\".$modelname;
 
         return $path;
     }
-    /**
-     * Verify entity file exists
-     *
-     * @param string $path: absolute path entity file
-     * @return string|null
-     */
-    private function entityExist($path): ?string
+
+    public function getEntity($table):self
     {
-        try {
-            file_exists($path);
-            return $path;
-        } catch (\Exception $e) {
-            die('Erreur  : '.$e->getMessage());
-        }
+        $this->table = $table;
+
+        $path = $this->getPathEntity();
+        
+        $this->entity = new $path();
+        
+        $this->query->from($this->table);
+
+        return $this;
+    }
+
+
+    public function findById($id)
+    {
+        $this->sql = $this->query
+            ->where(['id' => $id])
+            ->__toString();
+
+        return $this->database->execSql($this->sql, $this->getPathEntity());
+    }
+
+    public function findOneBy(array $params, $limit = 1)
+    {
+        $this->sql =  $this->query
+            ->where($params)
+            ->limit($limit)
+            ->__toString();
+
+        return $this->database->execSql($this->sql, $this->getPathEntity())[0];
+    }
+
+    public function findAll(?int $limit = null, string  $order = 'DESC')
+    {
+        $this->sql =  $this->query
+            ->orderBy('id', $order)
+            ->limit($limit)
+            ->__toString();
+
+        return $this->database->execSql($this->sql, $this->getPathEntity());
+    }
+
+    public function findBy(array $params, string $order = 'DESC', int $limit = null)
+    {
+        $this->sql =  $this->query
+            ->where($params)
+            ->orderBy('id', $order)
+            ->limit($limit)
+            ->__toString();
+
+        return $this->database->execSql($this->sql, $this->getPathEntity());
     }
 }

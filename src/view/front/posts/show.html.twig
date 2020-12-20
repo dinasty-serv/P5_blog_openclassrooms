@@ -1,1 +1,31 @@
-{{slug}}
+{% extends "/layout/front.html.twig" %}
+
+{% block content %}
+	<div class="container">
+
+		<div class="row">
+			<div class="col-md-9">
+				<h1>{{post.title}}</h1>
+				<p>{{post.content}}</p>
+
+				<p>Mise en ligne le:
+					{{post.created_at|date("m/d/Y")}}</p>
+
+				<p>Mis à jours le:
+					{{post.updated_at|date("m/d/Y")}}</p>
+
+				<h2>Espace commentaires</h2>
+
+				<form action="" method="POST" name="newComment" id="newComments">
+					<input type="text" id="comment" class="form-control" name="comment">
+
+					<button type="submit" class="btn btn-primary">Envoyer</button>
+
+				</div>
+				<div class="col-md-3"></div>
+
+			</div>
+		</div>
+
+
+	{% endblock %}

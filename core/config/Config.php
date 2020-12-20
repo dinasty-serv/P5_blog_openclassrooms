@@ -9,11 +9,11 @@ namespace Framework\config;
 class Config
 {
     private $dbParams = array(
-      'user'     => 'root',
-      'password' => '',
+      'user'     => 'admin',
+      'password' => 'Apizee22',
       'dbname'   => 'blog',
       'host'     => 'localhost'
-   );
+    );
     /**
      * Config path entity
      */
@@ -43,10 +43,10 @@ class Config
         return $this->dbParams;
     }
     /**
-    * Return global path
-    *
-    * @return string
-    */
+     * Return global path
+     *
+     * @return string
+     */
     public function getGlobalPath():string
     {
         $this->globalPath = dirname(dirname(__DIR__));

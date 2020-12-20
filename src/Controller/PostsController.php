@@ -7,13 +7,14 @@ class PostsController extends Controller
 {
     public function index()
     {
-       
-
-        $this->renderview('front/home.html.twig');
+        $Posts = $this->entity->getEntity('posts')->findAll();
+        $this->renderview('front/posts/index.html.twig', ['posts' => $Posts]);
     }
 
     public function show($slug, $id)
     {
-        $this->renderview('front/posts/show.html.twig', ['slug' => $slug, 'id' => $id]);
+        $Post = $this->entity->getEntity('posts')->findOneBy(["slug" => $slug, "id" => $id]);
+        var_dump($Post);
+        $this->renderview('front/posts/show.html.twig', ['post' => $Post]);
     }
 }

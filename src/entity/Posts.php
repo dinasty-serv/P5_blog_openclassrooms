@@ -1,8 +1,8 @@
 <?php
 namespace App\Entity;
 
-class Posts{
-    
+class Posts
+{
     private $title;
 
     private $content;
@@ -17,27 +17,32 @@ class Posts{
 
     private $category_id;
 
-    public function getTitle(){
+    public function getTitle()
+    {
         return $this->title;
     }
-    public function getContent(){
+    public function getContent()
+    {
         return $this->content;
     }
-    public function getCreated_at(){
-        return $this->title;
+    public function getCreated_at()
+    {
+        return $this->created_at;
     }
-    public function getUpdated_at(){
+    public function getUpdated_at()
+    {
         return $this->updated_at;
     }
-    public function getSlug(){
+    public function getSlug()
+    {
         return $this->slug;
     }
-    public function getUser_id(){
+    public function getUser_id()
+    {
         return $this->user_id;
     }
-    public function getCategory_id(){
+    public function getCategory_id()
+    {
         return $this->category_id;
     }
-
-
 }

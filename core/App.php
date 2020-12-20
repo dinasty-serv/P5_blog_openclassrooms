@@ -4,7 +4,7 @@ namespace Framework;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Framework\config\Config;
-use Framework\bdd;
+use Framework\Database\Bdd;
 use Framework\Exception;
 use Framework\Entity;
 use Twig\TwigTest;
@@ -24,6 +24,7 @@ class App
      * @var Object
      */
     protected $config;
+
     protected $entity;
     protected $twig;
     public $router;
@@ -31,11 +32,9 @@ class App
     public function __construct()
     {
         $this->config = new Config();
-        $this->bdd = new bdd($this->config->getDatabaseConfig(), $this->config->getPathsEntityConfig());
-        $this->entity = new Entity();
         $this->router  = new Router($_GET['url']);
-
         $this->twig = $this->initTwig();
+        $this->entity = new Entity($this->config);
     }
 
     public function run()
@@ -43,14 +42,22 @@ class App
         $this->getRoutes();
         $this->router->run();
     }
+    /**
+     * Cread Route
+     *
+     * @todo   A déplacer
+     * @return null
+     */
+    public function getRoutes()
+    {
+        $this->router->get('/', "Home:index", 'Home.index');
+        $this->router->get('/posts', "Posts:index", 'Posts.index');
 
-    public function getRoutes(){
-
-       $this->router->get('/', "Home:index", 'Home.index');
        
-       $this->router->get('/post/:slug-:id', "Posts:show", 'posts.show')->with('slug', '[a-z0-9]+')->with('id', '[0-9]+');
-
+        $this->router->get('/post/:slug-:id', "Posts:show", 'posts.show')->with('slug', '[a-z-0-9]+')->with('id', '[0-9]+');
+        $this->router->post('/post/:slug-:id', "Posts:show", 'posts.show')->with('slug', '[a-z-0-9]+')->with('id', '[0-9]+');
     }
+
     /**
      * Init twig
      *
@@ -60,10 +67,7 @@ class App
     {
         $loader = new \Twig\Loader\FilesystemLoader($this->config->getPathsViewConfig());
         return new \Twig\Environment(
-            $loader,
-            [
-            
-            ]
+            $loader
         );
     }
 }

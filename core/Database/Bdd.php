@@ -1,21 +1,21 @@
 <?php
-namespace Framework;
+namespace Framework\Database;
 
 use Exception;
 use PDO;
-use Framework\App;
 use Framework\config\Config;
 use Framework\Entity;
 
-class bdd extends Config
+class Bdd extends Config
 {
     private $pdo;
+    protected $query;
 
 
     /**
      * Undocumented function
      *
-     * @param array $db_params
+     * @param array  $db_params
      * @param string $pathsModel
      */
     public function __construct(array $db_params)
@@ -47,55 +47,16 @@ class bdd extends Config
             die('Erreur Mysql init : '.$e->getMessage());
         }
     }
-
-    public function getAll($table, $params = [])
-    {
-        $entity = new Entity();
-        $sql = "SELECT * FROM `".$table."` ";
-        if(!empty($params)){
-          $sql .=  $this->constructSql($params);
-
-        }
-
-        $path = $entity->getPathEntity($table);
-       
-       
-        return $this->execSql($sql, $entity->getPathEntity($table));
-    }
-
-
-
-    private function preparSql($sql)
-    {
-        $sth = $this->pdo->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
-        return $sth;
-    }
-
+    /**
+     * Execute Sql query
+     *
+     * @param  string $sql
+     * @param  string $pathEntity path entity
+     * @return void
+     */
     public function execSql($sql, $pathEntity)
     {
         $res =$this->pdo->query($sql);
         return $res->fetchAll(PDO::FETCH_CLASS, $pathEntity);
     }
-
-    private function constructSql(array $params):string
-    {
-        $sql = "";
-        foreach ($params as $k => $v) {
-            if($k === 'where'){
-
-            }
-
-            if($k != 'limit'){
-                $sql .= "`$k` = `$v` ";
-            }else{
-                $sql .= "LIMIT $v ";
-            }
-        }
-
-        return $sql;
-
-    }
-
-    
-    
 }
