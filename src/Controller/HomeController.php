@@ -9,10 +9,9 @@ class HomeController extends Controller
     {
         //Récupèrer les 3 derniers articles
         $Posts = $this->entity->getEntity('posts')->findAll(3);
-                
-
-        var_dump($Posts);
-        
+       
+        //$url = $this->router->url('home.index');
+       
         $this->renderview('front/home.html.twig', ['posts' => $Posts]);
     }
 

@@ -4,7 +4,7 @@ namespace Framework\Router;
 use Framework\App;
 use Framework\Exception;
 
-class Router
+class Router extends App
 {
     private $url;
     private $routes = [];

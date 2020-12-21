@@ -14,6 +14,9 @@ class Config
       'dbname'   => 'blog',
       'host'     => 'localhost'
     );
+
+    private $pathRootUrl = "http://192.168.1.198:8080/OPC/blog/public";
+    
     /**
      * Config path entity
      */
@@ -72,5 +75,15 @@ class Config
     public function getPathsViewConfig():string
     {
         return dirname(dirname(__DIR__)).'/'.$this->paths_view;
+    }
+
+    /**
+     * Return path root URL
+     * @todo Delete funtion
+     * @return string
+     */
+    public function getpathRootUrl():string
+    {
+        return $this->pathRootUrl;
     }
 }

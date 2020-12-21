@@ -65,10 +65,12 @@ class Entity
             ->limit($limit)
             ->__toString();
 
+       
+
         return $this->database->execSql($this->sql, $this->getPathEntity())[0];
     }
 
-    public function findAll(?int $limit = null, string  $order = 'DESC')
+    public function findAll(?int $limit = null, ?string  $order = 'DESC')
     {
         $this->sql =  $this->query
             ->orderBy('id', $order)

@@ -9,6 +9,7 @@ use Framework\Exception;
 use Framework\Entity;
 use Twig\TwigTest;
 use Framework\Router\Router;
+use Framework\Router\RouterTwigExtention;
 
 class App
 {
@@ -29,17 +30,19 @@ class App
     protected $twig;
     public $router;
 
+    
+
     public function __construct()
     {
         $this->config = new Config();
         $this->router  = new Router($_GET['url']);
         $this->twig = $this->initTwig();
         $this->entity = new Entity($this->config);
+        $this->getRoutes();
     }
 
     public function run()
     {
-        $this->getRoutes();
         $this->router->run();
     }
     /**
@@ -50,12 +53,10 @@ class App
      */
     public function getRoutes()
     {
-        $this->router->get('/', "Home:index", 'Home.index');
-        $this->router->get('/posts', "Posts:index", 'Posts.index');
-
-       
-        $this->router->get('/post/:slug-:id', "Posts:show", 'posts.show')->with('slug', '[a-z-0-9]+')->with('id', '[0-9]+');
-        $this->router->post('/post/:slug-:id', "Posts:show", 'posts.show')->with('slug', '[a-z-0-9]+')->with('id', '[0-9]+');
+        $this->router->get('/', "Home:index", 'home.index');
+        $this->router->get('/posts', "Posts:index", 'posts.index');
+        $this->router->get('/post/:slug-:id', "Posts:show", 'post.show')->with('slug', '[a-z-0-9]+')->with('id', '[0-9]+');
+        $this->router->post('/post-new-comme/:slug-:id', "Posts:show", 'post.comment')->with('slug', '[a-z-0-9]+')->with('id', '[0-9]+');
     }
 
     /**
@@ -66,8 +67,10 @@ class App
     private function initTwig()
     {
         $loader = new \Twig\Loader\FilesystemLoader($this->config->getPathsViewConfig());
-        return new \Twig\Environment(
-            $loader
-        );
+        $twig =  new \Twig\Environment($loader);
+
+        $twig->addExtension(new RouterTwigExtention($this->router));
+
+        return $twig;
     }
 }

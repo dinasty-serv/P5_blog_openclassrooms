@@ -14,7 +14,14 @@ class PostsController extends Controller
     public function show($slug, $id)
     {
         $Post = $this->entity->getEntity('posts')->findOneBy(["slug" => $slug, "id" => $id]);
-        var_dump($Post);
+
+       
+
+        
         $this->renderview('front/posts/show.html.twig', ['post' => $Post]);
+    }
+
+    public function newComment($slug, $id)
+    {
     }
 }

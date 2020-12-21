@@ -1,6 +1,8 @@
 <?php
 namespace Framework\Router;
 
+use Framework\App;
+
 class Route
 {
     private $path;
@@ -8,9 +10,13 @@ class Route
     private $matches = [];
     private $params = [];
 
+    private const FOLDER = 'blog';
+
+
     public function __construct($path, $callable)
     {
         $this->path = trim($path, '/');
+
         $this->callable = $callable;
     }
 
@@ -40,9 +46,8 @@ class Route
         if (is_string($this->callable)) {
             $params = explode(':', $this->callable);
             $controller = "App\\Controller\\".$params[0]."Controller";
-            $action = $params[1];
-
             $controller  = new $controller();
+
             return call_user_func_array([$controller, $params[1]], $this->matches);
         } else {
             return call_user_func_array($this->callable, $this->matches);
@@ -59,10 +64,29 @@ class Route
     public function getUrl($params)
     {
         $path = $this->path;
+       
         foreach ($params as $k => $v) {
             $path = str_replace(":$k", $v, $path);
-
-            return $path;
         }
+        //@todo Retirer 'blog/'
+        return $this->pathRootUrl()."blog/".$path;
+    }
+
+    public function pathRootUrl($dir = __DIR__)
+    {
+        $root = "";
+        $dir = str_replace('\\', '/', realpath($dir));
+
+        //HTTPS or HTTP
+        $root .= !empty($_SERVER['HTTPS']) ? 'https' : 'http';
+
+        //HOST
+        $root .= '://' . $_SERVER['HTTP_HOST'];
+
+        
+
+        $root .= '/';
+
+        return $root;
     }
 }

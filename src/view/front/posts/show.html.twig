@@ -6,6 +6,7 @@
 		<div class="row">
 			<div class="col-md-9">
 				<h1>{{post.title}}</h1>
+
 				<p>{{post.content}}</p>
 
 				<p>Mise en ligne le:
@@ -16,7 +17,8 @@
 
 				<h2>Espace commentaires</h2>
 
-				<form action="" method="POST" name="newComment" id="newComments">
+				<form action="{{route('post.comment',{'slug':post.slug, 'id':post.id} ) }}" method="POST" name="newComment" id="newComments">
+
 					<input type="text" id="comment" class="form-control" name="comment">
 
 					<button type="submit" class="btn btn-primary">Envoyer</button>

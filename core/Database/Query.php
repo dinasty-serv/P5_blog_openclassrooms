@@ -96,7 +96,7 @@ class Query
 
         if ($this->where) {
             $parts[] = 'WHERE';
-            $parts[] = $this-> _buildWhere()();
+            $parts[] = $this-> _buildWhere();
         }
 
         if ($this->order) {
