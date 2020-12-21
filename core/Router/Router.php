@@ -4,15 +4,18 @@ namespace Framework\Router;
 use Framework\App;
 use Framework\Exception;
 
-class Router extends App
+class Router
 {
     private $url;
     private $routes = [];
     private $routeName = [];
+    private $request;
 
 
-    public function __construct($url)
+    public function __construct($url, $request)
     {
+        $this->request = $request;
+       
         $this->url = $url;
     }
 
@@ -29,7 +32,7 @@ class Router extends App
 
     public function addRoute($path, $callable, $name = null, $methode)
     {
-        $route = new Route($path, $callable);
+        $route = new Route($path, $callable, $this->request);
 
         $this->routes[$methode][] = $route;
 

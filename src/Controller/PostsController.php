@@ -3,6 +3,8 @@ namespace App\Controller;
 
 use Framework\Controller;
 
+use GuzzleHttp\Psr7\ServerRequest as Request;
+
 class PostsController extends Controller
 {
     public function index()
@@ -21,7 +23,8 @@ class PostsController extends Controller
         $this->renderview('front/posts/show.html.twig', ['post' => $Post]);
     }
 
-    public function newComment($slug, $id)
+    public function newComment($slug, $id, Request $request)
     {
+        var_dump($request->getParsedBody()['comment']);
     }
 }

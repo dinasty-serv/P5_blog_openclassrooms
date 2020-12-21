@@ -1,15 +1,12 @@
 <?php
 namespace Framework;
 
-use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Framework\config\Config;
-use Framework\Database\Bdd;
-use Framework\Exception;
 use Framework\Entity;
-use Twig\TwigTest;
 use Framework\Router\Router;
 use Framework\Router\RouterTwigExtention;
+use GuzzleHttp\Psr7\ServerRequest;
 
 class App
 {
@@ -24,39 +21,34 @@ class App
      *
      * @var Object
      */
-    protected $config;
-
-    protected $entity;
-    protected $twig;
+    public $config;
+    public $entity;
+    public $twig;
     public $router;
+   
 
     
 
     public function __construct()
     {
         $this->config = new Config();
-        $this->router  = new Router($_GET['url']);
-        $this->twig = $this->initTwig();
         $this->entity = new Entity($this->config);
-        $this->getRoutes();
+        $this->initRouter(ServerRequest::fromGlobals());
+        $this->twig = $this->initTwig();
     }
 
     public function run()
     {
         $this->router->run();
     }
-    /**
-     * Cread Route
-     *
-     * @todo   A déplacer
-     * @return null
-     */
-    public function getRoutes()
+   
+    public function initRouter(ServerRequestInterface $request)
     {
+        $this->router  = new Router($request->getUri()->getPath(), $request);
         $this->router->get('/', "Home:index", 'home.index');
         $this->router->get('/posts', "Posts:index", 'posts.index');
         $this->router->get('/post/:slug-:id', "Posts:show", 'post.show')->with('slug', '[a-z-0-9]+')->with('id', '[0-9]+');
-        $this->router->post('/post-new-comme/:slug-:id', "Posts:show", 'post.comment')->with('slug', '[a-z-0-9]+')->with('id', '[0-9]+');
+        $this->router->post('/post-new-comme/:slug-:id', "Posts:newComment", 'post.comment')->with('slug', '[a-z-0-9]+')->with('id', '[0-9]+');
     }
 
     /**
