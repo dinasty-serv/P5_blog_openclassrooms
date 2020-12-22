@@ -48,6 +48,20 @@ class Entity
         return $this;
     }
 
+    public function save(){
+        $data =$this->entity;
+        
+        $database = $this->database->prepareInsertObject($this->table);
+
+        foreach ($this->entity as $k => $v) {
+
+            
+        }
+        var_dump($data);
+        
+        
+    }
+
 
     public function findById($id)
     {

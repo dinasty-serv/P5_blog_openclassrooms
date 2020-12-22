@@ -6,33 +6,54 @@ use Framework\Exception;
 
 class Router
 {
+    /**
+     * Url enter request
+     * @var string
+     */
     private $url;
+     /**
+     * Array for routes
+     * @var Array
+     */
     private $routes = [];
+     /**
+     * Array for routesName
+     * @var Array
+     */
     private $routeName = [];
-    private $request;
+ 
 
-
-    public function __construct($url, $request)
+     /**
+      * Init Router
+      * @param string  $url
+      * @param Request $request
+      */
+    public function __construct($url)
     {
-        $this->request = $request;
+        var_dump($url);
        
         $this->url = $url;
     }
 
-    
-    public function get($path, $callable, $name = null):Route
+    /**
+     * Init new route
+     * @param strig $path 
+     * @param callback $callable
+     * @param string $name
+     */
+    public function get($path, $callable, $name = null, $request):Route
     {
-        return $this->addRoute($path, $callable, $name, 'GET');
+        return $this->addRoute($path, $callable, $name,$request, 'GET');
     }
 
-    public function post($path, $callable, $name = null):Route
+    public function post($path, $callable, $name = null, $request):Route
     {
-        return $this->addRoute($path, $callable, $name, 'POST');
+        return $this->addRoute($path, $callable, $name,$request, 'POST');
     }
 
-    public function addRoute($path, $callable, $name = null, $methode)
+    public function addRoute($path, $callable, $name = null,$request, $methode)
     {
-        $route = new Route($path, $callable, $this->request);
+        $route = new Route($path, $callable, $request);
 
         $this->routes[$methode][] = $route;
 

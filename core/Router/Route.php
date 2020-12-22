@@ -12,7 +12,6 @@ class Route
     public function __construct($path, $callable, $request)
     {
         $this->path = trim($path, '/');
-
         $this->callable = $callable;
         $this->request = $request;
     }
@@ -67,7 +66,7 @@ class Route
         foreach ($params as $k => $v) {
             $path = str_replace(":$k", $v, $path);
         }
-        
+        $uri = $this->request->getUri()->getPath();
         return '/'.$path;
     }
 

@@ -7,6 +7,7 @@ use Framework\Entity;
 use Framework\Router\Router;
 use Framework\Router\RouterTwigExtention;
 use GuzzleHttp\Psr7\ServerRequest;
+use Psr\Http\Message\ResponseInterface as Response;
 
 class App
 {
@@ -44,11 +45,14 @@ class App
    
     public function initRouter(ServerRequestInterface $request)
     {
-        $this->router  = new Router($request->getUri()->getPath(), $request);
-        $this->router->get('/', "Home:index", 'home.index');
-        $this->router->get('/posts', "Posts:index", 'posts.index');
-        $this->router->get('/post/:slug-:id', "Posts:show", 'post.show')->with('slug', '[a-z-0-9]+')->with('id', '[0-9]+');
-        $this->router->post('/post-new-comme/:slug-:id', "Posts:newComment", 'post.comment')->with('slug', '[a-z-0-9]+')->with('id', '[0-9]+');
+        $uri = $request->getUri()->getPath();
+
+        
+        $this->router  = new Router($_GET['url']);
+        $this->router->get('/', "Home:index", 'home.index', $request);
+        $this->router->get('/posts', "Posts:index", 'posts.index', $request);
+        $this->router->get('/post/:slug-:id', "Posts:show", 'post.show', $request)->with('slug', '[a-z-0-9]+')->with('id', '[0-9]+');
+        $this->router->post('/post-new-comme/:slug-:id', "Posts:newComment", 'post.comment', $request)->with('slug', '[a-z-0-9]+')->with('id', '[0-9]+');
     }
 
     /**

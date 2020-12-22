@@ -40,7 +40,8 @@ class Bdd extends Config
             $pdo = new PDO(
                 'mysql:dbname='.$this->db_baseName.';host='.$this->db_host,
                 $this->db_user,
-                $this->db_password
+                $this->db_password,
+                [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
             );
             return $pdo;
         } catch (Exception $e) {
@@ -58,5 +59,13 @@ class Bdd extends Config
     {
         $res =$this->pdo->query($sql);
         return $res->fetchAll(PDO::FETCH_CLASS, $pathEntity);
+    }
+
+    public function prepareInsertObject($table)
+    {
+      $pdo =  $this->pdo->prepare("INSERT INTO objects (data) VALUES (?)");
+
+       return $pdo;
+
     }
 }

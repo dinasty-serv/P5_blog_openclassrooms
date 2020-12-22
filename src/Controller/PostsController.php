@@ -25,6 +25,16 @@ class PostsController extends Controller
 
     public function newComment($slug, $id, Request $request)
     {
-        var_dump($request->getParsedBody()['comment']);
+        $data = $request->getParsedBody();
+        $newComment = $this->entity->getEntity('comments');
+        //Set data
+        $newComment->entity
+        ->setContent('fdfds')
+        ;
+
+        //Save Data
+        $newComment->save();
+
+       
     }
 }
