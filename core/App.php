@@ -46,9 +46,9 @@ class App
     public function initRouter(ServerRequestInterface $request)
     {
         $uri = $request->getUri()->getPath();
-
         
-        $this->router  = new Router($_GET['url']);
+        
+        $this->router  = new Router($uri);
         $this->router->get('/', "Home:index", 'home.index', $request);
         $this->router->get('/posts', "Posts:index", 'posts.index', $request);
         $this->router->get('/post/:slug-:id', "Posts:show", 'post.show', $request)->with('slug', '[a-z-0-9]+')->with('id', '[0-9]+');

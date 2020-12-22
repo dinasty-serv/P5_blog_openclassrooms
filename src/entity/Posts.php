@@ -45,4 +45,9 @@ class Posts
     {
         return $this->category_id;
     }
+
+    public function getArray()
+    {
+        return get_object_vars($this);
+    }
 }

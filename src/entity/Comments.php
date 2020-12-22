@@ -3,27 +3,20 @@ namespace App\Entity;
 
 use DateTime;
 
-class Comments{
-
-    private $id;
-    private $content; 
+class Comments
+{
+    private $content;
     private $created_at;
-    private $updated_at;
-    private $approved = false;
+    private $approve = 0;
     private $user_id= 1;
+    private $post_id;
 
 
-    public function __construct(){
-        $this->created_at = new DateTime('now');
-        $this->updated_at = new DateTime('now');
-    }
-    public function getId():int
+    public function __construct()
     {
-        return $this->id;
-    }
+        $date = new DateTime('now');
 
-    public function setId(int $id){
-        $this->id = $id;
+        $this->created_at = $date->format('d/m/Y');
     }
 
     public function getContent():string
@@ -36,32 +29,25 @@ class Comments{
         $this->content = $content;
     }
 
-    public function getCreated_at():DateTime
+
+    public function getCreated_at()
     {
         return $this->created_at;
     }
 
-    public function setCreated_at($created_at){
+    public function setCreated_at($created_at)
+    {
         $this->created_at = $created_at;
     }
 
-    public function getUpdated_at():DateTime
+    public function getApprove():bool
     {
-        return $this->updated_at;
+        return $this->approve;
     }
 
-    public function setUpdated_at($updated_at){
-        $this->updated_at = $updated_at;
-    }
-
-    public function getApproved():bool
+    public function setApprove(bool $approve)
     {
-        return $this->approved;
-    }
-
-    public function setApproved(bool $approved)
-    {
-        $this->approved = $approved;
+        $this->approve = $approve;
     }
 
     public function getUserId():int
@@ -74,5 +60,19 @@ class Comments{
         $this->user_id = $user;
     }
 
+    public function getPostId():int
+    {
+        return $this->post_id;
+    }
 
+    public function setPostId(int $post)
+    {
+        $this->post_id = $post;
+    }
+
+    
+    public function getArray()
+    {
+        return get_object_vars($this);
+    }
 }

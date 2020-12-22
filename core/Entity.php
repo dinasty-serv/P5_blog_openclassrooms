@@ -17,7 +17,6 @@ class Entity
     public function __construct(Config $config)
     {
         $this->config = $config;
-        $this->query = new Query();
         $this->database = new Bdd($this->config->getDatabaseConfig(), $this->config->getPathsEntityConfig());
     }
 
@@ -35,37 +34,38 @@ class Entity
         return $path;
     }
 
-    public function getEntity($table):self
+    public function getEntity($table)
     {
+        $this->query = new Query($table);
         $this->table = $table;
 
         $path = $this->getPathEntity();
         
         $this->entity = new $path();
         
-        $this->query->from($this->table);
+        //$this->query->from($this->table);
 
         return $this;
     }
 
-    public function save(){
-        $data =$this->entity;
-        
-        $database = $this->database->prepareInsertObject($this->table);
+    public function save()
+    {
+        $data =$this->entity->getArray();
+        $this->sql = $this->query
+            ->action("INSERT")
+            ->insert($data)
+            ->__toString();
 
-        foreach ($this->entity as $k => $v) {
-
-            
-        }
-        var_dump($data);
-        
-        
+        return $this->database->execSql($this->sql, $this->getPathEntity());
     }
+
+   
 
 
     public function findById($id)
     {
         $this->sql = $this->query
+            ->action('SELECT')
             ->where(['id' => $id])
             ->__toString();
 
@@ -75,11 +75,10 @@ class Entity
     public function findOneBy(array $params, $limit = 1)
     {
         $this->sql =  $this->query
+            ->action('SELECT')
             ->where($params)
             ->limit($limit)
             ->__toString();
-
-       
 
         return $this->database->execSql($this->sql, $this->getPathEntity())[0];
     }
@@ -87,6 +86,7 @@ class Entity
     public function findAll(?int $limit = null, ?string  $order = 'DESC')
     {
         $this->sql =  $this->query
+            ->action('SELECT')
             ->orderBy('id', $order)
             ->limit($limit)
             ->__toString();
@@ -97,6 +97,7 @@ class Entity
     public function findBy(array $params, string $order = 'DESC', int $limit = null)
     {
         $this->sql =  $this->query
+            ->action('SELECT')
             ->where($params)
             ->orderBy('id', $order)
             ->limit($limit)

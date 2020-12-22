@@ -10,24 +10,23 @@ class Query
 {
     private $select;
 
-    private $from;
+    private $table;
 
     private $where;
+
+    private $action;
 
     private $order;
 
     private $limit;
-    /**
-     * Select table sql request
-     *
-     * @param  string $table
-     * @return self
-     */
-    public function from(string $table):self
+
+    private $insert;
+
+    public function __construct($table)
     {
-        $this->from = $table;
-        return $this;
+        $this->table = $table;
     }
+   
     /**
      * Select fields sql request
      *
@@ -49,6 +48,18 @@ class Query
     {
         $this->where = $condition;
 
+        return $this;
+    }
+
+    public function insert(array $insert):self
+    {
+        $this->insert = $insert;
+        return $this;
+    }
+
+    public function action(string $action):self
+    {
+        $this->action = $action;
         return $this;
     }
     /**
@@ -83,21 +94,35 @@ class Query
     public function __toString():string
     {
         //Set SELECT $field
-        $parts = ['SELECT'];
-        if ($this->select) {
-            $parts[] = join(', ', $this->select);
-        } else {
-            $parts[] = '*';
-        }
-        //Set FROM $table
+        $parts[] = $this->action;
 
-        $parts[] = 'FROM';
-        $parts[] = $this->from;
+        if ($this->action === 'SELECT') {
+            if ($this->select) {
+                $parts[] = join(', ', $this->select);
+            } else {
+                $parts[] = '*';
+            }
 
-        if ($this->where) {
-            $parts[] = 'WHERE';
-            $parts[] = $this-> _buildWhere();
+            //Set FROM $table
+            $parts[] = 'FROM';
+            $parts[] = $this->table;
+
+
+            if ($this->where) {
+                $parts[] = 'WHERE';
+                $parts[] = $this-> _buildWhere();
+            }
         }
+
+       
+
+        if ($this->insert) {
+            $parts[] = 'INTO';
+            $parts[] = $this->table;
+
+            $parts[] = $this-> _buildInsert();
+        }
+
 
         if ($this->order) {
             $parts[] = 'ORDER BY ';
@@ -120,6 +145,7 @@ class Query
     private function _buildWhere():string
     {
         $where = [];
+
         foreach ($this->where as $k => $v) {
             if (is_string($v)) {
                 $value = "'".$v."'";
@@ -131,5 +157,18 @@ class Query
         }
 
         return join(' AND ', $where);
+    }
+
+    private function _buildInsert()
+    {
+        $insert = "";
+        $colone = "";
+        $val = "";
+
+        $colone .= " (`".implode("`, `", array_keys($this->insert))."`)";
+        $val .= " VALUES ('".implode("', '", $this->insert)."') ";
+
+        $insert .= $colone.''.$val;
+        return $insert;
     }
 }

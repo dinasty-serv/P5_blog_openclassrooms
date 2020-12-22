@@ -60,12 +60,4 @@ class Bdd extends Config
         $res =$this->pdo->query($sql);
         return $res->fetchAll(PDO::FETCH_CLASS, $pathEntity);
     }
-
-    public function prepareInsertObject($table)
-    {
-      $pdo =  $this->pdo->prepare("INSERT INTO objects (data) VALUES (?)");
-
-       return $pdo;
-
-    }
 }

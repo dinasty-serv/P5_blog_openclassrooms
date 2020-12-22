@@ -9,8 +9,8 @@ namespace Framework\config;
 class Config
 {
     private $dbParams = array(
-      'user'     => 'root',
-      'password' => '',
+      'user'     => 'admin',
+      'password' => 'Apizee22',
       'dbname'   => 'blog',
       'host'     => 'localhost'
     );

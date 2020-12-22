@@ -16,6 +16,19 @@
 					{{post.updated_at|date("m/d/Y")}}</p>
 
 				<h2>Espace commentaires</h2>
+				{% for comment in comments %}
+
+					<div class="card">
+						<div class="card-header">
+							User.name
+
+						</div>
+						<div class="card-body">
+							<p class="card-text">{{comment.content}}</p>
+							<smal>{{comment.created_at}}</smal>
+						</div>
+					</div>
+				{% endfor %}
 
 				<form action="{{route('post.comment',{'slug':post.slug, 'id':post.id} ) }}" method="POST" name="newComment" id="newComments">
 

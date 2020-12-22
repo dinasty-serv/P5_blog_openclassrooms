@@ -16,25 +16,25 @@ class PostsController extends Controller
     public function show($slug, $id)
     {
         $Post = $this->entity->getEntity('posts')->findOneBy(["slug" => $slug, "id" => $id]);
-
+        $comments = $this->entity->getEntity('comments')->findBy(['post_id' => $id]);
+        
        
 
         
-        $this->renderview('front/posts/show.html.twig', ['post' => $Post]);
+        $this->renderview('front/posts/show.html.twig', ['post' => $Post, 'comments' => $comments]);
     }
 
     public function newComment($slug, $id, Request $request)
     {
         $data = $request->getParsedBody();
+
         $newComment = $this->entity->getEntity('comments');
+        
         //Set data
-        $newComment->entity
-        ->setContent('fdfds')
-        ;
+        $newComment->entity->setContent($data['comment']);
+        $newComment->entity->setPostId($id);
 
         //Save Data
-        $newComment->save();
-
-       
+        $this->entity->save();
     }
 }

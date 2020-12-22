@@ -1,22 +1,65 @@
 <?php
 namespace Framework\Router;
 
+use Psr\Http\Message\ServerRequestInterface as Request;
+
+/**
+ * Route class
+ * @author nicolas de Fontaine <nicolas.defontaine@apizee.com>
+ */
 class Route
 {
+    /**
+     * path target
+     *
+     * @var string $path
+     */
     private $path;
+    /**
+     * Function target
+     *
+     * @var callable
+     */
     private $callable;
+    /**
+     * Reoute matched
+     *
+     * @var array
+     */
     private $matches = [];
+    /**
+     * Route params
+     *
+     * @var array
+     */
     private $params = [];
+    /**
+     * Request
+     *
+     * @var Request
+     */
     private $request;
 
-    public function __construct($path, $callable, $request)
+    /**
+     * Init route
+     *
+     * @param string $path
+     * @param callable $callable
+     * @param Request $request
+     */
+    public function __construct(string $path, $callable, Request $request)
     {
         $this->path = trim($path, '/');
         $this->callable = $callable;
         $this->request = $request;
     }
-
-    public function match($url)
+    /**
+     * Check url matche route
+     *
+     * @param string $url
+     * @return bool
+     */
+    public function match(string $url):bool
     {
         $url = trim($url, '/');
         $path = preg_replace_callback('#:([\w]+)#', [$this, 'paramMatch'], $this->path);
@@ -28,15 +71,24 @@ class Route
         $this->matches = $matches;
         return true;
     }
-
-    private function paramMatch($match)
+    /**
+     * Check params matche into route
+     *
+     * @param string $match
+     * @return void
+     */
+    private function paramMatch($match):string
     {
         if (isset($this->params[$match[1]])) {
             return '('.$this->params[$match[1]].')';
         }
         return '([^/]+)';
     }
-
+    /**
+     * Call to action into controller
+     *
+     * @return void
+     */
     public function call()
     {
         if (is_string($this->callable)) {
@@ -52,14 +104,26 @@ class Route
         }
     }
 
-    public function with($param, $regex)
+    /**
+     * set with param
+     *
+     * @param string $param
+     * @param string $regex
+     * @return void
+     */
+    public function with(string $param, string $regex)
     {
         $this->params[$param] = str_replace('(', '(?:', $regex);
 
         return $this;
     }
-
-    public function getUrl($params)
+    /**
+     * Return URL
+     *
+     * @param array $params
+     * @return string
+     */
+    public function getUrl(array $params):string
     {
         $path = $this->path;
        
@@ -68,23 +132,5 @@ class Route
         }
         $uri = $this->request->getUri()->getPath();
         return '/'.$path;
-    }
-
-    public function pathRootUrl($dir = __DIR__)
-    {
-        $root = "";
-        $dir = str_replace('\\', '/', realpath($dir));
-
-        //HTTPS or HTTP
-        $root .= !empty($_SERVER['HTTPS']) ? 'https' : 'http';
-
-        //HOST
-        $root .= '://' . $_SERVER['HTTP_HOST'];
-
-        
-
-        $root .= '/';
-
-        return $root;
     }
 }
