@@ -33,16 +33,22 @@ class Router
      */
     private $request;
 
+    private $container;
+
     /**
      * Init Router
      * @param string  $url
      * @param Request $request
      */
-    public function __construct($url, $request)
+    
+
+    public function __construct($url, $request, $container)
     {
+        $this->container = $container;
         $this->request = $request;
         $this->url = $url;
     }
+    
 
     /**
      * Init new route GET
@@ -82,7 +88,7 @@ class Router
      */
     public function addRoute(string $path, string $callable, string $name = null, string $methode): Route
     {
-        $route = new Route($path, $callable, $this->request);
+        $route = new Route($path, $callable, $this->request, $this->container);
 
         $this->routes[$methode][] = $route;
 

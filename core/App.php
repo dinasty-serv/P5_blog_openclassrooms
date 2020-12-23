@@ -7,7 +7,6 @@ use Framework\Entity;
 use Framework\Router\Router;
 use Framework\Router\RouterTwigExtention;
 use GuzzleHttp\Psr7\ServerRequest;
-use Psr\Http\Message\ResponseInterface as Response;
 
 class App
 {
@@ -26,16 +25,15 @@ class App
     public $entity;
     public $twig;
     public $router;
+    public $container;
    
 
     
 
     public function __construct()
     {
-        $this->config = new Config();
-        $this->entity = new Entity($this->config);
+        $this->container = new Container();
         $this->initRouter(ServerRequest::fromGlobals());
-        $this->twig = $this->initTwig();
     }
 
     public function run()
@@ -48,25 +46,12 @@ class App
         $uri = $request->getUri()->getPath();
         
         
-        $this->router  = new Router($uri, $request);
+        $this->container->get(new Router($uri, $request, $this->container));
+       
+
         $this->router->get('/', "Home:index", 'home.index');
         $this->router->get('/posts', "Posts:index", 'posts.index');
         $this->router->get('/post/:slug-:id', "Posts:show", 'post.show')->with('slug', '[a-z-0-9]+')->with('id', '[0-9]+');
         $this->router->post('/post-new-comme/:slug-:id', "Posts:newComment", 'post.comment')->with('slug', '[a-z-0-9]+')->with('id', '[0-9]+');
-    }
-
-    /**
-     * Init twig
-     *
-     * @return object
-     */
-    private function initTwig()
-    {
-        $loader = new \Twig\Loader\FilesystemLoader($this->config->getPathsViewConfig());
-        $twig =  new \Twig\Environment($loader);
-
-        $twig->addExtension(new RouterTwigExtention($this->router));
-
-        return $twig;
     }
 }

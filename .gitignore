@@ -3,3 +3,4 @@ appengine-generated/
 
 /vendor/
 /cache/
+/.vscode/

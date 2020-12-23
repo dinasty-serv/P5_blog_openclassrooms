@@ -5,10 +5,11 @@ use Exception;
 use PDO;
 use Framework\config\Config;
 
-class Bdd extends Config
+class Bdd
 {
     private $pdo;
     protected $query;
+   
 
 
     /**
@@ -23,6 +24,7 @@ class Bdd extends Config
         $this->db_user = $db_params['user'];
         $this->db_password = $db_params['password'];
         $this->db_baseName = $db_params['dbname'];
+        
         
         
         $this->pdo = $this->initMysql();
@@ -44,7 +46,7 @@ class Bdd extends Config
             );
             return $pdo;
         } catch (Exception $e) {
-            die('Erreur Mysql init : '.$e->getMessage());
+            throw new Exception($e->getMessage());
         }
     }
     /**
@@ -58,14 +60,19 @@ class Bdd extends Config
     {
         try {
             $res =$this->pdo->query($sql);
-            var_dump($res);
+            
             return $res->fetchAll(PDO::FETCH_CLASS, $pathEntity);
         } catch (\Exception $e) {
             throw new Exception($e->getMessage());
         }
     }
-
-    public function execSimpleSql($sql, $pathEntity)
+    /**
+     * Execute simple sql request
+     *
+     * @param string $sql
+     * @return void
+     */
+    public function execSimpleSql(string $sql):PDO
     {
         try {
             return $this->pdo->query($sql);
