@@ -56,11 +56,10 @@ class Entity
             ->insert($data)
             ->__toString();
 
-        return $this->database->execSql($this->sql, $this->getPathEntity());
+        return $this->database->execSimpleSql($this->sql, $this->getPathEntity());
     }
 
    
-
 
     public function findById($id)
     {
@@ -69,7 +68,7 @@ class Entity
             ->where(['id' => $id])
             ->__toString();
 
-        return $this->database->execSql($this->sql, $this->getPathEntity());
+        return $this->database->execSqlAndFetch($this->sql, $this->getPathEntity());
     }
 
     public function findOneBy(array $params, $limit = 1)
@@ -80,7 +79,7 @@ class Entity
             ->limit($limit)
             ->__toString();
 
-        return $this->database->execSql($this->sql, $this->getPathEntity())[0];
+        return $this->database->execSqlAndFetch($this->sql, $this->getPathEntity())[0];
     }
 
     public function findAll(?int $limit = null, ?string  $order = 'DESC')
@@ -91,7 +90,7 @@ class Entity
             ->limit($limit)
             ->__toString();
 
-        return $this->database->execSql($this->sql, $this->getPathEntity());
+        return $this->database->execSqlAndFetch($this->sql, $this->getPathEntity());
     }
 
     public function findBy(array $params, string $order = 'DESC', int $limit = null)
@@ -103,6 +102,6 @@ class Entity
             ->limit($limit)
             ->__toString();
 
-        return $this->database->execSql($this->sql, $this->getPathEntity());
+        return $this->database->execSqlAndFetch($this->sql, $this->getPathEntity());
     }
 }

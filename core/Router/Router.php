@@ -26,17 +26,21 @@ class Router
     * @var Array
     */
     private $routeName = [];
- 
+    /**
+     * Request
+     *
+     * @var Request $request
+     */
+    private $request;
 
     /**
      * Init Router
      * @param string  $url
      * @param Request $request
      */
-    public function __construct($url)
+    public function __construct($url, $request)
     {
-        var_dump($url);
-       
+        $this->request = $request;
         $this->url = $url;
     }
 
@@ -49,9 +53,9 @@ class Router
      * @param Request $request
      * @return Route
      */
-    public function get(string $path, string $callable, string $name = null, Request $request):Route
+    public function get(string $path, string $callable, string $name = null)
     {
-        return $this->addRoute($path, $callable, $name, $request, 'GET');
+        return $this->addRoute($path, $callable, $name, 'GET');
     }
     /**
      * Init new route Post
@@ -62,9 +66,9 @@ class Router
      * @param Request $request
      * @return Route
      */
-    public function post(string $path, string $callable, string $name = null, Request $request):Route
+    public function post(string $path, string $callable, string $name = null):Route
     {
-        return $this->addRoute($path, $callable, $name, $request, 'POST');
+        return $this->addRoute($path, $callable, $name, 'POST');
     }
 
     /**
@@ -73,13 +77,12 @@ class Router
      * @param string $path
      * @param string $callable
      * @param string $name
-     * @param Request $request
      * @param string $methode
      * @return Route
      */
-    public function addRoute(string $path, string $callable, string $name = null, Request $request, string $methode): Route
+    public function addRoute(string $path, string $callable, string $name = null, string $methode): Route
     {
-        $route = new Route($path, $callable, $request);
+        $route = new Route($path, $callable, $this->request);
 
         $this->routes[$methode][] = $route;
 
@@ -96,10 +99,10 @@ class Router
      */
     public function run():Route
     {
-        if (!isset($this->routes[$_SERVER['REQUEST_METHOD']])) {
+        if (!isset($this->routes[$this->request->getMethod()])) {
             throw new Exception('REQUEST_METHOD does not exist');
         }
-        foreach ($this->routes[$_SERVER['REQUEST_METHOD']] as $route) {
+        foreach ($this->routes[$this->request->getMethod()] as $route) {
             if ($route->match($this->url)) {
                 return $route->call();
             }
@@ -119,5 +122,20 @@ class Router
             throw new Exception('No route matches this name');
         }
         return $this->routeName[$name]->getUrl($params);
+    }
+    /**
+     * Redirect to route
+     *
+     * @param string $name
+     * @param array|null $params
+     * @return void
+     */
+    public function redirect(string $name, ?array $params = [])
+    {
+        if (!isset($this->routeName[$name])) {
+            throw new Exception('No route matches this name');
+        }
+        $url = $this->url($name, $params);
+        header("Location:".$this->request->getServerParams()['REQUEST_SCHEME']."://".$this->request->getServerParams()['SERVER_NAME'].":".$this->request->getServerParams()['SERVER_PORT']."".$url);
     }
 }

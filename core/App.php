@@ -48,11 +48,11 @@ class App
         $uri = $request->getUri()->getPath();
         
         
-        $this->router  = new Router($uri);
-        $this->router->get('/', "Home:index", 'home.index', $request);
-        $this->router->get('/posts', "Posts:index", 'posts.index', $request);
-        $this->router->get('/post/:slug-:id', "Posts:show", 'post.show', $request)->with('slug', '[a-z-0-9]+')->with('id', '[0-9]+');
-        $this->router->post('/post-new-comme/:slug-:id', "Posts:newComment", 'post.comment', $request)->with('slug', '[a-z-0-9]+')->with('id', '[0-9]+');
+        $this->router  = new Router($uri, $request);
+        $this->router->get('/', "Home:index", 'home.index');
+        $this->router->get('/posts', "Posts:index", 'posts.index');
+        $this->router->get('/post/:slug-:id', "Posts:show", 'post.show')->with('slug', '[a-z-0-9]+')->with('id', '[0-9]+');
+        $this->router->post('/post-new-comme/:slug-:id', "Posts:newComment", 'post.comment')->with('slug', '[a-z-0-9]+')->with('id', '[0-9]+');
     }
 
     /**

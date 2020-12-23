@@ -2,7 +2,6 @@
 namespace App\Controller;
 
 use Framework\Controller;
-
 use GuzzleHttp\Psr7\ServerRequest as Request;
 
 class PostsController extends Controller
@@ -16,10 +15,7 @@ class PostsController extends Controller
     public function show($slug, $id)
     {
         $Post = $this->entity->getEntity('posts')->findOneBy(["slug" => $slug, "id" => $id]);
-        $comments = $this->entity->getEntity('comments')->findBy(['post_id' => $id]);
-        
-       
-
+        $comments = $this->entity->getEntity('comments')->findBy(['post_id' => $id,'approve' => true]);
         
         $this->renderview('front/posts/show.html.twig', ['post' => $Post, 'comments' => $comments]);
     }
@@ -27,7 +23,7 @@ class PostsController extends Controller
     public function newComment($slug, $id, Request $request)
     {
         $data = $request->getParsedBody();
-
+        
         $newComment = $this->entity->getEntity('comments');
         
         //Set data
@@ -36,5 +32,6 @@ class PostsController extends Controller
 
         //Save Data
         $this->entity->save();
+        $this->router->redirect('post.show', ['id' => $id, 'slug' => $slug]);
     }
 }

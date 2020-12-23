@@ -111,7 +111,7 @@ class Route
      * @param string $regex
      * @return void
      */
-    public function with(string $param, string $regex)
+    public function with(string $param, string $regex):self
     {
         $this->params[$param] = str_replace('(', '(?:', $regex);
 

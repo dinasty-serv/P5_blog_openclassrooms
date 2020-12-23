@@ -4,7 +4,6 @@ namespace Framework\Database;
 use Exception;
 use PDO;
 use Framework\config\Config;
-use Framework\Entity;
 
 class Bdd extends Config
 {
@@ -55,9 +54,23 @@ class Bdd extends Config
      * @param  string $pathEntity path entity
      * @return void
      */
-    public function execSql($sql, $pathEntity)
+    public function execSqlAndFetch($sql, $pathEntity)
     {
-        $res =$this->pdo->query($sql);
-        return $res->fetchAll(PDO::FETCH_CLASS, $pathEntity);
+        try {
+            $res =$this->pdo->query($sql);
+            var_dump($res);
+            return $res->fetchAll(PDO::FETCH_CLASS, $pathEntity);
+        } catch (\Exception $e) {
+            throw new Exception($e->getMessage());
+        }
+    }
+
+    public function execSimpleSql($sql, $pathEntity)
+    {
+        try {
+            return $this->pdo->query($sql);
+        } catch (\Exception $e) {
+            throw new Exception($e->getMessage());
+        }
     }
 }
