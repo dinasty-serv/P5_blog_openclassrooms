@@ -3,6 +3,10 @@ namespace Framework\Router;
 
 use Framework\Entity;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Framework\Twig;
+use Framework\Controller;
+use Framework\App;
+use Framework\Container;
 
 /**
  * Route class
@@ -10,7 +14,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
  */
 class Route
 {
-    /**
+    /*
      * path target
      *
      * @var string $path
@@ -40,8 +44,9 @@ class Route
      * @var Request
      */
     private $request;
-
     private $container;
+    
+
 
     /**
      * Init route
@@ -50,10 +55,9 @@ class Route
      * @param callable $callable
      * @param Request $request
      */
-    public function __construct(string $path, $callable, Request $request, $container)
+    public function __construct(string $path, $callable, Request $request, Container $container)
     {
         $this->container = $container;
-
         $this->path = trim($path, '/');
         $this->callable = $callable;
         $this->request = $request;
@@ -99,11 +103,11 @@ class Route
         if (is_string($this->callable)) {
             $params = explode(':', $this->callable);
             $controller = "App\\Controller\\".$params[0]."Controller";
-
             $controller  = new $controller(
                 $this->container->get(Entity::class),
                 $this->container->get(Router::class),
-                $this->container->get(Twig::class)
+                $this->container->get(Twig::class),
+                $this->container->get(Container::class)
             );
             $this->matches[] = $this->request;
             

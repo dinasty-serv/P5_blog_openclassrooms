@@ -1,9 +1,10 @@
 <?php
 namespace Framework\Router;
 
-use Framework\App;
+use Framework\Container;
 use Framework\Exception;
-use Psr\Http\Message\ServerRequestInterface as Request;
+use GuzzleHttp\Psr7\ServerRequest as Request;
+use Framework\App;
 
 /**
  * Router class
@@ -34,21 +35,28 @@ class Router
     private $request;
 
     private $container;
+    
 
     /**
      * Init Router
      * @param string  $url
      * @param Request $request
      */
-    
 
-    public function __construct($url, $request, $container)
+    public function __construct(Request $request, Container $container)
     {
         $this->container = $container;
         $this->request = $request;
-        $this->url = $url;
+        $uri = $this->request->getUri()->getPath();
+
+        $this->url = $uri;
+
+        
+        
+      
+        var_dump($this->url);
     }
-    
+
 
     /**
      * Init new route GET

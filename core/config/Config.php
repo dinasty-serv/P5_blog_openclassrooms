@@ -26,16 +26,9 @@ class Config
      * Config path view
      */
     private $paths_view = 'src/view';
-    /**
-     * Global path app
-     */
-    private $globalPath;
-
-    public function __construct()
-    {
-        $this->globalPath;
-    }
     
+
+   
     /**
      * Return global database config
      *

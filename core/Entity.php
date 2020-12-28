@@ -17,8 +17,7 @@ class Entity
     public function __construct(Config $config)
     {
         $this->config = $config;
-
-        $this->database = new Bdd($this->config->getDatabaseConfig(), $this->config->getPathsEntityConfig(), $this->config);
+        $this->database = new Bdd($this->config->getDatabaseConfig());
     }
 
     /**
@@ -56,8 +55,8 @@ class Entity
             ->action("INSERT")
             ->insert($data)
             ->__toString();
-
-        return $this->database->execSimpleSql($this->sql);
+        
+        return  $this->database->execSimpleSql($this->sql);
     }
 
    

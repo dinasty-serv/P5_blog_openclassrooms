@@ -24,14 +24,17 @@ class PostsController extends Controller
     {
         $data = $request->getParsedBody();
         
+        
         $newComment = $this->entity->getEntity('comments');
         
         //Set data
         $newComment->entity->setContent($data['comment']);
         $newComment->entity->setPostId($id);
+        //var_dump($newComment);
 
         //Save Data
-        $this->entity->save();
-        $this->router->redirect('post.show', ['id' => $id, 'slug' => $slug]);
+        if ($this->entity->save()) {
+            $this->router->redirect('post.show', ['id' => $id, 'slug' => $slug]);
+        }
     }
 }

@@ -21,19 +21,19 @@ class App
      *
      * @var Object
      */
-    public $config;
-    public $entity;
-    public $twig;
-    public $router;
+    private $router;
+
     public $container;
-   
 
-    
-
-    public function __construct()
+    public function __construct(ServerRequestInterface $request)
     {
         $this->container = new Container();
-        $this->initRouter(ServerRequest::fromGlobals());
+        
+        $this->container->set($this->container);
+        $this->request = $this->container->set($request);
+        $this->router =  $this->container->get(Router::class);
+        
+        $this->initRouter();
     }
 
     public function run()
@@ -41,14 +41,8 @@ class App
         $this->router->run();
     }
    
-    public function initRouter(ServerRequestInterface $request)
+    public function initRouter()
     {
-        $uri = $request->getUri()->getPath();
-        
-        
-        $this->container->get(new Router($uri, $request, $this->container));
-       
-
         $this->router->get('/', "Home:index", 'home.index');
         $this->router->get('/posts', "Posts:index", 'posts.index');
         $this->router->get('/post/:slug-:id', "Posts:show", 'post.show')->with('slug', '[a-z-0-9]+')->with('id', '[0-9]+');

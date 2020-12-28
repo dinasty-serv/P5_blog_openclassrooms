@@ -19,5 +19,6 @@ class Twig
         $loader = new \Twig\Loader\FilesystemLoader($this->config->getPathsViewConfig());
         $this->twig =  new \Twig\Environment($loader);
         $this->twig->addExtension(new RouterTwigExtention($this->router));
+        return $this;
     }
 }

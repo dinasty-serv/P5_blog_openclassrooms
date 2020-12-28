@@ -72,10 +72,13 @@ class Bdd
      * @param string $sql
      * @return void
      */
-    public function execSimpleSql(string $sql):PDO
+    public function execSimpleSql(string $sql):bool
     {
         try {
-            return $this->pdo->query($sql);
+            if ($this->pdo->exec($sql)) {
+                return true;
+            }
+            return false;
         } catch (\Exception $e) {
             throw new Exception($e->getMessage());
         }

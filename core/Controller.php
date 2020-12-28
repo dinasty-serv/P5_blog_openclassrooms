@@ -4,16 +4,17 @@ namespace Framework;
 
 use Framework\Router\Router;
 use GuzzleHttp\Psr7\Request;
-use \Twig\Environment as Twig;
+use Framework\Twig as Twig;
 
-abstract class Controller
+class Controller
 {
     protected $entity;
     protected $twig;
     protected $router;
-
-    public function __construct(Entity $entity, Router $router, Twig $twig)
+    protected $container;
+    public function __construct(Entity $entity, Router $router, Twig $twig, Container $container)
     {
+        $this->container = $container;
         $this->entity = $entity;
         $this->twig = $twig;
         $this->router = $router;
@@ -21,6 +22,6 @@ abstract class Controller
 
     public function renderview(string $vue, array $params = [])
     {
-        echo $this->twig->render($vue, $params);
+        echo $this->twig->twig->render($vue, $params);
     }
 }
