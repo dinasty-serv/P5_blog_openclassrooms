@@ -54,7 +54,7 @@ class Router
         
         
       
-        var_dump($this->url);
+        //var_dump($this->url);
     }
 
 

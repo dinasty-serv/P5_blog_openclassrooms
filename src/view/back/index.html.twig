@@ -1,0 +1,61 @@
+{% extends "/layout/back.html.twig" %}
+
+{% block content %}
+	<div class="row">
+		<div class="col-md-6">
+			<h3>Liste des articles</h3>
+			<table class="table">
+				<thead>
+					<tr>
+						<th scope="col">#</th>
+						<th scope="col">Titre</th>
+						<th scope="col">Action</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for post in posts %}
+						<tr>
+							<th scope="row">{{post.id}}</th>
+
+							<td>{{post.title}}</td>
+
+
+							<td>
+								<a href='{{route('admin.editPost',{'id': post.id})}}' class="btn btn-primary">
+
+
+									<i class="fa fa-edit"></i>
+									Editer
+								</a>
+							</td>
+						</tr>
+					{% endfor %}
+
+				</tbody>
+			</tbody>
+		</table>
+	</div>
+	<div class="col-md-6">
+		<h3>Liste des commentaires non approuvé</h3>
+		<table class="table">
+			<thead>
+				<tr>
+					<th scope="col">#</th>
+					<th scope="col">User</th>
+					<th scope="col">Contenu</th>
+					<th scope="col">Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<th scope="row">1</th>
+					<td>Mark</td>
+					<td>Otto</td>
+					<td>@mdo</td>
+				</tr>
+
+			</tbody>
+		</table>
+	</div>
+
+</div>{% endblock %}

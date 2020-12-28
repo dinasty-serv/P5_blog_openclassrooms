@@ -32,7 +32,7 @@ class App
         $this->container->set($this->container);
         $this->request = $this->container->set($request);
         $this->router =  $this->container->get(Router::class);
-        
+
         $this->initRouter();
     }
 
@@ -47,5 +47,9 @@ class App
         $this->router->get('/posts', "Posts:index", 'posts.index');
         $this->router->get('/post/:slug-:id', "Posts:show", 'post.show')->with('slug', '[a-z-0-9]+')->with('id', '[0-9]+');
         $this->router->post('/post-new-comme/:slug-:id', "Posts:newComment", 'post.comment')->with('slug', '[a-z-0-9]+')->with('id', '[0-9]+');
+        
+        $this->router->get('/admin', "Admin:index", 'admin.index');
+        $this->router->get('/admin/post/edit-:id', "PostsAdmin:edit", 'admin.editPost')->with('id', '[0-9]+');
+        $this->router->post('/admin/post/edit-:id', "PostsAdmin:edit", 'admin.editPost')->with('id', '[0-9]+');
     }
 }

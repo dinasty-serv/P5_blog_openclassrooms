@@ -1,0 +1,49 @@
+{% extends "/layout/back.html.twig" %}
+
+{% block content %}
+	<div class="row">
+		<div class="col-md-12">
+			<div class="bd-example">
+				<div class="card">
+					<h5 class="card-header">Editer un article</h5>
+					<div class="card-body">
+
+
+						<form action="{{route('admin.editPost',{'id' : post.id})}}" method="POST" name="EditPost" id="EditPost">
+
+
+							<div class="form-group">
+								<label for="title">Titre</label>
+								<input type="text" class="form-control" id="title" value="{{post.title}}">
+							</div>
+							<div class="form-group">
+								<label for="categorie">Categorie</label>
+								<select class="form-control" id="categorie">
+									{% for category in categories %}
+										<option value='{{category.id}}'>{{category.name}}</option>
+									{% endfor %}
+								</select>
+							</div>
+
+							<div class="form-group">
+								<label for="content">Content</label>
+
+								<textarea class="form-control" id="content" rows="3">
+
+									{{post.content}}
+
+								</textarea>
+							</div>
+
+							<button type="submit" class="btn btn-primary">Enregistrer</a>
+
+						</form>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+
+	</div>
+{% endblock %}

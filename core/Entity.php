@@ -68,7 +68,7 @@ class Entity
             ->where(['id' => $id])
             ->__toString();
 
-        return $this->database->execSqlAndFetch($this->sql, $this->getPathEntity());
+        return $this->database->execSqlAndFetch($this->sql, $this->getPathEntity())[0];
     }
 
     public function findOneBy(array $params, $limit = 1)
