@@ -33,35 +33,84 @@ class Entity
 
         return $path;
     }
-
-    public function getEntity($table)
+    /**
+     * init new entity
+     *
+     * @param string $table
+     * @return self
+     */
+    public function getEntity(string $table):self
     {
         $this->query = new Query($table);
+
         $this->table = $table;
 
         $path = $this->getPathEntity();
         
         $this->entity = new $path();
-        
         //$this->query->from($this->table);
 
         return $this;
     }
-
-    public function save()
+    /**
+     * Save into database
+     *
+     * @return bool
+     */
+    public function save($entity):bool
     {
+        $this->entity = $entity;
+        var_dump($this->entity);
         $data =$this->entity->getArray();
         $this->sql = $this->query
-            ->action("INSERT")
+            ->table($this->entity->table)
+            ->action("UPDATE")
             ->insert($data)
             ->__toString();
-        
+        // var_dump($this->sql);
+        return  $this->database->execSimpleSql($this->sql);
+    }
+    /**
+     * Update unto database
+     *
+     * @return boolean
+     */
+    public function update($entity):bool
+    {
+        $this->entity = $entity;
+
+        $data =$this->entity->getArray();
+        $this->sql = $this->query
+            
+            ->action("UPDATE")
+            ->update($data, $this->entity->getId())
+            ->__toString();
+       
         return  $this->database->execSimpleSql($this->sql);
     }
 
-   
+    public function delete($entity):bool
+    {
+        $this->entity = $entity;
 
-    public function findById($id)
+        $data =$this->entity->getArray();
+        $this->sql = $this->query
+            
+            ->action("DELETE")
+            ->where(["id" => $this->entity->getId()])
+            ->__toString();
+       
+        return  $this->database->execSimpleSql($this->sql);
+    }
+
+    
+    /**
+     * FintById into database
+     *
+     * @param integer $id
+     * @return object
+     */
+    public function findById(int $id):object
     {
         $this->sql = $this->query
             ->action('SELECT')
@@ -89,7 +138,7 @@ class Entity
             ->orderBy('id', $order)
             ->limit($limit)
             ->__toString();
-
+      
         return $this->database->execSqlAndFetch($this->sql, $this->getPathEntity());
     }
 
@@ -101,7 +150,6 @@ class Entity
             ->orderBy('id', $order)
             ->limit($limit)
             ->__toString();
-
         return $this->database->execSqlAndFetch($this->sql, $this->getPathEntity());
     }
 }

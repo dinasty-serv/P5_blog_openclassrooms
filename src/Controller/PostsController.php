@@ -33,7 +33,7 @@ class PostsController extends Controller
         //var_dump($newComment);
 
         //Save Data
-        if ($this->entity->save()) {
+        if ($this->entity->save($newComment)) {
             $this->router->redirect('post.show', ['id' => $id, 'slug' => $slug]);
         }
     }

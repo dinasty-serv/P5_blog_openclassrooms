@@ -1,9 +1,8 @@
 <?php
-namespace Framework;
+namespace Framework\Twig;
 
 use Framework\config\Config;
 use Framework\Router\Router;
-use Framework\Router\RouterTwigExtention;
 
 class Twig
 {
@@ -19,6 +18,5 @@ class Twig
         $loader = new \Twig\Loader\FilesystemLoader($this->config->getPathsViewConfig());
         $this->twig =  new \Twig\Environment($loader);
         $this->twig->addExtension(new RouterTwigExtention($this->router));
-        return $this;
     }
 }

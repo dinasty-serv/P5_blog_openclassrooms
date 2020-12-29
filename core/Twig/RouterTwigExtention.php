@@ -1,9 +1,10 @@
 <?php
 
-namespace Framework\Router;
+namespace Framework\Twig;
 
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
+use Framework\Router\Router;
 
 /**
  * Router extention Twig

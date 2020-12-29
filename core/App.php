@@ -2,11 +2,7 @@
 namespace Framework;
 
 use Psr\Http\Message\ServerRequestInterface;
-use Framework\config\Config;
-use Framework\Entity;
 use Framework\Router\Router;
-use Framework\Router\RouterTwigExtention;
-use GuzzleHttp\Psr7\ServerRequest;
 
 class App
 {
@@ -22,9 +18,17 @@ class App
      * @var Object
      */
     private $router;
-
+    /**
+     * Init container
+     *
+     * @var ContainerInterface
+     */
     public $container;
-
+    /**
+     * Init app
+     *
+     * @param ServerRequestInterface $request
+     */
     public function __construct(ServerRequestInterface $request)
     {
         $this->container = new Container();
@@ -35,12 +39,20 @@ class App
 
         $this->initRouter();
     }
-
+    /**
+     * Run App
+     *
+     * @return void
+     */
     public function run()
     {
         $this->router->run();
     }
-   
+    /**
+     * Init router
+     *
+     * @return void
+     */
     public function initRouter()
     {
         $this->router->get('/', "Home:index", 'home.index');
@@ -51,5 +63,7 @@ class App
         $this->router->get('/admin', "Admin:index", 'admin.index');
         $this->router->get('/admin/post/edit-:id', "PostsAdmin:edit", 'admin.editPost')->with('id', '[0-9]+');
         $this->router->post('/admin/post/edit-:id', "PostsAdmin:edit", 'admin.editPost')->with('id', '[0-9]+');
+        
+        $this->router->get('/admin/deleteOrApproveComment/:id/:action', "CommentsAdmin:appouvOrDelete", 'admin.appouvOrDelete')->with('id', '[0-9]+')->with('action', '[a-z-0-9]+');
     }
 }

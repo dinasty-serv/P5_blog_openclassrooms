@@ -25,7 +25,8 @@
 						</div>
 						<div class="card-body">
 							<p class="card-text">{{comment.content}}</p>
-							<smal>{{comment.created_at}}</smal>
+							<smal>{{comment.created_at|date('d/m/Y')}}</smal>
+
 						</div>
 					</div>
 				{% endfor %}

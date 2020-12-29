@@ -4,7 +4,6 @@ namespace Framework\Router;
 use Framework\Container;
 use Framework\Exception;
 use GuzzleHttp\Psr7\ServerRequest as Request;
-use Framework\App;
 
 /**
  * Router class
@@ -121,7 +120,8 @@ class Router
                 return $route->call();
             }
         }
-        throw new Exception('No matching routes');
+       
+        throw new Exception('No matching routes for '.$this->url);
     }
     /**
      * Generate URL for route name and params

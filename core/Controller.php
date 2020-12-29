@@ -3,8 +3,7 @@
 namespace Framework;
 
 use Framework\Router\Router;
-use GuzzleHttp\Psr7\Request;
-use Framework\Twig as Twig;
+use Framework\Twig\Twig as Twig;
 
 class Controller
 {

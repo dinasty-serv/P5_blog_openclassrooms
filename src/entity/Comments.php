@@ -5,6 +5,7 @@ use DateTime;
 
 class Comments
 {
+    private $id;
     private $content;
     private $created_at;
     private $approve = 0;
@@ -74,5 +75,25 @@ class Comments
     public function getArray()
     {
         return get_object_vars($this);
+    }
+
+    /**
+     * Get the value of id
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set the value of id
+     *
+     * @return  self
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
     }
 }

@@ -22,7 +22,14 @@ class Query
 
     private $insert;
 
+    private $update;
+
     public function __construct($table)
+    {
+        $this->table = $table;
+    }
+
+    public function table(string $table)
     {
         $this->table = $table;
     }
@@ -56,7 +63,12 @@ class Query
         $this->insert = $insert;
         return $this;
     }
-
+    public function update(array $update, int $id):self
+    {
+        $this->update = $update;
+        $this->id = $id;
+        return $this;
+    }
     public function action(string $action):self
     {
         $this->action = $action;
@@ -112,9 +124,21 @@ class Query
                 $parts[] = 'WHERE';
                 $parts[] = $this-> _buildWhere();
             }
+        } elseif ($this->action === 'DELETE') {
+            //Set FROM $table
+            $parts[] = 'FROM';
+            $parts[] = $this->table;
+            $parts[] = 'WHERE ';
+            $parts[] = $this-> _buildWhere();
         }
 
-       
+        if ($this->update) {
+            $parts[] = $this->table;
+            $parts[] = 'SET';
+            $parts[] = $this-> _buildUpdate();
+            $parts[] = 'WHERE id=';
+            $parts[] = $this->id;
+        }
 
         if ($this->insert) {
             $parts[] = 'INTO';
@@ -170,5 +194,20 @@ class Query
 
         $insert .= $colone.''.$val;
         return $insert;
+    }
+
+    private function _buildUpdate()
+    {
+        foreach ($this->update as $k => $v) {
+            if (is_string($v)) {
+                $value = '"'.$v.'"';
+            } else {
+                $value = $v;
+            }
+
+            $where[] = " $k = $value";
+        }
+
+        return join(' , ', $where);
     }
 }

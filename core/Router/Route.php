@@ -3,9 +3,7 @@ namespace Framework\Router;
 
 use Framework\Entity;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use Framework\Twig;
-use Framework\Controller;
-use Framework\App;
+use Framework\Twig\Twig;
 use Framework\Container;
 
 /**
@@ -107,7 +105,7 @@ class Route
                 $this->container->get(Entity::class),
                 $this->container->get(Router::class),
                 $this->container->get(Twig::class),
-                $this->container->get(Container::class)
+                $this->container
             );
             $this->matches[] = $this->request;
             

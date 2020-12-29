@@ -9,12 +9,27 @@ class PostsAdminController extends Controller
     public function edit($id, Request $request)
     {
         //liste des articles
+        
+        $categories = $this->entity->getEntity('categories')->findAll(10);
         $Post = $this->entity->getEntity('posts')->findById($id);
-        $categories = $this->entity->getEntity('categories')->findAll();
+
         if ($request->getMethod() === "POST") {
+            //Récupèrer les données du formulaire
             $data =  $request->getParsedBody();
+
+            //Set les nouvelles données
+            $Post->setTitle($data['title']);
+            $Post->setContent($data['content']);
+            $Post->setCategory_id($data['categories']);
+            $Post->setTitle($data['title']);
+            $Post->setUser_id(1);
+
+
+            //Save into database
             
-            var_dump($data);
+            if ($this->entity->update($Post)) {
+                return $this->router->redirect('admin.index');
+            }
         }
          
 

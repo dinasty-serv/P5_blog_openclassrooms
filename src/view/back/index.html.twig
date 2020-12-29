@@ -1,61 +1,77 @@
 {% extends "/layout/back.html.twig" %}
 
 {% block content %}
-	<div class="row">
-		<div class="col-md-6">
-			<h3>Liste des articles</h3>
-			<table class="table">
-				<thead>
-					<tr>
-						<th scope="col">#</th>
-						<th scope="col">Titre</th>
-						<th scope="col">Action</th>
-					</tr>
-				</thead>
-				<tbody>
-					{% for post in posts %}
-						<tr>
-							<th scope="row">{{post.id}}</th>
-
-							<td>{{post.title}}</td>
-
-
-							<td>
-								<a href='{{route('admin.editPost',{'id': post.id})}}' class="btn btn-primary">
-
-
-									<i class="fa fa-edit"></i>
-									Editer
-								</a>
-							</td>
-						</tr>
-					{% endfor %}
-
-				</tbody>
-			</tbody>
-		</table>
-	</div>
+<div class="row">
 	<div class="col-md-6">
-		<h3>Liste des commentaires non approuvé</h3>
+		<h3>Liste des articles</h3>
 		<table class="table">
 			<thead>
 				<tr>
 					<th scope="col">#</th>
-					<th scope="col">User</th>
-					<th scope="col">Contenu</th>
+					<th scope="col">Titre</th>
 					<th scope="col">Action</th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr>
-					<th scope="row">1</th>
-					<td>Mark</td>
-					<td>Otto</td>
-					<td>@mdo</td>
-				</tr>
+				{% for post in posts %}
+					<tr>
+						<th scope="row">{{post.id}}</th>
+
+						<td>{{post.title}}</td>
+
+
+						<td>
+							<a href='{{route('admin.editPost',{'id': post.id})}}' class="btn btn-primary">
+
+
+								<i class="fas fa-edit"></i>
+								Editer
+							</a>
+						</td>
+					</tr>
+				{% endfor %}
 
 			</tbody>
-		</table>
-	</div>
+		</tbody>
+	</table>
+</div>
+<div class="col-md-6">
+	<h3>Liste des commentaires non approuvé</h3>
+	<table class="table">
+		<thead>
 
-</div>{% endblock %}
+
+			<tr>
+				<th scope="col">#</th>
+				<th scope="col">Contenu</th>
+				<th scope="col">Action</th>
+			</tr>
+
+		</thead>
+		<tbody>
+			{% for comment in comments %}
+
+				<tr>
+					<th scope="row">{{comment.id}}</th>
+
+					<td>{{comment.content}}</td>
+
+					<td>
+						<a href='{{route('admin.appouvOrDelete',{'id': comment.id, 'action': 'approve'})}}' class="btn btn-primary btn-sm">
+
+
+							<i class="fas fa-check-circle"></i>Approuvé
+
+						</a>
+
+						<a href='{{route('admin.appouvOrDelete',{'id': comment.id, 'action': 'delete'})}}' class="btn btn-danger btn-sm">
+
+							<i class="fas fa-trash"></i>Supprimer
+
+						</a>
+					</td>
+				</tr>
+			</td>
+		</tbody>
+	</td>
+</tr>{% endfor %}</tbody></table></div></div>{% endblock %}
