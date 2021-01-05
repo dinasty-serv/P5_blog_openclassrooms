@@ -1,0 +1,21 @@
+{% extends "/layout/back.html.twig" %}
+{% block content %}
+	<div class="row">
+
+		<div class="col-md-12">
+			<h3>Editer une catégorie</h3>
+			<div class="card-body">
+				<form action="{{route('admin.editCategorie',{'id': category.id})}}" method="POST" name="EditPost" id="EditPost">
+
+
+					<div class="form-group">
+						<label for="title">Nom de la catégorie</label>
+						<input type="text" class="form-control" name="name" id="name" value="{{category.name}}">
+					</div>
+					<button type="submit" class="btn btn-primary">Enregistrer</a>
+				</form>
+			</div>
+
+		</table>
+	</div>
+{% endblock %}

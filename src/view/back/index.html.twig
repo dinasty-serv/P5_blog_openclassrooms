@@ -25,12 +25,19 @@
 
 
 						<td>
-							<a href='{{route('admin.editPost',{'id': post.id})}}' class="btn btn-primary">
+							<a href='{{route('admin.editPost',{'id': post.id})}}' class="btn btn-primary btn-sm">
 
 
 								<i class="fas fa-edit"></i>
 								Editer
 							</a>
+							<a onclick="return confirm('Are you sure?')" href='{{route('admin.deletePost',{'id': post.id})}}' class="btn btn-danger btn-sm">
+
+
+								<i class="fas fa-trash"></i>
+								Supprimer
+							</a>
+
 						</td>
 					</tr>
 				{% endfor %}

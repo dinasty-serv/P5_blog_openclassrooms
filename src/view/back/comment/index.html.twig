@@ -1,0 +1,76 @@
+{% extends "/layout/back.html.twig" %}
+
+{% block content %}
+	<div class="row">
+
+		<div class="col-md-12">
+			<h3>Liste des commentaires</h3>
+			<table class="table">
+				<thead>
+
+
+					<tr>
+						<th scope="col">#</th>
+						<th scope="col">Contenu</th>
+						<th scope="col">Article</th>
+						<th scope="col">Date</th>
+
+						<th scope="col">User</th>
+						<th scope="col">Statut</th>
+						<th scope="col">Action</th>
+					</tr>
+
+				</thead>
+				<tbody>
+					{% for comment in comments %}
+
+						<tr>
+							<th scope="row">{{comment.id}}</th>
+
+							<td>{{comment.content}}</td>
+							<td>
+								<a href="{{route('post.show',{'slug': comment.post.slug, 'id': comment.post.id})}}" target="_blank" title="Voir l'article">
+
+									{{comment.post.title}}
+								</a>
+							</td>
+
+							<td>{{comment.created_at}}</td>
+
+							<td>{{comment.user.username}}</td>
+							<td>
+								{% if comment.approve == true  %}
+									<span class="badge badge-success">Approuvé</span>
+								{% else %}
+
+									<span class="badge badge-danger">Non approuvé</span>
+
+								{% endif %}
+
+							</td>
+
+
+							<td>
+								{% if comment.approve != true  %}
+
+									<a href='{{route('admin.appouvOrDelete',{'id': comment.id, 'action': 'approve'})}}' class="btn btn-primary btn-sm">
+
+
+										<i class="fas fa-check-circle"></i>Approuvé
+
+									</a>
+								{% endif %}
+
+								<a href='{{route('admin.appouvOrDelete',{'id': comment.id, 'action': 'delete'})}}' class="btn btn-danger btn-sm">
+
+									<i class="fas fa-trash"></i>Supprimer
+
+								</a>
+							</td>
+						</tr>
+					</td>
+				</tbody>
+			</td>
+		</tr>
+	{% endfor %}
+</tbody></table></div></div>{% endblock %}

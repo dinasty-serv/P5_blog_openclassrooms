@@ -54,16 +54,31 @@ class App
      * @return void
      */
     public function initRouter()
-    {
+    {   //FRONT
         $this->router->get('/', "Home:index", 'home.index');
         $this->router->get('/posts', "Posts:index", 'posts.index');
         $this->router->get('/post/:slug-:id', "Posts:show", 'post.show')->with('slug', '[a-z-0-9]+')->with('id', '[0-9]+');
         $this->router->post('/post-new-comme/:slug-:id', "Posts:newComment", 'post.comment')->with('slug', '[a-z-0-9]+')->with('id', '[0-9]+');
         
+        //BACK-INDEX
         $this->router->get('/admin', "Admin:index", 'admin.index');
-        $this->router->get('/admin/post/edit-:id', "PostsAdmin:edit", 'admin.editPost')->with('id', '[0-9]+');
-        $this->router->post('/admin/post/edit-:id', "PostsAdmin:edit", 'admin.editPost')->with('id', '[0-9]+');
         
+        //BACK-POSTS
+        $this->router->get('/admin/post/edit-:id', "PostsAdmin:edit", 'admin.editPost')->with('id', '[0-9]+');
+        $this->router->get('/admin/post/delete-:id', "PostsAdmin:delete", 'admin.deletePost')->with('id', '[0-9]+');
+        $this->router->post('/admin/post/edit-:id', "PostsAdmin:edit", 'admin.editPost')->with('id', '[0-9]+');
+        $this->router->post('/admin/post/add', "PostsAdmin:add", 'admin.addPost');
+        $this->router->get('/admin/post/add', "PostsAdmin:add", 'admin.addPost');
+        
+        //BACK-COMMENTS
+        $this->router->get('/admin/comments/', "CommentsAdmin:index", 'admin.comments');
         $this->router->get('/admin/deleteOrApproveComment/:id/:action', "CommentsAdmin:appouvOrDelete", 'admin.appouvOrDelete')->with('id', '[0-9]+')->with('action', '[a-z-0-9]+');
+        
+        //BACK-CATEGORIES
+        $this->router->get('/admin/categories/', "CategoriesAdmin:index", 'admin.categoriesIndex');
+        $this->router->get('/admin/categorie/delete-:id', "CategoriesAdmin:delete", 'admin.deleteCategorie')->with('id', '[0-9]+');
+        $this->router->get('/admin/categorie/edit-:id', "CategoriesAdmin:edit", 'admin.editCategorie')->with('id', '[0-9]+');
+        $this->router->post('/admin/categorie/edit-:id', "CategoriesAdmin:edit", 'admin.editCategorie')->with('id', '[0-9]+');
+        $this->router->post('/admin/categorie/add', "CategoriesAdmin:index", 'admin.addCategorie');
     }
 }

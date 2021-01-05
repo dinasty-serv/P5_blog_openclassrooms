@@ -40,13 +40,38 @@
 					<div class="sb-sidenav-menu">
 						<div class="nav">
 							<div class="sb-sidenav-menu-heading">Blog</div>
-							<a class="nav-link" href="index.html">
+							<a class="nav-link" href="{{route('admin.index')}}">
+
+
 								<div class="sb-nav-link-icon">
-									<i class="fas fa-tachometer-alt"></i>
+									<i class="fa fa-tachometer-alt"></i>
+
+
 								</div>
-								Articles
+								Dashboard
 							</a>
-							<a class="nav-link" href="index.html">
+
+							<a class="nav-link" href="{{route('admin.addPost')}}">
+
+								<div class="sb-nav-link-icon">
+									<i class="fas fa-plus"></i>
+								</div>
+								Ajouter un article
+							</a>
+
+							<a class="nav-link" href="{{route('admin.categoriesIndex')}}">
+
+
+								<div class="sb-nav-link-icon">
+									<i class="fas fa-align-justify"></i>
+
+								</div>
+								Gestions des catégories
+							</a>
+
+							<a class="nav-link" href="{{route('admin.comments')}}">
+
+
 								<div class="sb-nav-link-icon">
 									<i class="fas fa-comment"></i>
 								</div>

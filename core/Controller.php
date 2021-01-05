@@ -23,4 +23,12 @@ class Controller
     {
         echo $this->twig->twig->render($vue, $params);
     }
+
+    public function generateSlug($title)
+    {
+        $slug = str_replace("'", '-', $title);
+        $slug = str_replace(' ', '-', $slug);
+
+        return $slug;
+    }
 }

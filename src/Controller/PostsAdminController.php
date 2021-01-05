@@ -12,14 +12,13 @@ class PostsAdminController extends Controller
         
         $categories = $this->entity->getEntity('categories')->findAll(10);
         $Post = $this->entity->getEntity('posts')->findById($id);
-        var_dump($Post);
+        
 
         if ($request->getMethod() === "POST") {
             //Récupèrer les données du formulaire
             $data =  $request->getParsedBody();
 
             //Set les nouvelles données
-            $Post->setTitle($data['title']);
             $Post->setContent($data['content']);
             $Post->setCategorie($data['categories']);
             $Post->setTitle($data['title']);
@@ -35,10 +34,48 @@ class PostsAdminController extends Controller
 
         //var_dump($Post);
         //$url = $this->router->url('home.index');
-        $this->renderview('back/EditPost.html.twig', ['post' => $Post, 'categories' => $categories]);
+        $this->renderview('back/post/EditPost.html.twig', ['post' => $Post, 'categories' => $categories]);
     }
+
+    public function add(Request $request)
+    {
+        //liste des articles
+        
+        $categories = $this->entity->getEntity('categories')->findAll(10);
+        $Post = $this->entity->getEntity('posts');
+        
+
+        if ($request->getMethod() === "POST") {
+            //Récupèrer les données du formulaire
+            $data =  $request->getParsedBody();
+            
+            //Set les nouvelles données
+            $Post->entity->setTitle(addslashes($data['title']));
+            $Post->entity->setContent(addslashes($data['content']));
+            $Post->entity->setCategorie($data['categories']);
+            $Post->entity->setSlug(addslashes($this->generateSlug($data['title'])));
+            $Post->entity->setUser(1);
+           
+            //Save into database
+            
+            if ($this->entity->save($Post->entity)) {
+                return $this->router->redirect('admin.index');
+            }
+        }
+         
+
+        //var_dump($Post);
+        //$url = $this->router->url('home.index');
+        $this->renderview('back/post/AddPost.html.twig', ['post' => $Post, 'categories' => $categories]);
+    }
+
 
     public function delete($id)
     {
+        $post = $this->entity->getEntity('posts')->findById($id);
+
+        if ($this->entity->delete($post)) {
+            return $this->router->redirect('admin.index');
+        }
     }
 }

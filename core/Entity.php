@@ -65,7 +65,7 @@ class Entity
     public function save($entity):bool
     {
         $this->entity = $entity;
-        //var_dump($this->entity);
+        
         $data =$this->entity->getArray();
         foreach ($data as $k => $v) {
             if (is_object($v)) {
@@ -74,11 +74,12 @@ class Entity
         }
 
         unset($data['id']);
+
         $this->sql = $this->query
             ->action("INSERT")
             ->insert($data)
             ->__toString();
-        
+        var_dump($this->sql);
         return  $this->database->execSimpleSql($this->sql);
     }
     /**
@@ -109,8 +110,7 @@ class Entity
     public function delete($entity):bool
     {
         $this->entity = $entity;
-
-        $data =$this->entity->getArray();
+        
         $this->sql = $this->query
             
             ->action("DELETE")
@@ -132,12 +132,6 @@ class Entity
         $sql = $this->query
             ->action('SELECT')
             ->where(['id' => $id]);
-
-        if (!empty($this->leftJoin)) {
-            foreach ($this->leftJoin as $k => $v) {
-                //var_dump($v);
-            }
-        }
 
         $this->sql = $sql->__toString();
 
@@ -212,11 +206,9 @@ class Entity
                     }
                 }
             }
-            if ($single) {
-                return $entry[0];
-            } else {
-                return $entry;
-            }
+        }
+        if ($single) {
+            return $entry[0];
         } else {
             return $entry;
         }

@@ -19,11 +19,16 @@ class Posts
 
     private $categorie_id;
 
+
     public function __construct()
     {
         $date = new \DateTime('now');
 
         $this->updated_at =  $date->format('d/m/Y');
+
+        if (empty($this->created_at)) {
+            $this->created_at =  $date->format('d/m/Y');
+        }
     }
 
     public function getTitle()
