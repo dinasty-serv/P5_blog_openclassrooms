@@ -9,6 +9,7 @@ class PostsController extends Controller
     public function index()
     {
         $Posts = $this->entity->getEntity('posts')->findAll();
+
         $this->renderview('front/posts/index.html.twig', ['posts' => $Posts]);
     }
 
@@ -16,7 +17,7 @@ class PostsController extends Controller
     {
         $Post = $this->entity->getEntity('posts')->findOneBy(["slug" => $slug, "id" => $id]);
         $comments = $this->entity->getEntity('comments')->findBy(['post_id' => $id,'approve' => true]);
-        
+       
         $this->renderview('front/posts/show.html.twig', ['post' => $Post, 'comments' => $comments]);
     }
 
@@ -29,11 +30,12 @@ class PostsController extends Controller
         
         //Set data
         $newComment->entity->setContent($data['comment']);
-        $newComment->entity->setPostId($id);
+        $newComment->entity->setPost($id);
         //var_dump($newComment);
 
         //Save Data
-        if ($this->entity->save($newComment)) {
+      
+        if ($this->entity->save($newComment->entity)) {
             $this->router->redirect('post.show', ['id' => $id, 'slug' => $slug]);
         }
     }

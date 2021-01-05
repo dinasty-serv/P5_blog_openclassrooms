@@ -10,23 +10,26 @@
 				<p>{{post.content}}</p>
 
 				<p>Mise en ligne le:
-					{{post.created_at|date("m/d/Y")}}</p>
+					{{post.created_at}}</p>
 
 				<p>Mis à jours le:
-					{{post.updated_at|date("m/d/Y")}}</p>
+					{{post.updated_at}}</p>
+				<p>Créer par:
+					{{post.user.username}}</p>
+
 
 				<h2>Espace commentaires</h2>
 				{% for comment in comments %}
 
 					<div class="card">
 						<div class="card-header">
-							User.name
+							{{comment.user.username}}
+
 
 						</div>
 						<div class="card-body">
 							<p class="card-text">{{comment.content}}</p>
-							<smal>{{comment.created_at|date('d/m/Y')}}</smal>
-
+							<smal>{{comment.created_at}}</smal>
 						</div>
 					</div>
 				{% endfor %}

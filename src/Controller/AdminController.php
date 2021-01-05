@@ -9,6 +9,7 @@ class AdminController extends Controller
     {
         //liste des articles
         $Posts = $this->entity->getEntity('posts')->findAll();
+        
         //Récupèrer les commentaires non approuvé
         $Comments = $this->entity->getEntity('comments')->findBy(['approve' => 0], 'DESC', 10);
         //var_dump($Comments);

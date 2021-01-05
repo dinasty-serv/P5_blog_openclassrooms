@@ -12,6 +12,7 @@ class PostsAdminController extends Controller
         
         $categories = $this->entity->getEntity('categories')->findAll(10);
         $Post = $this->entity->getEntity('posts')->findById($id);
+        var_dump($Post);
 
         if ($request->getMethod() === "POST") {
             //Récupèrer les données du formulaire
@@ -20,10 +21,9 @@ class PostsAdminController extends Controller
             //Set les nouvelles données
             $Post->setTitle($data['title']);
             $Post->setContent($data['content']);
-            $Post->setCategory_id($data['categories']);
+            $Post->setCategorie($data['categories']);
             $Post->setTitle($data['title']);
-            $Post->setUser_id(1);
-
+            $Post->setUser(1);
 
             //Save into database
             
@@ -36,5 +36,9 @@ class PostsAdminController extends Controller
         //var_dump($Post);
         //$url = $this->router->url('home.index');
         $this->renderview('back/EditPost.html.twig', ['post' => $Post, 'categories' => $categories]);
+    }
+
+    public function delete($id)
+    {
     }
 }

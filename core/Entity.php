@@ -13,6 +13,7 @@ class Entity
     public $entity;
     private $sql;
     private $config;
+    private $leftJoin;
     
     public function __construct(Config $config)
     {
@@ -45,9 +46,13 @@ class Entity
 
         $this->table = $table;
 
+
         $path = $this->getPathEntity();
         
         $this->entity = new $path();
+        
+       
+        $this->getLeftJoin($this->entity);
         //$this->query->from($this->table);
 
         return $this;
@@ -60,14 +65,20 @@ class Entity
     public function save($entity):bool
     {
         $this->entity = $entity;
-        var_dump($this->entity);
+        //var_dump($this->entity);
         $data =$this->entity->getArray();
+        foreach ($data as $k => $v) {
+            if (is_object($v)) {
+                $data[$k] = $v->getId();
+            }
+        }
+
+        unset($data['id']);
         $this->sql = $this->query
-            ->table($this->entity->table)
-            ->action("UPDATE")
+            ->action("INSERT")
             ->insert($data)
             ->__toString();
-        // var_dump($this->sql);
+        
         return  $this->database->execSimpleSql($this->sql);
     }
     /**
@@ -80,6 +91,12 @@ class Entity
         $this->entity = $entity;
 
         $data =$this->entity->getArray();
+        foreach ($data as $k => $v) {
+            if (is_object($v)) {
+                $data[$k] = $v->getId();
+            }
+        }
+       
         $this->sql = $this->query
             
             ->action("UPDATE")
@@ -110,14 +127,23 @@ class Entity
      * @param integer $id
      * @return object
      */
-    public function findById(int $id):object
+    public function findById(int $id)
     {
-        $this->sql = $this->query
+        $sql = $this->query
             ->action('SELECT')
-            ->where(['id' => $id])
-            ->__toString();
+            ->where(['id' => $id]);
 
-        return $this->database->execSqlAndFetch($this->sql, $this->getPathEntity())[0];
+        if (!empty($this->leftJoin)) {
+            foreach ($this->leftJoin as $k => $v) {
+                //var_dump($v);
+            }
+        }
+
+        $this->sql = $sql->__toString();
+
+        //var_dump($this->sql);
+
+        return $this->leftJoin($this->database->execSqlAndFetch($this->sql, $this->getPathEntity()), true);
     }
 
     public function findOneBy(array $params, $limit = 1)
@@ -128,7 +154,7 @@ class Entity
             ->limit($limit)
             ->__toString();
 
-        return $this->database->execSqlAndFetch($this->sql, $this->getPathEntity())[0];
+        return $this->leftJoin($this->database->execSqlAndFetch($this->sql, $this->getPathEntity()), true);
     }
 
     public function findAll(?int $limit = null, ?string  $order = 'DESC')
@@ -139,17 +165,106 @@ class Entity
             ->limit($limit)
             ->__toString();
       
-        return $this->database->execSqlAndFetch($this->sql, $this->getPathEntity());
+        return $this->leftJoin($this->database->execSqlAndFetch($this->sql, $this->getPathEntity()), false);
     }
 
     public function findBy(array $params, string $order = 'DESC', int $limit = null)
     {
+        //var_dump($this->leftJoin);
         $this->sql =  $this->query
             ->action('SELECT')
             ->where($params)
             ->orderBy('id', $order)
             ->limit($limit)
             ->__toString();
-        return $this->database->execSqlAndFetch($this->sql, $this->getPathEntity());
+
+        
+        return $this->leftJoin($this->database->execSqlAndFetch($this->sql, $this->getPathEntity()), false);
+    }
+    /**
+     * Construct sql request and set entity for foreign keys
+     *
+     * @param entity $entry
+     * @param boolean $single if single return
+     * @return void
+     */
+    private function leftjoin($entry, bool $single)
+    {
+        if (!empty($this->leftJoin)) {
+            for ($i =0;$i<count($entry);$i++) {
+                foreach ($this->leftJoin as $k => $v) {
+                    $functionGet = $v['functionGet'];
+                    $functionSet = $v['functionSet'];
+
+
+                    $getWhere = $entry[$i];
+                    $sql = new Query($v['table']);
+                    $sql->action('SELECT');
+                    $sql->where(['id' => $getWhere->$functionGet()]);
+                    $sql = $sql->__toString();
+
+                    $entityGet = $this->database->execSqlAndFetch($sql, $v['entity']);
+
+                    if (count($entityGet) === 1) {
+                        $entry[$i]->$functionSet($entityGet[0]);
+                    } else {
+                        $entry[$i]->$functionSet($entityGet);
+                    }
+                }
+            }
+            if ($single) {
+                return $entry[0];
+            } else {
+                return $entry;
+            }
+        } else {
+            return $entry;
+        }
+    }
+    /**
+     * checks if there are foreign keys
+     *
+     * @param [type] $entity
+     * @return void
+     */
+    private function getLeftJoin()
+    {
+        $leftJoin = [];
+        foreach ($this->entity->getArray() as $k => $v) {
+            $otherentity = [];
+            $other = explode('_', $k);
+
+            if (count($other) > 1 && $other[count($other)-1] === 'id') {
+                $param = ucwords($other[0]);
+                $class_name = "";
+                $table_name = "";
+               
+                for ($i = 0; $i < count($other)-1; $i++) {
+                    $class_name .= ucwords($other[$i]);
+                    $table_name .= $other[$i].'_';
+                }
+                $table_name = substr($table_name, 0, -1);
+
+                
+
+                $otherentity['entity'] =  $this->config->getPathsEntityConfig()."\\".$class_name.'s';
+                $otherentity['params'][$table_name.'_id']  = $table_name.'s.id';
+                $otherentity['select'] = $table_name.'_id';
+                $otherentity['table'] = $table_name.'s';
+                $otherentity['functionSet'] = "set".ucwords($table_name);
+                $otherentity['functionGet'] = "get".ucwords($table_name);
+
+                //$newentity = new $newentity();
+                
+                $fun = 'set'.$param;
+
+                //$this->entity->$fun($newentity);
+                $leftJoin[] = $otherentity;
+            }
+
+            //var_dump($leftJoin);
+        }
+
+        $this->leftJoin = $leftJoin;
     }
 }

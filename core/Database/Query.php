@@ -24,6 +24,8 @@ class Query
 
     private $update;
 
+    private $leftJoin;
+
     public function __construct($table)
     {
         $this->table = $table;
@@ -55,6 +57,12 @@ class Query
     {
         $this->where = $condition;
 
+        return $this;
+    }
+
+    public function leftJoin($leftjoin)
+    {
+        $this->leftJoin = $leftjoin;
         return $this;
     }
 
@@ -109,15 +117,20 @@ class Query
         $parts[] = $this->action;
 
         if ($this->action === 'SELECT') {
-            if ($this->select) {
-                $parts[] = join(', ', $this->select);
+            if ($this->select || $this->leftJoin) {
+                $parts[] = $this->_buildSelectLeftJoin();
             } else {
-                $parts[] = '*';
+                $parts[] = $this->table.'.*';
             }
+
 
             //Set FROM $table
             $parts[] = 'FROM';
             $parts[] = $this->table;
+
+            if ($this->leftJoin) {
+                $parts[] = $this->_buildLeftJoin();
+            }
 
 
             if ($this->where) {
@@ -131,6 +144,7 @@ class Query
             $parts[] = 'WHERE ';
             $parts[] = $this-> _buildWhere();
         }
+
 
         if ($this->update) {
             $parts[] = $this->table;
@@ -158,7 +172,7 @@ class Query
             $parts[] = 'LIMIT';
             $parts[] = $this->limit;
         }
-
+        
         return join(' ', $parts);
     }
     /**
@@ -177,7 +191,7 @@ class Query
                 $value = $v;
             }
 
-            $where[] = " $k = $value";
+            $where[] = ' '.$this->table.".$k = $value";
         }
 
         return join(' AND ', $where);
@@ -209,5 +223,29 @@ class Query
         }
 
         return join(' , ', $where);
+    }
+
+    private function _buildLeftJoin()
+    {
+        $leftJoin = [];
+        foreach ($this->leftJoin as $k => $v) {
+            $leftJoin[] = ' LEFT JOIN '.$v['table'].' ON '.$v['params'];
+
+            $this->select[] = $v['table'];
+        }
+       
+        return join(' ', $leftJoin);
+    }
+
+    private function _buildSelectLeftJoin()
+    {
+        $selectLeftJoin = [];
+        foreach ($this->leftJoin as $k => $v) {
+            $selectLeftJoin[] = $this->table.'.*';
+
+            $selectLeftJoin[] = $v['table'].'.id as '.$v['select'];
+        }
+       
+        return join(',', $selectLeftJoin);
     }
 }

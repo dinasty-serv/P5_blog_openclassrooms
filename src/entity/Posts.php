@@ -17,7 +17,7 @@ class Posts
 
     private $user_id;
 
-    private $category_id;
+    private $categorie_id;
 
     public function __construct()
     {
@@ -46,13 +46,13 @@ class Posts
     {
         return $this->slug;
     }
-    public function getUser_id()
+    public function getUser()
     {
         return $this->user_id;
     }
-    public function getCategory_id()
+    public function getCategorie()
     {
-        return $this->category_id;
+        return $this->categorie_id;
     }
 
     /**
@@ -60,9 +60,9 @@ class Posts
      *
      * @return  self
      */
-    public function setCategory_id($category_id)
+    public function setCategorie($category_id)
     {
-        $this->category_id = $category_id;
+        $this->categorie_id = $category_id;
 
         return $this;
     }
@@ -72,7 +72,7 @@ class Posts
      *
      * @return  self
      */
-    public function setUser_id($user_id)
+    public function setUser($user_id)
     {
         $this->user_id = $user_id;
 

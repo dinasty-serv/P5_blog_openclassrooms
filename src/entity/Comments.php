@@ -2,6 +2,7 @@
 namespace App\Entity;
 
 use DateTime;
+use PhpParser\Node\Expr\Cast\Object_;
 
 class Comments
 {
@@ -11,6 +12,7 @@ class Comments
     private $approve = 0;
     private $user_id= 1;
     private $post_id;
+
 
 
     public function __construct()
@@ -51,22 +53,22 @@ class Comments
         $this->approve = $approve;
     }
 
-    public function getUserId():int
+    public function getUser()
     {
         return $this->user_id;
     }
 
-    public function setUserId(int $user)
+    public function setUser($user)
     {
         $this->user_id = $user;
     }
 
-    public function getPostId():int
+    public function getPost()
     {
         return $this->post_id;
     }
 
-    public function setPostId(int $post)
+    public function setPost($post)
     {
         $this->post_id = $post;
     }
