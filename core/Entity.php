@@ -79,7 +79,6 @@ class Entity
             ->action("INSERT")
             ->insert($data)
             ->__toString();
-        var_dump($this->sql);
         return  $this->database->execSimpleSql($this->sql);
     }
     /**

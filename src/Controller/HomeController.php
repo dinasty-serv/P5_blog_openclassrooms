@@ -35,7 +35,7 @@ class HomeController extends Controller
                 $message
             );
             /**
-             * @todo Vérifier si mail envoyer ou non
+             * @todo Vérifier si mail envoyé ou non
              */
             $mail->send();
         }

@@ -59,9 +59,10 @@ class Bdd
     public function execSqlAndFetch($sql, $pathEntity)
     {
         try {
-            $res =$this->pdo->query($sql);
-            
-            return $res->fetchAll(PDO::FETCH_CLASS, $pathEntity);
+            $statement = $this->pdo->prepare($sql);
+          
+            $statement->execute();
+            return $statement->fetchAll(PDO::FETCH_CLASS, $pathEntity);
         } catch (\Exception $e) {
             throw new Exception($e->getMessage());
         }
