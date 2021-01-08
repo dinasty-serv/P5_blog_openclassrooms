@@ -15,7 +15,7 @@ class CategoriesAdminController extends Controller
             $data =  $request->getParsedBody();
 
             //Set les nouvelles données
-            $category->entity->setName(addslashes($data['name']));
+            $category->entity->setName($data['name']);
             $category->entity->setSlug(addslashes($this->generateSlug($data['name'])));
 
 

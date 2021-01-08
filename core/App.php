@@ -36,7 +36,7 @@ class App
         $this->container->set($this->container);
         $this->request = $this->container->set($request);
         $this->router =  $this->container->get(Router::class);
-
+        $this->container->get(Mailer::class);
         $this->initRouter();
     }
     /**
@@ -59,7 +59,10 @@ class App
         $this->router->get('/posts', "Posts:index", 'posts.index');
         $this->router->get('/post/:slug-:id', "Posts:show", 'post.show')->with('slug', '[a-z-0-9]+')->with('id', '[0-9]+');
         $this->router->post('/post-new-comme/:slug-:id', "Posts:newComment", 'post.comment')->with('slug', '[a-z-0-9]+')->with('id', '[0-9]+');
-        
+        //FRONT-CONTACT
+        $this->router->post('/contact', "Home:contact", 'contact.submit');
+        $this->router->get('/contact', "Home:contact", 'contact.page');
+
         //BACK-INDEX
         $this->router->get('/admin', "Admin:index", 'admin.index');
         

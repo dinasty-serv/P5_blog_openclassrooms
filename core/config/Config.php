@@ -16,6 +16,13 @@ class Config
     );
 
     private $pathRootUrl = "http://192.168.1.198:8080/OPC/blog/public";
+
+    private $mailParams = array(
+        'smtp' => 'smtp.hosts-game-server.com',
+        'port' => 587,
+        'username' => 'contact@hosts-game-server.com',
+        'password' => 'Lyliana01@'
+    );
     
     /**
      * Config path entity
@@ -78,5 +85,15 @@ class Config
     public function getpathRootUrl():string
     {
         return $this->pathRootUrl;
+    }
+
+    /**
+     * Return mail params
+     *
+     * @return array
+     */
+    public function getMailParams():array
+    {
+        return $this->mailParams;
     }
 }

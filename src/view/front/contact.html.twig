@@ -1,0 +1,57 @@
+{% extends "/layout/front.html.twig" %}
+
+{% block content %}
+
+	<section class="py-5 text-center container">
+		<div class="row py-lg-5">
+			<div class="col-lg-6 col-md-8 mx-auto">
+				<h1 class="fw-light">Demande de contact</h1>
+
+			</div>
+		</div>
+	</section>
+
+
+	<div class="container">
+		<div class="row">
+
+			<form action="{{route('contact.submit')}}" method="POST" name="contact-form" id="contact-form">
+
+				<div class="form-group">
+					<label for="title">Nom</label>
+					<input type="text" class="form-control" name="firstname" id="firstname" required>
+
+				</div>
+				<div class="form-group">
+					<label for="title">Prénom</label>
+					<input type="text" class="form-control" name="lastname" id="lastname" required>
+
+
+				</div>
+
+				<div class="form-group">
+					<label for="title">Email</label>
+					<input type="email" class="form-control" name="email" id="email" required>
+
+
+				</div>
+				<div class="form-group">
+					<label for="title">Sujet</label>
+					<input type="text" class="form-control" name="subject" id="subject" required>
+
+
+				</div>
+				<div class="form-group">
+					<label for="title">Message</label>
+					<textarea class="form-control" name="message" id="message" required></textarea>
+
+
+				</div>
+				<button type="submit" class="btn btn-primary">Envoyer</button>
+
+			</form>
+
+		</div>
+	</div>
+
+{% endblock %}
