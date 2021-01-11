@@ -12,7 +12,7 @@ class PostsAdminController extends Controller
         
         $categories = $this->entity->getEntity('categories')->findAll(10);
         $Post = $this->entity->getEntity('posts')->findById($id);
-        
+
 
         if ($request->getMethod() === "POST") {
             //Récupèrer les données du formulaire
@@ -27,6 +27,8 @@ class PostsAdminController extends Controller
             //Save into database
             
             if ($this->entity->update($Post)) {
+                $this->setFlash(['type' => 'success', 'message' => 'L\'article à bien été modifié.']);
+
                 return $this->router->redirect('admin.index');
             }
         }
@@ -43,7 +45,7 @@ class PostsAdminController extends Controller
         
         $categories = $this->entity->getEntity('categories')->findAll(10);
         $Post = $this->entity->getEntity('posts');
-        
+
 
         if ($request->getMethod() === "POST") {
             //Récupèrer les données du formulaire
@@ -57,8 +59,10 @@ class PostsAdminController extends Controller
             $Post->entity->setUser(1);
            
             //Save into database
-            
+
             if ($this->entity->save($Post->entity)) {
+                $this->setFlash(['type' => 'success', 'message' => 'L\'article à bien été ajouté.']);
+
                 return $this->router->redirect('admin.index');
             }
         }
@@ -75,6 +79,8 @@ class PostsAdminController extends Controller
         $post = $this->entity->getEntity('posts')->findById($id);
 
         if ($this->entity->delete($post)) {
+            $this->setFlash(['type' => 'success', 'message' => 'L\'article à bien été supprimé.']);
+
             return $this->router->redirect('admin.index');
         }
     }

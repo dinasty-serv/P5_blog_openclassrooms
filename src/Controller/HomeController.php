@@ -13,6 +13,10 @@ class HomeController extends Controller
         $Posts = $this->entity->getEntity('posts')->findAll(3);
        
         //$url = $this->router->url('home.index');
+
+       
+
+
        
         $this->renderview('front/home.html.twig', ['posts' => $Posts]);
     }
@@ -34,10 +38,10 @@ class HomeController extends Controller
                 ['nicodu22300@hotmail.fr' => 'Blog test'],
                 $message
             );
-            /**
-             * @todo Vérifier si mail envoyé ou non
-             */
-            $mail->send();
+            
+            if ($mail->send()) {
+                $this->setFlash(['type' => 'success', 'message' => 'Votre méssage à bien été envoyé, vous recevrez une réponse rapide !']);
+            }
         }
         $this->renderview('front/contact.html.twig');
     }

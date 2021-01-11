@@ -22,6 +22,8 @@ class CategoriesAdminController extends Controller
             //Save into database
             
             if ($this->entity->save($category->entity)) {
+                $this->setFlash(['type' => 'success', 'message' => 'La catégorie à bien été ajouté']);
+
                 return $this->router->redirect('admin.categoriesIndex');
             }
         }
@@ -49,6 +51,8 @@ class CategoriesAdminController extends Controller
             //Save into database
             
             if ($this->entity->update($category)) {
+                $this->setFlash(['type' => 'success', 'message' => 'La catégorie à bien été modifié']);
+
                 return $this->router->redirect('admin.categoriesIndex');
             }
         }
@@ -65,6 +69,8 @@ class CategoriesAdminController extends Controller
         $categorie = $this->entity->getEntity('categories')->findById($id);
         var_dump($categorie);
         if ($this->entity->delete($categorie)) {
+            $this->setFlash(['type' => 'success', 'message' => 'La catégorie à bien été supprimé']);
+
             return $this->router->redirect('admin.categoriesIndex');
         }
     }

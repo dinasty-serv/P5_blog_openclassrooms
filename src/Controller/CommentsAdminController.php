@@ -9,7 +9,7 @@ class CommentsAdminController extends Controller
     public function index()
     {
         $comments = $this->entity->getEntity('comments')->findAll();
-        
+
         $this->renderview('back/comment/index.html.twig', ['comments' => $comments]);
     }
     public function appouvOrDelete($id, $action)
@@ -17,11 +17,15 @@ class CommentsAdminController extends Controller
         $comment = $this->entity->getEntity('comments')->findById($id);
         
         if ($action === "delete") {
-            $this->entity->delete($comment);
+            if ($this->entity->delete($comment)) {
+                $this->setFlash(['type' => 'success', 'message' => 'Le commentaire à bien été supprimé']);
+            }
         } elseif ($action === "approve") {
             $comment->setApprove(true);
 
-            $this->entity->update($comment);
+            if ($this->entity->update($comment)) {
+                $this->setFlash(['type' => 'success', 'message' => 'Le commentaire à bien été approuvé']);
+            }
         }
 
         return $this->router->redirect('admin.index');

@@ -3,6 +3,8 @@ namespace Framework;
 
 use Psr\Http\Message\ServerRequestInterface;
 use Framework\Router\Router;
+use Framework\Session\Session;
+use Framework\Session\SessionFlash;
 
 class App
 {
@@ -37,6 +39,9 @@ class App
         $this->request = $this->container->set($request);
         $this->router =  $this->container->get(Router::class);
         $this->container->get(Mailer::class);
+        
+
+
         $this->initRouter();
     }
     /**

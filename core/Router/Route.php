@@ -5,6 +5,8 @@ use Framework\Entity;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Framework\Twig\Twig;
 use Framework\Container;
+use Framework\Session\Session;
+use Framework\Session\SessionFlash;
 
 /**
  * Route class
@@ -105,7 +107,9 @@ class Route
                 $this->container->get(Entity::class),
                 $this->container->get(Router::class),
                 $this->container->get(Twig::class),
-                $this->container
+                $this->container,
+                $this->container->get(SessionFlash::class),
+                $this->container->get(Session::class)
             );
             $this->matches[] = $this->request;
             
