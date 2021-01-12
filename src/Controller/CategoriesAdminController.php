@@ -16,7 +16,7 @@ class CategoriesAdminController extends Controller
 
             //Set les nouvelles données
             $category->entity->setName($data['name']);
-            $category->entity->setSlug(addslashes($this->generateSlug($data['name'])));
+            $category->entity->setSlug($this->generateSlug($data['name']));
 
 
             //Save into database
@@ -44,8 +44,8 @@ class CategoriesAdminController extends Controller
             $data =  $request->getParsedBody();
 
             //Set les nouvelles données
-            $category->setName(addslashes($data['name']));
-            $category->setSlug(addslashes($this->generateSlug($data['name'])));
+            $category->setName($data['name']);
+            $category->setSlug($this->generateSlug($data['name']));
 
 
             //Save into database
@@ -66,7 +66,6 @@ class CategoriesAdminController extends Controller
     public function delete($id)
     {
         $categorie = $this->entity->getEntity('categories')->findById($id);
-        var_dump($categorie);
         if ($this->entity->delete($categorie)) {
             $this->setFlash(['type' => 'success', 'message' => 'La catégorie à bien été supprimé']);
 
