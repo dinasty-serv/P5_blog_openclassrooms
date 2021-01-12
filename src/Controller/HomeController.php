@@ -33,12 +33,15 @@ class HomeController extends Controller
             $message = $data['firstname']." ".$data['lastname']." vous contacte pour:".$data['subject']."\r\nMessage: ".$data['message']."\r\nMail du contact: ".$data['email']."\r\n";
             
             $mail->newMail(
-                $data['subject'],
+                'Demande de contact',
                 ['email@blog.local' => 'Blog dev'],
-                ['nicodu22300@hotmail.fr' => 'Blog test'],
-                $message
+                ["nicodu22300@hotmail.fr" => 'Blog test'],
+                $this->twig->twig->render(
+                    'emails/contact.html.twig',
+                    ['user' => $data]
+                )
             );
-            
+
             if ($mail->send()) {
                 $this->setFlash(['type' => 'success', 'message' => 'Votre méssage à bien été envoyé, vous recevrez une réponse rapide !']);
             }

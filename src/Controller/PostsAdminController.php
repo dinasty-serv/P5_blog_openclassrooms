@@ -22,6 +22,7 @@ class PostsAdminController extends Controller
             $Post->setContent($data['content']);
             $Post->setCategorie($data['categories']);
             $Post->setTitle($data['title']);
+            $Post->setUpdated_at();
             $Post->setUser(1);
 
             //Save into database
@@ -52,10 +53,10 @@ class PostsAdminController extends Controller
             $data =  $request->getParsedBody();
             
             //Set les nouvelles données
-            $Post->entity->setTitle(addslashes($data['title']));
-            $Post->entity->setContent(addslashes($data['content']));
+            $Post->entity->setTitle($data['title']);
+            $Post->entity->setContent($data['content']);
             $Post->entity->setCategorie($data['categories']);
-            $Post->entity->setSlug(addslashes($this->generateSlug($data['title'])));
+            $Post->entity->setSlug($this->generateSlug($data['title']));
             $Post->entity->setUser(1);
            
             //Save into database

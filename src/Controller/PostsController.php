@@ -35,6 +35,8 @@ class PostsController extends Controller
         //Save Data
       
         if ($this->entity->save($newComment->entity)) {
+            $this->setFlash(['type' => 'success', 'message' => 'Votre commentaire a bien été posté et est en attente d\'aprobation par un administrateur. ']);
+
             $this->router->redirect('post.show', ['id' => $id, 'slug' => $slug]);
         }
     }

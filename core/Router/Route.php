@@ -176,7 +176,7 @@ class Route
             if ($user == null) {
                 return false;
             }
-            if ($prefix === "Admin" && $user['role'] != "Admin") {
+            if ($prefix === "admin" && $user['role'] != "Admin") {
                 return false;
             }
             return true;

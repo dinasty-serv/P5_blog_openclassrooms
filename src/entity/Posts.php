@@ -105,9 +105,11 @@ class Posts
      *
      * @return  self
      */
-    public function setUpdated_at($updated_at)
+    public function setUpdated_at()
     {
-        $this->updated_at = $updated_at;
+        $date = new \DateTime('now');
+       
+        $this->updated_at =  $date->format('d/m/Y');
 
         return $this;
     }

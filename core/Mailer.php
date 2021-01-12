@@ -21,7 +21,7 @@ class Mailer
         ->setUsername($config->getMailParams()['username'])
         ->setPassword($config->getMailParams()['password']);
 
-        $this->mailer = $mailer = new \Swift_Mailer($this->transport);
+        $this->mailer  = new \Swift_Mailer($this->transport);
     }
 
     public function newMail($object, $from, $to, $message)

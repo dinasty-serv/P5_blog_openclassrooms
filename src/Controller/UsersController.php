@@ -8,6 +8,12 @@ use GuzzleHttp\Psr7\ServerRequest as Request;
 
 class UsersController extends Controller
 {
+    /**
+     * Login function
+     *
+     * @param Request $request
+     * @return void
+     */
     public function login(Request $request)
     {
         if ($request->getMethod() === "POST") {
@@ -26,7 +32,12 @@ class UsersController extends Controller
 
         $this->renderview('front/login.html.twig');
     }
-
+    /**
+     * Register function
+     *
+     * @param Request $request
+     * @return void
+     */
     public function register(Request $request)
     {
         if ($request->getMethod() === "POST") {
@@ -58,7 +69,12 @@ class UsersController extends Controller
             }
         }
     }
-
+    /**
+     * Lost password function
+     *
+     * @param Request $request
+     * @return void
+     */
     public function lostPassword(Request $request)
     {
         if ($request->getMethod() === "POST") {
@@ -92,11 +108,16 @@ class UsersController extends Controller
                 }
             }
         }
-
         $this->renderview('front/lostPassword.html.twig');
     }
-
-    public function resetPassword($token, Request $request)
+    /**
+     * Reset password function
+     *
+     * @param string $token
+     * @param Request $request
+     * @return void
+     */
+    public function resetPassword(string $token, Request $request)
     {
         $user = $this->entity->getEntity('users')->findOneBy(['reset_token' => $token]);
         if (empty($user)) {
@@ -124,8 +145,11 @@ class UsersController extends Controller
         }
         $this->renderview('front/resetPassword.html.twig', ['token' => $token]);
     }
-
-
+    /**
+     * Logout function
+     *
+     * @return void
+     */
     public function logout()
     {
         if ($this->session->getSession('auth')) {
@@ -134,7 +158,12 @@ class UsersController extends Controller
             return $this->router->redirect('home.index');
         }
     }
-
+    /**
+     * Edit profile function
+     *
+     * @param Request $request
+     * @return void
+     */
     public function editProfile(Request $request)
     {
         if ($request->getMethod() === "POST") {
@@ -148,7 +177,11 @@ class UsersController extends Controller
             }
         }
     }
-
+    /**
+     * Get infos profil function
+     *
+     * @return void
+     */
     public function profile()
     {
         $comments = $this->entity->getEntity('comments')->findBy([
@@ -157,7 +190,11 @@ class UsersController extends Controller
 
         $this->renderview('front/membre/profile.html.twig', ['comments' => $comments]);
     }
-
+    /**
+     * Change password request
+     *
+     * @return void
+     */
     public function changePassword()
     {
         $this->user->setToken($this->generateToken());
