@@ -106,7 +106,6 @@ class App
 
 
         $this->router->get('/profile', "Users:profile", 'users.profile');
-        
-        $this->router->post('/reset/:token', "Users:resetPassword", 'users.resetpassword-post')->with('token', '[a-z-0-9]+');
+        $this->router->get('/profile/resetPassword', "Users:changePassword", 'users.resetpassword-profile');
     }
 }

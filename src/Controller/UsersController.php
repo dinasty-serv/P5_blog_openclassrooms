@@ -158,7 +158,7 @@ class UsersController extends Controller
         $this->renderview('front/membre/profile.html.twig', ['comments' => $comments]);
     }
 
-    public function chanPassword()
+    public function changePassword()
     {
         $this->user->setToken($this->generateToken());
 

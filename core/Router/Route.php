@@ -171,7 +171,7 @@ class Route
     {
         $session = $this->container->get(Session::class);
         $user = $session->getSession('auth');
-
+        
         if ($prefix === "admin" || $prefix === "profile") {
             if ($user == null) {
                 return false;
