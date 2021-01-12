@@ -4,7 +4,7 @@
 
 		<p>Bonjour
 			{{user.username}}, cliquer sur ce lien pour activé votre compte:
-			<a href="{{route('users.resetpassword',{'token': user.token})}}">Activé mon compte</a>
+			<a href="{{route('users.resetpassword',{'token': user.token}, true)}}">Activé mon compte</a>
 		</p>
 	</body>
 </html>

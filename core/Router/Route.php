@@ -1,6 +1,7 @@
 <?php
 namespace Framework\Router;
 
+use Framework\config\Config;
 use Framework\Entity;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Framework\Twig\Twig;
@@ -76,7 +77,7 @@ class Route
         $explode = explode('/', $url);
 
         $prefix = $explode[0];
-        
+
         if ($this->checkAuthoriz($prefix)) {
             if (!preg_match($regex, $url, $matches)) {
                 return false;
@@ -146,31 +147,40 @@ class Route
      * @param array $params
      * @return string
      */
-    public function getUrl(array $params):string
+    public function getUrl(array $params, $absolut):string
     {
         $path = $this->path;
        
         foreach ($params as $k => $v) {
             $path = str_replace(":$k", $v, $path);
         }
-        
-        return '/'.$path;
+        $url = "/";
+        if ($absolut) {
+            $rootUrl = $this->container->get(Config::class)->getpathRootUrl();
+            $url = $rootUrl."".$url;
+        }
+        return $url.=$path;
     }
-
-    public function checkAuthoriz($prefix)
+    /**
+     * Check if request is authorized
+     *
+     * @param string $prefix
+     * @return boolean true or false
+     */
+    public function checkAuthoriz(string $prefix):bool
     {
         $session = $this->container->get(Session::class);
         $user = $session->getSession('auth');
 
-        if ($prefix === "admin" || $prefix === "membre" && $user != null) {
-            if ($prefix === "admin" && $user['role'] === "Admin") {
-                return true;
-            } else {
+        if ($prefix === "admin" || $prefix === "profile") {
+            if ($user == null) {
+                return false;
+            }
+            if ($prefix === "Admin" && $user['role'] != "Admin") {
                 return false;
             }
             return true;
         }
-
         return true;
     }
 }

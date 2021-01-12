@@ -130,12 +130,12 @@ class Router
      * @param array $params
      * @return string
      */
-    public function url(string $name, array $params = []):string
+    public function url(string $name, array $params = [], bool $absolut = false):string
     {
         if (!isset($this->routeName[$name])) {
             throw new Exception('No route matches this name');
         }
-        return $this->routeName[$name]->getUrl($params);
+        return $this->routeName[$name]->getUrl($params, $absolut);
     }
     /**
      * Redirect to route

@@ -15,7 +15,7 @@ class Config
       'host'     => 'localhost'
     );
 
-    private $pathRootUrl = "http://192.168.1.198:8080/OPC/blog/public";
+    private $pathRootUrl = "http://blog.local:8080";
 
     private $mailParams = array(
         'smtp' => 'smtp.hosts-game-server.com',
