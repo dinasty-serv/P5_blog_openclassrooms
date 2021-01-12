@@ -80,7 +80,7 @@ class Entity
             ->insert($data)
             ->limit(null)
             ->__toString();
-        return  $this->database->execSimpleSql($this->sql);
+        return  $this->database->execSimpleSql($this->sql, $data);
     }
     /**
      * Update into database
@@ -105,8 +105,8 @@ class Entity
             ->update($data, $this->entity->getId())
             ->limit(null)
             ->__toString();
-       
-        return  $this->database->execSimpleSql($this->sql);
+        var_dump($this->sql);
+        return  $this->database->execSimpleSql($this->sql, $data);
     }
 
     public function delete($entity):bool
@@ -119,7 +119,7 @@ class Entity
             ->where(["id" => $this->entity->getId()])
             ->__toString();
        
-        return  $this->database->execSimpleSql($this->sql);
+        return  $this->database->execSimpleSql($this->sql, ["id" => $this->entity->getId()]);
     }
 
     
@@ -139,7 +139,7 @@ class Entity
 
         //var_dump($this->sql);
 
-        return $this->leftJoin($this->database->execSqlAndFetch($this->sql, $this->getPathEntity()), true);
+        return $this->leftJoin($this->database->execSqlAndFetch($this->sql, $this->getPathEntity(), ['id' => $id]), true);
     }
 
     public function findOneBy(array $params, $limit = 1)
@@ -150,7 +150,7 @@ class Entity
             ->limit($limit)
             ->__toString();
 
-        return $this->leftJoin($this->database->execSqlAndFetch($this->sql, $this->getPathEntity()), true);
+        return $this->leftJoin($this->database->execSqlAndFetch($this->sql, $this->getPathEntity(), $params), true);
     }
 
     public function findAll(?int $limit = null, ?string  $order = 'DESC')
@@ -160,8 +160,8 @@ class Entity
             ->orderBy('id', $order)
             ->limit($limit)
             ->__toString();
-      
-        return $this->leftJoin($this->database->execSqlAndFetch($this->sql, $this->getPathEntity()), false);
+       
+        return $this->leftJoin($this->database->execSqlAndFetch($this->sql, $this->getPathEntity(), null), false);
     }
 
     public function findBy(array $params, string $order = 'DESC', int $limit = null)
@@ -173,9 +173,9 @@ class Entity
             ->orderBy('id', $order)
             ->limit($limit)
             ->__toString();
-
+      
         
-        return $this->leftJoin($this->database->execSqlAndFetch($this->sql, $this->getPathEntity()), false);
+        return $this->leftJoin($this->database->execSqlAndFetch($this->sql, $this->getPathEntity(), $params), false);
     }
     /**
      * Construct sql request and set entity for foreign keys
@@ -198,8 +198,8 @@ class Entity
                     $sql->action('SELECT');
                     $sql->where(['id' => $getWhere->$functionGet()]);
                     $sql = $sql->__toString();
-
-                    $entityGet = $this->database->execSqlAndFetch($sql, $v['entity']);
+                    
+                    $entityGet = $this->database->execSqlAndFetch($sql, $v['entity'], ['id' => $getWhere->$functionGet()]);
 
                     if (count($entityGet) === 1) {
                         $entry[$i]->$functionSet($entityGet[0]);

@@ -56,12 +56,12 @@ class Bdd
      * @param  string $pathEntity path entity
      * @return void
      */
-    public function execSqlAndFetch($sql, $pathEntity)
+    public function execSqlAndFetch($sql, $pathEntity, $data = null)
     {
         try {
             $statement = $this->pdo->prepare($sql);
           
-            $statement->execute();
+            $statement->execute($data);
             return $statement->fetchAll(PDO::FETCH_CLASS, $pathEntity);
         } catch (\Exception $e) {
             throw new Exception($e->getMessage());
@@ -73,11 +73,13 @@ class Bdd
      * @param string $sql
      * @return void
      */
-    public function execSimpleSql(string $sql):bool
+    public function execSimpleSql(string $sql, $data):bool
     {
         try {
             $statement = $this->pdo->prepare($sql);
-            if ($statement->execute()) {
+          
+
+            if ($statement->execute($data)) {
                 return true;
             }
             return false;

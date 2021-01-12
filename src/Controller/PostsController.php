@@ -17,7 +17,6 @@ class PostsController extends Controller
     {
         $Post = $this->entity->getEntity('posts')->findOneBy(["slug" => $slug, "id" => $id]);
         $comments = $this->entity->getEntity('comments')->findBy(['post_id' => $id,'approve' => true]);
-       
         $this->renderview('front/posts/show.html.twig', ['post' => $Post, 'comments' => $comments]);
     }
 

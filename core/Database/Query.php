@@ -191,7 +191,7 @@ class Query
                 $value = $v;
             }
 
-            $where[] = ' '.$this->table.".$k = $value";
+            $where[] = ' '.$this->table.".$k = :$k";
         }
 
         return join(' AND ', $where);
@@ -204,7 +204,15 @@ class Query
         $val = "";
 
         $colone .= " (`".implode("`, `", array_keys($this->insert))."`)";
-        $val .= " VALUES ('".implode("', '", $this->insert)."') ";
+        $val .= " VALUES ( ";
+        foreach ($this->insert as $k => $v) {
+            $val .= ":$k ,";
+        }
+        $val =  substr($val, 0, -1);
+
+        $val .= ") ";
+
+       
 
         $insert .= $colone.''.$val;
         return $insert;
@@ -219,7 +227,7 @@ class Query
                 $value = $v;
             }
 
-            $where[] = " $k = $value";
+            $where[] = " $k = :$k";
         }
 
         return join(' , ', $where);

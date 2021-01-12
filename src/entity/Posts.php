@@ -29,6 +29,10 @@ class Posts
         if (empty($this->created_at)) {
             $this->created_at =  $date->format('d/m/Y');
         }
+
+        if (empty($this->updated_at)) {
+            $this->updated_at =  $date->format('d/m/Y');
+        }
     }
 
     public function getTitle()
@@ -163,7 +167,7 @@ class Posts
      *
      * @return  self
      */
-    public function setId($id)
+    public function setId(int $id)
     {
         $this->id = $id;
 
