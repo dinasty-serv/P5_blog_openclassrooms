@@ -30,7 +30,6 @@ class PostsController extends Controller
         //Set data
         $newComment->entity->setContent($data['comment']);
         $newComment->entity->setPost($id);
-        //var_dump($newComment);
 
         //Save Data
       

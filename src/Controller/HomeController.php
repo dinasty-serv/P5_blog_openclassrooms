@@ -11,13 +11,6 @@ class HomeController extends Controller
     {
         //Récupèrer les 3 derniers articles
         $Posts = $this->entity->getEntity('posts')->findAll(3);
-       
-        //$url = $this->router->url('home.index');
-
-       
-
-
-       
         $this->renderview('front/home.html.twig', ['posts' => $Posts]);
     }
 
@@ -29,8 +22,6 @@ class HomeController extends Controller
 
             //Récupèrer les données du formulaire
             $data =  $request->getParsedBody();
-            //Créer le message
-            $message = $data['firstname']." ".$data['lastname']." vous contacte pour:".$data['subject']."\r\nMessage: ".$data['message']."\r\nMail du contact: ".$data['email']."\r\n";
             
             $mail->newMail(
                 'Demande de contact',

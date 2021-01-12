@@ -248,11 +248,7 @@ class Entity
                 $otherentity['functionSet'] = "set".ucwords($table_name);
                 $otherentity['functionGet'] = "get".ucwords($table_name);
 
-                //$newentity = new $newentity();
                 
-                $fun = 'set'.$param;
-
-                //$this->entity->$fun($newentity);
                 $leftJoin[] = $otherentity;
             }
 

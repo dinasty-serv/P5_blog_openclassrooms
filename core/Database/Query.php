@@ -185,12 +185,6 @@ class Query
         $where = [];
 
         foreach ($this->where as $k => $v) {
-            if (is_string($v)) {
-                $value = "'".$v."'";
-            } else {
-                $value = $v;
-            }
-
             $where[] = ' '.$this->table.".$k = :$k";
         }
 
@@ -221,12 +215,6 @@ class Query
     private function _buildUpdate()
     {
         foreach ($this->update as $k => $v) {
-            if (is_string($v) || $v == null) {
-                $value = '"'.$v.'"';
-            } else {
-                $value = $v;
-            }
-
             $where[] = " $k = :$k";
         }
 

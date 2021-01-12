@@ -69,7 +69,6 @@ class PostsAdminController extends Controller
         }
          
 
-        //var_dump($Post);
         //$url = $this->router->url('home.index');
         $this->renderview('back/post/AddPost.html.twig', ['post' => $Post, 'categories' => $categories]);
     }

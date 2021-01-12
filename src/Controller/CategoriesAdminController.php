@@ -58,7 +58,6 @@ class CategoriesAdminController extends Controller
         }
          
 
-        //var_dump($Post);
         //$url = $this->router->url('home.index');
         $this->renderview('back/categorie/edit.html.twig', ['category' => $category]);
     }
