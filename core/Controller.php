@@ -14,7 +14,8 @@ class Controller
     protected $router;
     protected $container;
     protected $sessionFlash;
-    private $session;
+    protected $session;
+    protected $user;
     public function __construct(
         Entity $entity,
         Router $router,
@@ -29,12 +30,18 @@ class Controller
         $this->router = $router;
         $this->sessionFlash = $sessionFlash;
         $this->session = $session;
+
+        if ($this->session->getSession('auth') != null) {
+            $this->user = $this->entity->getEntity('users')->findOneBy([
+                'id' => $this->session->getSession('auth')['id']
+                ]);
+        }
     }
 
     public function renderview(string $vue, array $params = [])
     {
         $params['flashs'] = $this->sessionFlash->getFlash();
-      
+        $params['auth'] = $this->session->getSession('auth');
         echo $this->twig->twig->render($vue, $params);
     }
 
@@ -54,5 +61,14 @@ class Controller
     public function getSession()
     {
         return $this->session;
+    }
+
+    public function generateToken()
+    {
+        $token = openssl_random_pseudo_bytes(16);
+ 
+        $token = bin2hex($token);
+ 
+        return $token;
     }
 }

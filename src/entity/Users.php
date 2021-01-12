@@ -7,6 +7,9 @@ class Users
     private $username;
     private $email;
     private $password;
+    private $reset_token;
+    private $created_at;
+    private $role = "membre";
     
     public function getArray()
     {
@@ -89,6 +92,66 @@ class Users
     public function setPassword($password)
     {
         $this->password = $password;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of token
+     */
+    public function getToken()
+    {
+        return $this->reset_token;
+    }
+
+    /**
+     * Set the value of token
+     *
+     * @return  self
+     */
+    public function setToken($token)
+    {
+        $this->reset_token = $token;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of created_at
+     */
+    public function getCreatedAt()
+    {
+        return $this->created_at;
+    }
+
+    /**
+     * Set the value of created_at
+     *
+     * @return  self
+     */
+    public function setCreatedAt($created_at)
+    {
+        $this->created_at = $created_at;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of role
+     */
+    public function getRole()
+    {
+        return $this->role;
+    }
+
+    /**
+     * Set the value of role
+     *
+     * @return  self
+     */
+    public function setRole($role)
+    {
+        $this->role = $role;
 
         return $this;
     }

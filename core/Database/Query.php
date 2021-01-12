@@ -213,7 +213,7 @@ class Query
     private function _buildUpdate()
     {
         foreach ($this->update as $k => $v) {
-            if (is_string($v)) {
+            if (is_string($v) || $v == null) {
                 $value = '"'.$v.'"';
             } else {
                 $value = $v;

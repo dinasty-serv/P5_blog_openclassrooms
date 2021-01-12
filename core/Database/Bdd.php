@@ -76,7 +76,8 @@ class Bdd
     public function execSimpleSql(string $sql):bool
     {
         try {
-            if ($this->pdo->exec($sql)) {
+            $statement = $this->pdo->prepare($sql);
+            if ($statement->execute()) {
                 return true;
             }
             return false;

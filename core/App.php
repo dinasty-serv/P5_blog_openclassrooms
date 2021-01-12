@@ -88,5 +88,25 @@ class App
         $this->router->get('/admin/categorie/edit-:id', "CategoriesAdmin:edit", 'admin.editCategorie')->with('id', '[0-9]+');
         $this->router->post('/admin/categorie/edit-:id', "CategoriesAdmin:edit", 'admin.editCategorie')->with('id', '[0-9]+');
         $this->router->post('/admin/categorie/add', "CategoriesAdmin:index", 'admin.addCategorie');
+
+
+        //Users
+
+        $this->router->get('/login-register', "Users:login", 'users.login');
+        $this->router->get('/logout', "Users:logout", 'users.logout');
+
+        $this->router->post('/register', "Users:register", 'users.register-post');
+        $this->router->post('/login', "Users:login", 'users.login-post');
+
+        $this->router->get('/lost-pasword', "Users:lostPassword", 'users.lostPassword');
+        $this->router->post('/lost-pasword', "Users:lostPassword", 'users.lostPassword-post');
+
+        $this->router->get('/reset/:token', "Users:resetPassword", 'users.resetpassword')->with('token', '[a-z-0-9]+');
+        $this->router->post('/reset/:token', "Users:resetPassword", 'users.resetpassword-post')->with('token', '[a-z-0-9]+');
+
+
+        $this->router->get('/profile', "Users:profile", 'users.profile');
+        
+        $this->router->post('/reset/:token', "Users:resetPassword", 'users.resetpassword-post')->with('token', '[a-z-0-9]+');
     }
 }

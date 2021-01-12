@@ -73,12 +73,20 @@ class Route
         $url = trim($url, '/');
         $path = preg_replace_callback('#:([\w]+)#', [$this, 'paramMatch'], $this->path);
         $regex = "#^$path$#i";
-        if (!preg_match($regex, $url, $matches)) {
+        $explode = explode('/', $url);
+
+        $prefix = $explode[0];
+        
+        if ($this->checkAuthoriz($prefix)) {
+            if (!preg_match($regex, $url, $matches)) {
+                return false;
+            }
+            array_shift($matches);
+            $this->matches = $matches;
+            return true;
+        } else {
             return false;
         }
-        array_shift($matches);
-        $this->matches = $matches;
-        return true;
     }
     /**
      * Check params matche into route
@@ -147,5 +155,22 @@ class Route
         }
         
         return '/'.$path;
+    }
+
+    public function checkAuthoriz($prefix)
+    {
+        $session = $this->container->get(Session::class);
+        $user = $session->getSession('auth');
+
+        if ($prefix === "admin" || $prefix === "membre" && $user != null) {
+            if ($prefix === "admin" && $user['role'] === "Admin") {
+                return true;
+            } else {
+                return false;
+            }
+            return true;
+        }
+
+        return true;
     }
 }

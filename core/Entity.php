@@ -78,11 +78,12 @@ class Entity
         $this->sql = $this->query
             ->action("INSERT")
             ->insert($data)
+            ->limit(null)
             ->__toString();
         return  $this->database->execSimpleSql($this->sql);
     }
     /**
-     * Update unto database
+     * Update into database
      *
      * @return boolean
      */
@@ -96,11 +97,13 @@ class Entity
                 $data[$k] = $v->getId();
             }
         }
-       
+        unset($data['id']);
+
         $this->sql = $this->query
             
             ->action("UPDATE")
             ->update($data, $this->entity->getId())
+            ->limit(null)
             ->__toString();
        
         return  $this->database->execSimpleSql($this->sql);

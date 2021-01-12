@@ -30,7 +30,7 @@ class Mailer
         $this->newMail = (new \Swift_Message($object))
             ->setFrom($from)
             ->setTo($to)
-            ->setBody($message);
+            ->setBody($message, 'text/html');
     }
 
 

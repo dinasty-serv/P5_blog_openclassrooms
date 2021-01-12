@@ -1,6 +1,8 @@
 <?php
 namespace Framework\Session;
 
+use App\Entity\Users;
+
 class Session
 {
     /**
@@ -9,7 +11,7 @@ class Session
      * @var array
      */
 
-
+    
     public function __construct()
     {
         if (session_status() === PHP_SESSION_NONE) {
@@ -25,7 +27,7 @@ class Session
         return null;
     }
 
-    public function setSession(string $key, array $value)
+    public function setSession(string $key, $value)
     {
         $_SESSION[$key][] = $value;
     }
@@ -33,5 +35,15 @@ class Session
     public function deleteSession(string $key)
     {
         unset($_SESSION[$key]);
+    }
+
+    public function auth(Users $user)
+    {
+        $_SESSION['auth'] = $user->getArray();
+    }
+
+    public function logout()
+    {
+        $this->deleteSession('auth');
     }
 }
