@@ -1,4 +1,5 @@
 <?php
+
 namespace Framework;
 
 use Framework\config\Config;
@@ -30,7 +31,7 @@ class Entity
     public function getPathEntity()
     {
         $modelname = ucwords($this->table);
-        $path = $this->config->getPathsEntityConfig()."\\".$modelname;
+        $path = $this->config->getPathsEntityConfig() . "\\" . $modelname;
 
         return $path;
     }
@@ -40,7 +41,7 @@ class Entity
      * @param string $table
      * @return self
      */
-    public function getEntity(string $table):self
+    public function getEntity(string $table): self
     {
         $this->query = new Query($table);
 
@@ -62,11 +63,11 @@ class Entity
      *
      * @return bool
      */
-    public function save($entity):bool
+    public function save($entity): bool
     {
         $this->entity = $entity;
         
-        $data =$this->entity->getArray();
+        $data = $this->entity->getArray();
         foreach ($data as $k => $v) {
             if (is_object($v)) {
                 $data[$k] = $v->getId();
@@ -87,11 +88,11 @@ class Entity
      *
      * @return boolean
      */
-    public function update($entity):bool
+    public function update($entity): bool
     {
         $this->entity = $entity;
 
-        $data =$this->entity->getArray();
+        $data = $this->entity->getArray();
         foreach ($data as $k => $v) {
             if (is_object($v)) {
                 $data[$k] = $v->getId();
@@ -105,11 +106,10 @@ class Entity
             ->update($data, $this->entity->getId())
             ->limit(null)
             ->__toString();
-        var_dump($this->sql);
         return  $this->database->execSimpleSql($this->sql, $data);
     }
 
-    public function delete($entity):bool
+    public function delete($entity): bool
     {
         $this->entity = $entity;
         
@@ -137,7 +137,6 @@ class Entity
 
         $this->sql = $sql->__toString();
 
-        //var_dump($this->sql);
 
         return $this->leftJoin($this->database->execSqlAndFetch($this->sql, $this->getPathEntity(), ['id' => $id]), true);
     }
@@ -153,7 +152,7 @@ class Entity
         return $this->leftJoin($this->database->execSqlAndFetch($this->sql, $this->getPathEntity(), $params), true);
     }
 
-    public function findAll(?int $limit = null, ?string  $order = 'DESC')
+    public function findAll(?int $limit = null, ?string $order = 'DESC')
     {
         $this->sql =  $this->query
             ->action('SELECT')
@@ -166,7 +165,6 @@ class Entity
 
     public function findBy(array $params, string $order = 'DESC', int $limit = null)
     {
-        //var_dump($this->leftJoin);
         $this->sql =  $this->query
             ->action('SELECT')
             ->where($params)
@@ -187,7 +185,7 @@ class Entity
     private function leftjoin($entry, bool $single)
     {
         if (!empty($this->leftJoin)) {
-            for ($i =0;$i<count($entry);$i++) {
+            for ($i = 0; $i < count($entry); $i++) {
                 foreach ($this->leftJoin as $k => $v) {
                     $functionGet = $v['functionGet'];
                     $functionSet = $v['functionSet'];
@@ -228,31 +226,29 @@ class Entity
             $otherentity = [];
             $other = explode('_', $k);
 
-            if (count($other) > 1 && $other[count($other)-1] === 'id') {
+            if (count($other) > 1 && $other[count($other) - 1] === 'id') {
                 $param = ucwords($other[0]);
                 $class_name = "";
                 $table_name = "";
                
-                for ($i = 0; $i < count($other)-1; $i++) {
+                for ($i = 0; $i < count($other) - 1; $i++) {
                     $class_name .= ucwords($other[$i]);
-                    $table_name .= $other[$i].'_';
+                    $table_name .= $other[$i] . '_';
                 }
                 $table_name = substr($table_name, 0, -1);
 
                 
 
-                $otherentity['entity'] =  $this->config->getPathsEntityConfig()."\\".$class_name.'s';
-                $otherentity['params'][$table_name.'_id']  = $table_name.'s.id';
-                $otherentity['select'] = $table_name.'_id';
-                $otherentity['table'] = $table_name.'s';
-                $otherentity['functionSet'] = "set".ucwords($table_name);
-                $otherentity['functionGet'] = "get".ucwords($table_name);
+                $otherentity['entity'] =  $this->config->getPathsEntityConfig() . "\\" . $class_name . 's';
+                $otherentity['params'][$table_name . '_id']  = $table_name . 's.id';
+                $otherentity['select'] = $table_name . '_id';
+                $otherentity['table'] = $table_name . 's';
+                $otherentity['functionSet'] = "set" . ucwords($table_name);
+                $otherentity['functionGet'] = "get" . ucwords($table_name);
 
                 
                 $leftJoin[] = $otherentity;
             }
-
-            //var_dump($leftJoin);
         }
 
         $this->leftJoin = $leftJoin;

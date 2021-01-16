@@ -41,7 +41,7 @@ class Config
      *
      * @return void
      */
-    public function getDatabaseConfig():array
+    public function getDatabaseConfig(): array
     {
         return $this->dbParams;
     }
@@ -50,7 +50,7 @@ class Config
      *
      * @return string
      */
-    public function getGlobalPath():string
+    public function getGlobalPath(): string
     {
         $this->globalPath = dirname(dirname(__DIR__));
         return $this->globalPath;
@@ -61,7 +61,7 @@ class Config
      * @return string
      */
 
-    public function getPathsEntityConfig():string
+    public function getPathsEntityConfig(): string
     {
         $path = $this->paths_entity;
         return $path;
@@ -72,9 +72,9 @@ class Config
      *
      * @return string
      */
-    public function getPathsViewConfig():string
+    public function getPathsViewConfig(): string
     {
-        return dirname(dirname(__DIR__)).'/'.$this->paths_view;
+        return dirname(dirname(__DIR__)) . '/' . $this->paths_view;
     }
 
     /**
@@ -82,7 +82,7 @@ class Config
      * @todo Delete funtion
      * @return string
      */
-    public function getpathRootUrl():string
+    public function getpathRootUrl(): string
     {
         return $this->pathRootUrl;
     }
@@ -92,7 +92,7 @@ class Config
      *
      * @return array
      */
-    public function getMailParams():array
+    public function getMailParams(): array
     {
         return $this->mailParams;
     }

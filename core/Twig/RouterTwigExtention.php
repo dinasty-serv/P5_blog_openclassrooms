@@ -47,7 +47,7 @@ class RouterTwigExtention extends AbstractExtension
      * @param array $params
      * @return string
      */
-    public function getUrl(string $routeName, ?array $params = [], $absolut = false):string
+    public function getUrl(string $routeName, ?array $params = [], $absolut = false): string
     {
         return $this->router->url($routeName, $params, $absolut);
     }

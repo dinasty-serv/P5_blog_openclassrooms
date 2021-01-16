@@ -1,4 +1,5 @@
 <?php
+
 namespace Framework;
 
 use Psr\Http\Message\ServerRequestInterface;
@@ -59,7 +60,8 @@ class App
      * @return void
      */
     public function initRouter()
-    {   //FRONT
+    {
+        //FRONT
         $this->router->get('/', "Home:index", 'home.index');
         $this->router->get('/posts', "Posts:index", 'posts.index');
         $this->router->get('/post/:slug-:id', "Posts:show", 'post.show')->with('slug', '[a-z-0-9]+')->with('id', '[0-9]+');

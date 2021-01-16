@@ -1,4 +1,5 @@
 <?php
+
 namespace Framework\Router;
 
 use Framework\config\Config;
@@ -69,7 +70,7 @@ class Route
      * @param string $url
      * @return bool
      */
-    public function match(string $url):bool
+    public function match(string $url): bool
     {
         $url = trim($url, '/');
         $path = preg_replace_callback('#:([\w]+)#', [$this, 'paramMatch'], $this->path);
@@ -95,10 +96,10 @@ class Route
      * @param string $match
      * @return void
      */
-    private function paramMatch($match):string
+    private function paramMatch($match): string
     {
         if (isset($this->params[$match[1]])) {
-            return '('.$this->params[$match[1]].')';
+            return '(' . $this->params[$match[1]] . ')';
         }
         return '([^/]+)';
     }
@@ -111,7 +112,7 @@ class Route
     {
         if (is_string($this->callable)) {
             $params = explode(':', $this->callable);
-            $controller = "App\\Controller\\".$params[0]."Controller";
+            $controller = "App\\Controller\\" . $params[0] . "Controller";
             $controller  = new $controller(
                 $this->container->get(Entity::class),
                 $this->container->get(Router::class),
@@ -135,7 +136,7 @@ class Route
      * @param string $regex
      * @return void
      */
-    public function with(string $param, string $regex):self
+    public function with(string $param, string $regex): self
     {
         $this->params[$param] = str_replace('(', '(?:', $regex);
 
@@ -147,7 +148,7 @@ class Route
      * @param array $params
      * @return string
      */
-    public function getUrl(array $params, $absolut):string
+    public function getUrl(array $params, $absolut): string
     {
         $path = $this->path;
        
@@ -157,9 +158,9 @@ class Route
         $url = "/";
         if ($absolut) {
             $rootUrl = $this->container->get(Config::class)->getpathRootUrl();
-            $url = $rootUrl."".$url;
+            $url = $rootUrl . "" . $url;
         }
-        return $url.=$path;
+        return $url .= $path;
     }
     /**
      * Check if request is authorized
@@ -167,7 +168,7 @@ class Route
      * @param string $prefix
      * @return boolean true or false
      */
-    public function checkAuthoriz(string $prefix):bool
+    public function checkAuthoriz(string $prefix): bool
     {
         $session = $this->container->get(Session::class);
         $user = $session->getSession('auth');

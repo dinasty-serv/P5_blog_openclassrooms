@@ -1,4 +1,5 @@
 <?php
+
 namespace Framework\Database;
 
 /**
@@ -31,6 +32,12 @@ class Query
         $this->table = $table;
     }
 
+    /**
+     * Set table for sql request
+     *
+     * @param  string $table
+     * @return void
+     */
     public function table(string $table)
     {
         $this->table = $table;
@@ -42,7 +49,7 @@ class Query
      * @param  string ...$fields
      * @return self
      */
-    public function select(string ...$fields):self
+    public function select(string ...$fields): self
     {
         $this->select = $fields;
         return $this;
@@ -53,31 +60,54 @@ class Query
      * @param  array $condition
      * @return self
      */
-    public function where(array $condition):self
+    public function where(array $condition): self
     {
         $this->where = $condition;
 
         return $this;
     }
-
-    public function leftJoin($leftjoin)
+    /**
+     * Set leftjoin parameters for sql request
+     *
+     * @param  array $leftjoin
+     * @return void
+     */
+    public function leftJoin(array $leftjoin)
     {
         $this->leftJoin = $leftjoin;
         return $this;
     }
-
-    public function insert(array $insert):self
+    /**
+     * Set insert parameters for sql request
+     *
+     * @param  array $insert
+     * @return self
+     */
+    public function insert(array $insert): self
     {
         $this->insert = $insert;
         return $this;
     }
-    public function update(array $update, int $id):self
+    /**
+     * Set update parameters for sql request
+     *
+     * @param  array   $update
+     * @param  integer $id
+     * @return self
+     */
+    public function update(array $update, int $id): self
     {
         $this->update = $update;
         $this->id = $id;
         return $this;
     }
-    public function action(string $action):self
+    /**
+     * Set action sql request
+     *
+     * @param  string $action
+     * @return self
+     */
+    public function action(string $action): self
     {
         $this->action = $action;
         return $this;
@@ -89,9 +119,9 @@ class Query
      * @param  string $order
      * @return self
      */
-    public function orderBy(string $field, string $order):self
+    public function orderBy(string $field, string $order): self
     {
-        $order = $field." ".$order;
+        $order = $field . " " . $order;
         $this->order = $order;
         return $this;
     }
@@ -101,7 +131,7 @@ class Query
      * @param  integer|null $limit
      * @return self
      */
-    public function limit(?int $limit = null):self
+    public function limit(?int $limit = null): self
     {
         $this->limit = $limit;
         return $this;
@@ -111,7 +141,7 @@ class Query
      *
      * @return string
      */
-    public function __toString():string
+    public function __toString(): string
     {
         //Set SELECT $field
         $parts[] = $this->action;
@@ -120,7 +150,7 @@ class Query
             if ($this->select || $this->leftJoin) {
                 $parts[] = $this->_buildSelectLeftJoin();
             } else {
-                $parts[] = $this->table.'.*';
+                $parts[] = $this->table . '.*';
             }
 
 
@@ -180,24 +210,28 @@ class Query
      *
      * @return string
      */
-    private function _buildWhere():string
+    private function _buildWhere(): string
     {
         $where = [];
 
         foreach ($this->where as $k => $v) {
-            $where[] = ' '.$this->table.".$k = :$k";
+            $where[] = ' ' . $this->table . ".$k = :$k";
         }
 
         return join(' AND ', $where);
     }
-
+    /**
+     * Build SQL request for insert
+     *
+     * @return void
+     */
     private function _buildInsert()
     {
         $insert = "";
         $colone = "";
         $val = "";
 
-        $colone .= " (`".implode("`, `", array_keys($this->insert))."`)";
+        $colone .= " (`" . implode("`, `", array_keys($this->insert)) . "`)";
         $val .= " VALUES ( ";
         foreach ($this->insert as $k => $v) {
             $val .= ":$k ,";
@@ -208,10 +242,14 @@ class Query
 
        
 
-        $insert .= $colone.''.$val;
+        $insert .= $colone . '' . $val;
         return $insert;
     }
-
+    /**
+     * Build sql request for update
+     *
+     * @return void
+     */
     private function _buildUpdate()
     {
         foreach ($this->update as $k => $v) {
@@ -220,26 +258,34 @@ class Query
 
         return join(' , ', $where);
     }
-
+    /**
+     * Build sql request for leftJoin
+     *
+     * @return void
+     */
     private function _buildLeftJoin()
     {
         $leftJoin = [];
         foreach ($this->leftJoin as $k => $v) {
-            $leftJoin[] = ' LEFT JOIN '.$v['table'].' ON '.$v['params'];
+            $leftJoin[] = ' LEFT JOIN ' . $v['table'] . ' ON ' . $v['params'];
 
             $this->select[] = $v['table'];
         }
        
         return join(' ', $leftJoin);
     }
-
+    /**
+     * Build sql request for select leftJoin
+     *
+     * @return void
+     */
     private function _buildSelectLeftJoin()
     {
         $selectLeftJoin = [];
         foreach ($this->leftJoin as $k => $v) {
-            $selectLeftJoin[] = $this->table.'.*';
+            $selectLeftJoin[] = $this->table . '.*';
 
-            $selectLeftJoin[] = $v['table'].'.id as '.$v['select'];
+            $selectLeftJoin[] = $v['table'] . '.id as ' . $v['select'];
         }
        
         return join(',', $selectLeftJoin);

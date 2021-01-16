@@ -1,4 +1,5 @@
 <?php
+
 namespace Framework\Database;
 
 use Exception;
@@ -39,7 +40,7 @@ class Bdd
     {
         try {
             $pdo = new PDO(
-                'mysql:dbname='.$this->db_baseName.';host='.$this->db_host,
+                'mysql:dbname=' . $this->db_baseName . ';host=' . $this->db_host,
                 $this->db_user,
                 $this->db_password,
                 [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
@@ -73,7 +74,7 @@ class Bdd
      * @param string $sql
      * @return void
      */
-    public function execSimpleSql(string $sql, $data):bool
+    public function execSimpleSql(string $sql, $data): bool
     {
         try {
             $statement = $this->pdo->prepare($sql);

@@ -1,4 +1,5 @@
 <?php
+
 namespace Framework\Twig;
 
 use Framework\config\Config;
@@ -18,5 +19,6 @@ class Twig
         $loader = new \Twig\Loader\FilesystemLoader($this->config->getPathsViewConfig());
         $this->twig =  new \Twig\Environment($loader, ['debug' => true]);
         $this->twig->addExtension(new RouterTwigExtention($this->router));
+        $this->twig->addExtension(new \Twig_Extensions_Extension_Text());
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use Framework\Controller;
@@ -19,7 +20,6 @@ class HomeController extends Controller
         $mail = $this->container->get(Mailer::class);
        
         if ($request->getMethod() === "POST") {
-
             //Récupèrer les données du formulaire
             $data =  $request->getParsedBody();
             
@@ -34,7 +34,9 @@ class HomeController extends Controller
             );
 
             if ($mail->send()) {
-                $this->setFlash(['type' => 'success', 'message' => 'Votre méssage à bien été envoyé, vous recevrez une réponse rapide !']);
+                $this->setFlash(['type' => 'success',
+                'message' => 'Votre méssage à bien été envoyé, vous recevrez une réponse rapide !'
+                ]);
             }
         }
         $this->renderview('front/contact.html.twig');

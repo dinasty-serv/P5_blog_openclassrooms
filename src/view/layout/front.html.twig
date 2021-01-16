@@ -77,7 +77,8 @@
 									</li>
 								{% else %}
 									<li class="nav-item">
-										<a class="nav-link" href="#">
+										<a class="nav-link" href="{{route('users.profile')}}">
+
 											<i class="fa fa-user"></i>
 											{{auth.username}}
 										</a>
@@ -125,18 +126,13 @@
 
 		<footer class="text-muted py-5">
 			<div class="container">
-				<p class="float-end mb-1">
-					<a href="#">Back to top</a>
-				</p>
-				<p class="mb-1">Album example is &copy; Bootstrap, but please download and customize it for yourself!</p>
+
 				{% if auth.role == 'Admin' %}
 					<p class="mb-0">Connecté en tant que
 						{{auth.role}}, accèder au
 						<a href="{{route('admin.index')}}">
 							back-office
 						</a>
-
-
 					</p>
 				{% endif %}
 

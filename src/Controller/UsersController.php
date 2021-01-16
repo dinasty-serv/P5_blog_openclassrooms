@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use App\Entity\Users;
@@ -18,12 +19,12 @@ class UsersController extends Controller
     {
         if ($request->getMethod() === "POST") {
             $data = $request->getParsedBody();
-
+            /** @var Users $user */
             $user = $this->entity->getEntity('users')->findOneBy(['email' => $data['email']]);
 
             if (!empty($user) && password_verify($data['password'], $user->getPassword())) {
                 $this->session->auth($user);
-                $this->setFlash(['type' => 'success', 'message' => "Bonjour ".$user->getUsername()]);
+                $this->setFlash(['type' => 'success', 'message' => "Bonjour " . $user->getUsername()]);
                 return $this->router->redirect('home.index');
             } else {
                 $this->setFlash(['type' => 'danger', 'message' => 'Email ou mots de passe invalide']);
@@ -63,7 +64,9 @@ class UsersController extends Controller
                 $newUser->entity->setCreatedAt($date->format('d/m/Y'));
 
                 if ($this->entity->save($newUser->entity)) {
-                    $this->setFlash(['type' => 'success', 'message' => 'Merci ! votre compte a bien été crée, vous pouvez vous connecter.']);
+                    $this->setFlash(['type' => 'success',
+                    'message' => 'Merci ! votre compte a bien été crée, vous pouvez vous connecter.'
+                    ]);
                     return $this->router->redirect('users.login');
                 }
             }
@@ -91,7 +94,6 @@ class UsersController extends Controller
 
             if ($this->entity->update($user)) {
                 //Créer le message
-                
                 $mail->newMail(
                     'Réinitialisation de mots de passe',
                     ['email@blog.local' => 'Blog dev'],
@@ -103,7 +105,9 @@ class UsersController extends Controller
                 );
 
                 if ($mail->send()) {
-                    $this->setFlash(['type' => 'success', 'message' => 'Vous allez recevoir un email de réinitialisation de votre mots de passe']);
+                    $this->setFlash(['type' => 'success',
+                    'message' => 'Vous allez recevoir un email de réinitialisation de votre mots de passe'
+                    ]);
                     return $this->router->redirect('home.index');
                 }
             }

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Entity;
 
 use DateTime;
@@ -10,7 +11,7 @@ class Categories
     private $slug;
     
 
-    public function getId():int
+    public function getId(): int
     {
         return $this->id;
     }
@@ -21,7 +22,7 @@ class Categories
     }
 
 
-    public function getName():string
+    public function getName(): string
     {
         return $this->name;
     }
@@ -31,7 +32,7 @@ class Categories
         $this->name = $name;
     }
 
-    public function getSlug():string
+    public function getSlug(): string
     {
         return $this->slug;
     }

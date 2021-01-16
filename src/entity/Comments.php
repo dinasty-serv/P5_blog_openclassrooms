@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Entity;
 
 use DateTime;
@@ -10,7 +11,7 @@ class Comments
     private $content;
     private $created_at;
     private $approve = 0;
-    private $user_id= 1;
+    private $user_id = 1;
     private $post_id;
 
 
@@ -22,7 +23,7 @@ class Comments
         $this->created_at = $date->format('d/m/Y');
     }
 
-    public function getContent():string
+    public function getContent(): string
     {
         return $this->content;
     }
@@ -43,7 +44,7 @@ class Comments
         $this->created_at = $created_at;
     }
 
-    public function getApprove():bool
+    public function getApprove(): bool
     {
         return $this->approve;
     }

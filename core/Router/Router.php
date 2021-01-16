@@ -1,4 +1,5 @@
 <?php
+
 namespace Framework\Router;
 
 use Framework\Container;
@@ -79,7 +80,7 @@ class Router
      * @param Request $request
      * @return Route
      */
-    public function post(string $path, string $callable, string $name = null):Route
+    public function post(string $path, string $callable, string $name = null): Route
     {
         return $this->addRoute($path, $callable, $name, 'POST');
     }
@@ -110,7 +111,7 @@ class Router
      *
      * @return Route
      */
-    public function run():Route
+    public function run(): Route
     {
         if (!isset($this->routes[$this->request->getMethod()])) {
             throw new Exception('REQUEST_METHOD does not exist');
@@ -121,7 +122,7 @@ class Router
             }
         }
        
-        throw new Exception('No matching routes for '.$this->url);
+        throw new Exception('No matching routes for ' . $this->url);
     }
     /**
      * Generate URL for route name and params
@@ -130,7 +131,7 @@ class Router
      * @param array $params
      * @return string
      */
-    public function url(string $name, array $params = [], bool $absolut = false):string
+    public function url(string $name, array $params = [], bool $absolut = false): string
     {
         if (!isset($this->routeName[$name])) {
             throw new Exception('No route matches this name');
@@ -150,6 +151,6 @@ class Router
             throw new Exception('No route matches this name');
         }
         $url = $this->url($name, $params);
-        header("Location:".$this->request->getServerParams()['REQUEST_SCHEME']."://".$this->request->getServerParams()['SERVER_NAME'].":".$this->request->getServerParams()['SERVER_PORT']."".$url);
+        header("Location:" . $this->request->getServerParams()['REQUEST_SCHEME'] . "://" . $this->request->getServerParams()['SERVER_NAME'] . ":" . $this->request->getServerParams()['SERVER_PORT'] . "" . $url);
     }
 }
