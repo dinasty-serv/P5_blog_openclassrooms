@@ -6,6 +6,7 @@
 			<h3>Editer une catégorie</h3>
 			<div class="card-body">
 				<form action="{{route('admin.editCategorie',{'id': category.id})}}" method="POST" name="EditPost" id="EditPost">
+					<input type="hidden" name="csrf_token" id="csrf_token" value="{{csrf_token}}">
 
 
 					<div class="form-group">

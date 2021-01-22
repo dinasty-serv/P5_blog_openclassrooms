@@ -1,12 +1,13 @@
 <?php
-namespace Framwork;
+
+namespace Framework;
 
 use Framework\Session\Session;
 use GuzzleHttp\Psr7\ServerRequest as Request;
 use Framework\Exception;
 
-Class Csrf{
-
+class Csrf
+{
     private $token;
 
     private $session;
@@ -14,32 +15,57 @@ Class Csrf{
     public function __construct(Session $session)
     {
         $this->session = $session;
-        if(empty($this->token)){
+        if (empty($this->session->getSession('csrf_token'))) {
             $this->token = $this->generateToken();
+            $this->setToken();
         }
     }
-
-    public function getToken(){
-        
-            return $this->session->getSession('csrf_token');
-      
+    /**
+     * get csrf token into session
+     *
+     * @return void
+     */
+    public function getToken()
+    {
+        return $this->session->getSession('csrf_token');
     }
-
-    public function setToken(){
+    /**
+     * Set csrf token into session
+     *
+     * @return void
+     */
+    public function setToken()
+    {
         $this->session->setSession('csrf_token', $this->token);
     }
-
-    private function generateToken(){
-
+    /**
+     * Generate CSRF token
+     *
+     * @return string
+     */
+    private function generateToken()
+    {
+        $token = openssl_random_pseudo_bytes(16);
+ 
+        $token = bin2hex($token);
+        return $token;
     }
-
+    /**
+     * Check token if request is post
+     *
+     * @param Request $request
+     * @return void
+     */
     public function checkToken(Request $request)
     {
         $data =  $request->getParsedBody();
-
-        if (!isset($data['csrf_token']) && $data['csrf_token'] != $this->session->getSession('csrf_token')){
+        
+        if (isset($data['csrf_token'])) {
+            if ($data['csrf_token'] != $this->session->getSession('csrf_token')) {
+                throw new Exception('Invalid csrf token');
+            }
+        } else {
             throw new Exception('Invalid csrf token');
         }
-
     }
 }

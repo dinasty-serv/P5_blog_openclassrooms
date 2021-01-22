@@ -16,6 +16,8 @@
 		<div class="row">
 
 			<form action="{{route('contact.submit')}}" method="POST" name="contact-form" id="contact-form">
+				<input type="hidden" name="csrf_token" id="csrf_token" value="{{csrf_token}}">
+
 
 				<div class="form-group">
 					<label for="title">Nom</label>

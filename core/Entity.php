@@ -106,7 +106,12 @@ class Entity
             ->__toString();
         return  $this->database->execSimpleSql($this->sql, $data);
     }
-
+    /**
+     * Construct sql for delete request
+     *
+     * @param $entity
+     * @return boolean
+     */
     public function delete($entity): bool
     {
         $this->entity = $entity;
@@ -138,7 +143,13 @@ class Entity
 
         return $this->leftJoin($this->database->execSqlAndFetch($this->sql, $this->getPathEntity(), ['id' => $id]), true);
     }
-
+    /**
+     * Construct sql request for findOnBy
+     *
+     * @param array $params
+     * @param integer $limit
+     * @return void
+     */
     public function findOneBy(array $params, $limit = 1)
     {
         $this->sql =  $this->query
@@ -149,7 +160,13 @@ class Entity
 
         return $this->leftJoin($this->database->execSqlAndFetch($this->sql, $this->getPathEntity(), $params), true);
     }
-
+    /**
+     * Construct sql request for findAll
+     *
+     * @param integer|null $limit
+     * @param string|null $order
+     * @return void
+     */
     public function findAll(?int $limit = null, ?string $order = 'DESC')
     {
         $this->sql =  $this->query
@@ -160,7 +177,14 @@ class Entity
        
         return $this->leftJoin($this->database->execSqlAndFetch($this->sql, $this->getPathEntity(), null), false);
     }
-
+    /**
+     * Construct sql request for findBy
+     *
+     * @param array $params
+     * @param string $order
+     * @param integer $limit
+     * @return void
+     */
     public function findBy(array $params, string $order = 'DESC', int $limit = null)
     {
         $this->sql =  $this->query

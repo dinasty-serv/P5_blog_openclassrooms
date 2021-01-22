@@ -18,6 +18,7 @@
 				<center>Se connecter</center>
 
 				<form name="login-form" id="login-form" method="POST" action="{{route('users.login-post')}}">
+					<input type="hidden" name="csrf_token" id="csrf_token" value="{{csrf_token}}">
 
 
 					<div class="form-group">
@@ -46,6 +47,9 @@
 				<center>Créer un compte</center>
 
 				<form action="{{route('users.register-post')}}" method="POST">
+					<input type="hidden" name="csrf_token" id="csrf_token" value="{{csrf_token}}">
+
+
 					<div class="row">
 						<div class="col">
 							<label for="InputFirstName">Email</label>

@@ -35,6 +35,8 @@
 				{% endfor %}
 
 				<form action="{{route('post.comment',{'slug':post.slug, 'id':post.id} ) }}" method="POST" name="newComment" id="newComments">
+					<input type="hidden" name="csrf_token" id="csrf_token" value="{{csrf_token}}">
+
 
 					<input type="text" id="comment" class="form-control" name="comment">
 

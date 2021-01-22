@@ -6,19 +6,27 @@ class SessionFlash
 {
     private $session;
 
-    // const TYPE = 'flash';
 
 
     public function __construct(Session $session)
     {
         $this->session = $session;
     }
-
+    /**
+     * Set message flash into session
+     *
+     * @param array $params
+     * @return void
+     */
     public function setFlash(array $params)
     {
         $this->session->setSession('flash', $params);
     }
-
+    /**
+     * Get message flash into session
+     *
+     * @return void
+     */
     public function getFlash()
     {
         $flash =  $this->session->getSession('flash');

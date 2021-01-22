@@ -10,7 +10,13 @@ class Twig
     private $config;
     public $twig;
     private $router;
-    
+    /**
+       * Init twig
+       *
+       * @param Config $config
+       * @param Router $router
+       */
+  
     public function __construct(Config $config, Router $router)
     {
         $this->config = $config;

@@ -8,6 +8,8 @@
 					<h5 class="card-header">Editer un article</h5>
 					<div class="card-body">
 						<form action="{{route('admin.addPost')}}" method="POST" name="EditPost" id="EditPost">
+							<input type="hidden" name="csrf_token" id="csrf_token" value="{{csrf_token}}">
+
 
 							<div class="form-group">
 								<label for="title">Titre</label>

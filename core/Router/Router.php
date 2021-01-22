@@ -3,6 +3,7 @@
 namespace Framework\Router;
 
 use Framework\Container;
+use Framework\Csrf;
 use Framework\Exception;
 use GuzzleHttp\Psr7\ServerRequest as Request;
 
@@ -110,6 +111,10 @@ class Router
     {
         if (!isset($this->routes[$this->request->getMethod()])) {
             throw new Exception('REQUEST_METHOD does not exist');
+        }
+        if ($this->request->getMethod() == "POST") {
+            $csrf = $this->container->get(Csrf::class);
+            $csrf->checkToken($this->request);
         }
         foreach ($this->routes[$this->request->getMethod()] as $route) {
             if ($route->match($this->url)) {

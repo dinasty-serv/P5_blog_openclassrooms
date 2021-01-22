@@ -6,6 +6,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Framework\Router\Router;
 use Framework\Session\Session;
 use Framework\Session\SessionFlash;
+use Framework\Csrf;
 
 class App
 {
@@ -40,6 +41,7 @@ class App
         $this->request = $this->container->set($request);
         $this->router =  $this->container->get(Router::class);
         $this->container->get(Mailer::class);
+        $this->container->get(Csrf::class);
         
 
 

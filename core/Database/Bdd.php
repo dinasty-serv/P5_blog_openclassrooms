@@ -14,7 +14,7 @@ class Bdd
 
 
     /**
-     * Undocumented function
+     * Init badd class
      *
      * @param array  $dbParams
      * @param string $pathsModel
