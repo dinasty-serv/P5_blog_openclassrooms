@@ -16,15 +16,15 @@ class Bdd
     /**
      * Undocumented function
      *
-     * @param array  $db_params
+     * @param array  $dbParams
      * @param string $pathsModel
      */
-    public function __construct(array $db_params)
+    public function __construct(array $dbParams)
     {
-        $this->db_host = $db_params['host'];
-        $this->db_user = $db_params['user'];
-        $this->db_password = $db_params['password'];
-        $this->db_baseName = $db_params['dbname'];
+        $this->dbHost = $dbParams['host'];
+        $this->dbUser = $dbParams['user'];
+        $this->dbPassword = $dbParams['password'];
+        $this->dbBaseName = $dbParams['dbname'];
         
         
         
@@ -40,9 +40,9 @@ class Bdd
     {
         try {
             $pdo = new PDO(
-                'mysql:dbname=' . $this->db_baseName . ';host=' . $this->db_host,
-                $this->db_user,
-                $this->db_password,
+                'mysql:dbname=' . $this->dbBaseName . ';host=' . $this->dbHost,
+                $this->dbUser,
+                $this->dbPassword,
                 [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
             );
             return $pdo;

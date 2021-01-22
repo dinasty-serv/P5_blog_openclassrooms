@@ -226,23 +226,23 @@ class Entity
 
             if (count($other) > 1 && $other[count($other) - 1] === 'id') {
                 $param = ucwords($other[0]);
-                $class_name = "";
-                $table_name = "";
+                $className = "";
+                $tableName = "";
                
                 for ($i = 0; $i < count($other) - 1; $i++) {
-                    $class_name .= ucwords($other[$i]);
-                    $table_name .= $other[$i] . '_';
+                    $className .= ucwords($other[$i]);
+                    $tableName .= $other[$i] . '_';
                 }
-                $table_name = substr($table_name, 0, -1);
+                $tableName = substr($tableName, 0, -1);
 
                 
 
-                $otherentity['entity'] =  $this->config->getPathsEntityConfig() . "\\" . $class_name . 's';
-                $otherentity['params'][$table_name . '_id']  = $table_name . 's.id';
-                $otherentity['select'] = $table_name . '_id';
-                $otherentity['table'] = $table_name . 's';
-                $otherentity['functionSet'] = "set" . ucwords($table_name);
-                $otherentity['functionGet'] = "get" . ucwords($table_name);
+                $otherentity['entity'] =  $this->config->getPathsEntityConfig() . "\\" . $className . 's';
+                $otherentity['params'][$tableName . '_id']  = $tableName . 's.id';
+                $otherentity['select'] = $tableName . '_id';
+                $otherentity['table'] = $tableName . 's';
+                $otherentity['functionSet'] = "set" . ucwords($tableName);
+                $otherentity['functionGet'] = "get" . ucwords($tableName);
 
                 
                 $leftJoin[] = $otherentity;

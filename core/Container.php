@@ -25,6 +25,11 @@ class Container implements ContainerInterface
                 if (empty($parameters)) {
                     $this->instances[$id] = $reflectionClass->newInstance();
                 } else {
+<<<<<<< HEAD
+=======
+                   
+                    
+>>>>>>> b8bd9b7190f42d24321d15376daa7c5005eff870
                     $args = array_map(
                         fn (ReflectionParameter $parameter) => $this->get($parameter->getClass()->getName()),
                         $parameters
