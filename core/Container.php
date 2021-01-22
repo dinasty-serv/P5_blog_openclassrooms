@@ -12,7 +12,6 @@ class Container implements ContainerInterface
 
     public function get($id)
     {
-        //var_dump($id);
         if (!$this->has($id)) {
             $reflectionClass = new ReflectionClass($id);
 
@@ -26,10 +25,6 @@ class Container implements ContainerInterface
                 if (empty($parameters)) {
                     $this->instances[$id] = $reflectionClass->newInstance();
                 } else {
-                    //var_dump($parameters);
-                    //var_dump($this->instances);
-                    //$parameter->getClass() == null si paramètre est pas une class
-                    
                     $args = array_map(
                         fn (ReflectionParameter $parameter) => $this->get($parameter->getClass()->getName()),
                         $parameters
@@ -40,8 +35,6 @@ class Container implements ContainerInterface
             }
         }
         
-        // var_dump($this->instances);
-
         return $this->instances[$id];
     }
 

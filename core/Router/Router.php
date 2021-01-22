@@ -50,11 +50,6 @@ class Router
         $uri = $this->request->getUri()->getPath();
 
         $this->url = $uri;
-
-        
-        
-      
-        //var_dump($this->url);
     }
 
 

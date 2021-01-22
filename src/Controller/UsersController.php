@@ -44,7 +44,6 @@ class UsersController extends Controller
         if ($request->getMethod() === "POST") {
             $newUser = $this->entity->getEntity('users');
 
-            //If email exist
             $date = new \DateTime();
             $data = $request->getParsedBody();
             $verif = $newUser->findOneBy(['email' => $data['email']]);
@@ -93,7 +92,6 @@ class UsersController extends Controller
             $user->setToken($this->generateToken());
 
             if ($this->entity->update($user)) {
-                //Créer le message
                 $mail->newMail(
                     'Réinitialisation de mots de passe',
                     ['email@blog.local' => 'Blog dev'],

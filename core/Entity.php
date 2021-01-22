@@ -54,8 +54,6 @@ class Entity
         
        
         $this->getLeftJoin($this->entity);
-        //$this->query->from($this->table);
-
         return $this;
     }
     /**

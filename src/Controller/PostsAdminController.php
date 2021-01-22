@@ -7,27 +7,21 @@ use GuzzleHttp\Psr7\ServerRequest as Request;
 
 class PostsAdminController extends Controller
 {
-    public function edit($id, Request $request)
+    
+    public function edit(int $id, Request $request)
     {
-        //liste des articles
-        
         $categories = $this->entity->getEntity('categories')->findAll(10);
         $Post = $this->entity->getEntity('posts')->findById($id);
 
 
         if ($request->getMethod() === "POST") {
-            //Récupèrer les données du formulaire
             $data =  $request->getParsedBody();
 
-            //Set les nouvelles données
             $Post->setContent($data['content']);
             $Post->setCategorie($data['categories']);
             $Post->setTitle($data['title']);
             $Post->setUpdated_at();
             $Post->setUser(1);
-
-            //Save into database
-            
             if ($this->entity->update($Post)) {
                 $this->setFlash(['type' => 'success', 'message' => 'L\'article à bien été modifié.']);
 
@@ -36,32 +30,24 @@ class PostsAdminController extends Controller
         }
          
 
-        //var_dump($Post);
-        //$url = $this->router->url('home.index');
         $this->renderview('back/post/EditPost.html.twig', ['post' => $Post, 'categories' => $categories]);
     }
 
     public function add(Request $request)
     {
-        //liste des articles
-        
         $categories = $this->entity->getEntity('categories')->findAll(10);
         $Post = $this->entity->getEntity('posts');
 
 
         if ($request->getMethod() === "POST") {
-            //Récupèrer les données du formulaire
             $data =  $request->getParsedBody();
-            
-            //Set les nouvelles données
+
             $Post->entity->setTitle($data['title']);
             $Post->entity->setContent($data['content']);
             $Post->entity->setCategorie($data['categories']);
             $Post->entity->setSlug($this->generateSlug($data['title']));
             $Post->entity->setUser(1);
            
-            //Save into database
-
             if ($this->entity->save($Post->entity)) {
                 $this->setFlash(['type' => 'success', 'message' => 'L\'article à bien été ajouté.']);
 
@@ -69,13 +55,11 @@ class PostsAdminController extends Controller
             }
         }
          
-
-        //$url = $this->router->url('home.index');
         $this->renderview('back/post/AddPost.html.twig', ['post' => $Post, 'categories' => $categories]);
     }
 
 
-    public function delete($id)
+    public function delete(int $id)
     {
         $post = $this->entity->getEntity('posts')->findById($id);
 
