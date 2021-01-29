@@ -141,14 +141,14 @@ class Query
      *
      * @return string
      */
-    public function __toString(): string
+    public function toString(): string
     {
         //Set SELECT $field
         $parts[] = $this->action;
 
         if ($this->action === 'SELECT') {
             if ($this->select || $this->leftJoin) {
-                $parts[] = $this->_buildSelectLeftJoin();
+                $parts[] = $this->buildSelectLeftJoin();
             } else {
                 $parts[] = $this->table . '.*';
             }
@@ -159,27 +159,27 @@ class Query
             $parts[] = $this->table;
 
             if ($this->leftJoin) {
-                $parts[] = $this->_buildLeftJoin();
+                $parts[] = $this->buildLeftJoin();
             }
 
 
             if ($this->where) {
                 $parts[] = 'WHERE';
-                $parts[] = $this-> _buildWhere();
+                $parts[] = $this->buildWhere();
             }
         } elseif ($this->action === 'DELETE') {
             //Set FROM $table
             $parts[] = 'FROM';
             $parts[] = $this->table;
             $parts[] = 'WHERE ';
-            $parts[] = $this-> _buildWhere();
+            $parts[] = $this->buildWhere();
         }
 
 
         if ($this->update) {
             $parts[] = $this->table;
             $parts[] = 'SET';
-            $parts[] = $this-> _buildUpdate();
+            $parts[] = $this-> buildUpdate();
             $parts[] = 'WHERE id=';
             $parts[] = $this->id;
         }
@@ -188,7 +188,7 @@ class Query
             $parts[] = 'INTO';
             $parts[] = $this->table;
 
-            $parts[] = $this-> _buildInsert();
+            $parts[] = $this->buildInsert();
         }
 
 
@@ -210,7 +210,7 @@ class Query
      *
      * @return string
      */
-    private function _buildWhere(): string
+    private function buildWhere(): string
     {
         $where = [];
 
@@ -225,7 +225,7 @@ class Query
      *
      * @return void
      */
-    private function _buildInsert()
+    private function buildInsert()
     {
         $insert = "";
         $colone = "";
@@ -250,7 +250,7 @@ class Query
      *
      * @return void
      */
-    private function _buildUpdate()
+    private function buildUpdate()
     {
         foreach ($this->update as $k => $v) {
             $where[] = " $k = :$k";
@@ -263,7 +263,7 @@ class Query
      *
      * @return void
      */
-    private function _buildLeftJoin()
+    private function buildLeftJoin()
     {
         $leftJoin = [];
         foreach ($this->leftJoin as $k => $v) {
@@ -279,7 +279,7 @@ class Query
      *
      * @return void
      */
-    private function _buildSelectLeftJoin()
+    private function buildSelectLeftJoin()
     {
         $selectLeftJoin = [];
         foreach ($this->leftJoin as $k => $v) {

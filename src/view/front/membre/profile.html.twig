@@ -75,8 +75,12 @@
 					<h2>Editer votre profile</h2>
 				</center>
 
-				<form action="{{route('users.register-post')}}" method="POST">
+				<form action="{{route('users.profile.edit')}}" method="POST">
+
 					<div class="row">
+						<input type="hidden" name="csrf_token" id="csrf_token" value="{{csrf_token}}">
+
+
 						<label for="InputFirstName">Email</label>
 						<input type="email" class="form-control" value="{{auth.email}}" name="email" disabled>
 

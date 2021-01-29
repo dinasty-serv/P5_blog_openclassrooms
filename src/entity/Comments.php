@@ -11,7 +11,7 @@ class Comments
     private $content;
     private $created_at;
     private $approve = 0;
-    private $user_id = 1;
+    private $user_id;
     private $post_id;
 
 
@@ -34,12 +34,12 @@ class Comments
     }
 
 
-    public function getCreated_at()
+    public function getCreatedAt()
     {
         return $this->created_at;
     }
 
-    public function setCreated_at($created_at)
+    public function setCreatedAt($created_at)
     {
         $this->created_at = $created_at;
     }

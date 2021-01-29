@@ -15,7 +15,7 @@ class Csrf
     public function __construct(Session $session)
     {
         $this->session = $session;
-        if (empty($this->session->getSession('csrf_token'))) {
+        if (empty($this->session->getSession('csrf_token')[0])) {
             $this->token = $this->generateToken();
             $this->setToken();
         }
@@ -59,13 +59,13 @@ class Csrf
     public function checkToken(Request $request)
     {
         $data =  $request->getParsedBody();
-        
+       
         if (isset($data['csrf_token'])) {
-            if ($data['csrf_token'] != $this->session->getSession('csrf_token')) {
-                throw new Exception('Invalid csrf token');
+            if ($data['csrf_token'] != $this->session->getSession('csrf_token')[0]) {
+                throw new Exception('Invalid csrf token 1');
             }
         } else {
-            throw new Exception('Invalid csrf token');
+            throw new Exception('Invalid csrf token 2');
         }
     }
 }

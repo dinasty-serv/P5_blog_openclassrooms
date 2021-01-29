@@ -31,6 +31,7 @@ class PostsController extends Controller
         //Set data
         $newComment->entity->setContent($data['comment']);
         $newComment->entity->setPost($id);
+        $newComment->entity->setUser($this->session->getSession('auth')['id']);
 
         //Save Data
       

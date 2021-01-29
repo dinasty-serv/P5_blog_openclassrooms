@@ -28,10 +28,10 @@ class Posts
         //$this->updated_at =  $date->format('d/m/Y');
 
         if (empty($this->created_at)) {
-            $this->created_at =  $date->format('d/m/Y');
+            $this->updated_at =  $date->format('d/m/Y');
         }
 
-        if (empty($this->updated_at)) {
+        if (empty($this->updatedAt)) {
             $this->updated_at =  $date->format('d/m/Y');
         }
     }
@@ -44,11 +44,11 @@ class Posts
     {
         return $this->content;
     }
-    public function getCreated_at()
+    public function getCreatedAt()
     {
         return $this->created_at;
     }
-    public function getUpdated_at()
+    public function getUpdatedAt()
     {
         return $this->updated_at;
     }
@@ -106,7 +106,7 @@ class Posts
      *
      * @return  self
      */
-    public function setUpdated_at()
+    public function setUpdatedAt()
     {
         $date = new \DateTime('now');
        
@@ -120,7 +120,7 @@ class Posts
      *
      * @return  self
      */
-    public function setCreated_at($created_at)
+    public function setCreatedAt($created_at)
     {
         $this->created_at = $created_at;
 

@@ -31,6 +31,27 @@
 									{% endfor %}
 								</select>
 							</div>
+
+							<div class="form-group">
+								<label for="categorie">Auteur</label>
+								<select class="form-control" name="author" id="author">
+
+
+									{% for user in users %}
+										{% if user.id == post.user.id %}
+
+
+											<option value='{{user.id}}' selected>{{user.username}}</option>
+										{% else %}
+											<option value='{{user.id}}'>{{user.username}}</option>
+
+										{% endif %}
+
+
+									{% endfor %}
+								</select>
+							</div>
+
 							<div class="form-group">
 								<label for="content">Content</label>
 

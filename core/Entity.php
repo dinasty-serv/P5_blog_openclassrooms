@@ -78,7 +78,7 @@ class Entity
             ->action("INSERT")
             ->insert($data)
             ->limit(null)
-            ->__toString();
+            ->toString();
         return  $this->database->execSimpleSql($this->sql, $data);
     }
     /**
@@ -103,7 +103,7 @@ class Entity
             ->action("UPDATE")
             ->update($data, $this->entity->getId())
             ->limit(null)
-            ->__toString();
+            ->toString();
         return  $this->database->execSimpleSql($this->sql, $data);
     }
     /**
@@ -120,7 +120,7 @@ class Entity
             
             ->action("DELETE")
             ->where(["id" => $this->entity->getId()])
-            ->__toString();
+            ->toString();
        
         return  $this->database->execSimpleSql($this->sql, ["id" => $this->entity->getId()]);
     }
@@ -138,7 +138,7 @@ class Entity
             ->action('SELECT')
             ->where(['id' => $id]);
 
-        $this->sql = $sql->__toString();
+        $this->sql = $sql->toString();
 
 
         return $this->leftJoin($this->database->execSqlAndFetch($this->sql, $this->getPathEntity(), ['id' => $id]), true);
@@ -156,7 +156,7 @@ class Entity
             ->action('SELECT')
             ->where($params)
             ->limit($limit)
-            ->__toString();
+            ->toString();
 
         return $this->leftJoin($this->database->execSqlAndFetch($this->sql, $this->getPathEntity(), $params), true);
     }
@@ -173,7 +173,7 @@ class Entity
             ->action('SELECT')
             ->orderBy('id', $order)
             ->limit($limit)
-            ->__toString();
+            ->toString();
        
         return $this->leftJoin($this->database->execSqlAndFetch($this->sql, $this->getPathEntity(), null), false);
     }
@@ -192,7 +192,7 @@ class Entity
             ->where($params)
             ->orderBy('id', $order)
             ->limit($limit)
-            ->__toString();
+            ->toString();
       
         
         return $this->leftJoin($this->database->execSqlAndFetch($this->sql, $this->getPathEntity(), $params), false);
@@ -217,7 +217,7 @@ class Entity
                     $sql = new Query($v['table']);
                     $sql->action('SELECT');
                     $sql->where(['id' => $getWhere->$functionGet()]);
-                    $sql = $sql->__toString();
+                    $sql = $sql->toString();
                     
                     $entityGet = $this->database->execSqlAndFetch($sql, $v['entity'], ['id' => $getWhere->$functionGet()]);
 

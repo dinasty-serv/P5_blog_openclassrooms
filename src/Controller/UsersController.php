@@ -174,8 +174,9 @@ class UsersController extends Controller
             $this->user->setUsername($data['username']);
 
             if ($this->entity->update($this->user)) {
-                $this->setFlash(['type' => 'success', 'message' => 'Votre profil à été mis à jours']);
-                return $this->router->redirect('users.profile');
+                $this->setFlash(['type' => 'success', 'message' => 'Votre profil à été mis à jours, vous devez vous ré-identifier']);
+                $this->logout();
+                return $this->router->redirect('users.login');
             }
         }
     }

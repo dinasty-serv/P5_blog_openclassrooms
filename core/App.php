@@ -110,6 +110,8 @@ class App
 
 
         $this->router->get('/profile', "Users:profile", 'users.profile');
+        $this->router->post('/profile', "Users:editProfile", 'users.profile.edit');
+
         $this->router->get('/profile/resetPassword', "Users:changePassword", 'users.resetpassword-profile');
     }
 }

@@ -58,7 +58,9 @@ class Controller
     {
         $params['flashs'] = $this->sessionFlash->getFlash();
         $params['auth'] = $this->session->getSession('auth');
-        $params['csrf_token'] = $this->session->getSession('csrf_token');
+        $params['csrf_token'] = $this->session->getSession('csrf_token')[0];
+        var_dump($this->session->getSession('csrf_token'));
+
         echo $this->twig->twig->render($vue, $params);
     }
     /**
