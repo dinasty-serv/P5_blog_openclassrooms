@@ -207,7 +207,8 @@ class Entity
     private function leftjoin($entry, bool $single)
     {
         if (!empty($this->leftJoin)) {
-            for ($i = 0; $i < count($entry); $i++) {
+            $max = count($entry);
+            for ($i = 0; $i < $max; $i++) {
                 foreach ($this->leftJoin as $k => $v) {
                     $functionGet = $v['functionGet'];
                     $functionSet = $v['functionSet'];

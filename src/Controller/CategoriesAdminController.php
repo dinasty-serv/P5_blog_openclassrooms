@@ -12,15 +12,12 @@ class CategoriesAdminController extends Controller
         if ($request->getMethod() === "POST") {
             $category = $this->entity->getEntity('categories');
 
-            //Récupèrer les données du formulaire
             $data =  $request->getParsedBody();
 
-            //Set les nouvelles données
             $category->entity->setName($data['name']);
             $category->entity->setSlug($this->generateSlug($data['name']));
 
 
-            //Save into database
             
             if ($this->entity->save($category->entity)) {
                 $this->setFlash(['type' => 'success', 'message' => 'La catégorie à bien été ajouté']);
@@ -35,21 +32,16 @@ class CategoriesAdminController extends Controller
     }
     public function edit($id, Request $request)
     {
-        //liste des articles
-        
         $category = $this->entity->getEntity('categories')->findById($id);
         
 
         if ($request->getMethod() === "POST") {
-            //Récupèrer les données du formulaire
             $data =  $request->getParsedBody();
 
-            //Set les nouvelles données
             $category->setName($data['name']);
             $category->setSlug($this->generateSlug($data['name']));
 
 
-            //Save into database
             
             if ($this->entity->update($category)) {
                 $this->setFlash(['type' => 'success', 'message' => 'La catégorie à bien été modifié']);
@@ -59,7 +51,6 @@ class CategoriesAdminController extends Controller
         }
          
 
-        //$url = $this->router->url('home.index');
         $this->renderview('back/categorie/edit.html.twig', ['category' => $category]);
     }
 

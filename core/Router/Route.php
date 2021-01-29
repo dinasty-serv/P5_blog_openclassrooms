@@ -174,7 +174,7 @@ class Route
         $user = $session->getSession('auth');
         
         if ($prefix === "admin" || $prefix === "profile") {
-            if ($user == null) {
+            if ($user === null) {
                 return false;
             }
             if ($prefix === "admin" && $user['role'] != "Admin") {

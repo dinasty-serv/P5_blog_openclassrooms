@@ -41,7 +41,7 @@ class Controller
         $this->sessionFlash = $sessionFlash;
         $this->session = $session;
 
-        if ($this->session->getSession('auth') != null) {
+        if ($this->session->getSession('auth') !== null) {
             $this->user = $this->entity->getEntity('users')->findOneBy([
                 'id' => $this->session->getSession('auth')['id']
                 ]);
@@ -59,7 +59,6 @@ class Controller
         $params['flashs'] = $this->sessionFlash->getFlash();
         $params['auth'] = $this->session->getSession('auth');
         $params['csrf_token'] = $this->session->getSession('csrf_token')[0];
-        var_dump($this->session->getSession('csrf_token'));
 
         echo $this->twig->twig->render($vue, $params);
     }

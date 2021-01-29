@@ -79,7 +79,6 @@ class Config
 
     /**
      * Return path root URL
-     * @todo Delete funtion
      * @return string
      */
     public function getpathRootUrl(): string

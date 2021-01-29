@@ -25,7 +25,6 @@ class Posts
     {
         $date = new \DateTime('now');
 
-        //$this->updated_at =  $date->format('d/m/Y');
 
         if (empty($this->created_at)) {
             $this->updated_at =  $date->format('d/m/Y');

@@ -1,4 +1,0 @@
-RewriteEngine on
-RewriteBase /
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^(.*)$ /blog/public/index.php?url=$1 [NC,QSA]
