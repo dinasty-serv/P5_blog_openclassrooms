@@ -1,0 +1,68 @@
+{% extends "/layout/back.html.twig" %}
+
+{% block content %}
+	<div class="row">
+		<div class="col-md-12">
+			<div class="bd-example">
+				<div class="card">
+					<h5 class="card-header">Editer un article</h5>
+					<div class="card-body">
+						<form action="{{route('admin.editPost',{'id' : post.id})}}" method="POST" name="EditPost" id="EditPost">
+							<input type="hidden" name="csrf_token" id="csrf_token" value="{{csrf_token}}">
+
+
+							<div class="form-group">
+								<label for="title">Titre</label>
+								<input type="text" class="form-control" name="title" id="title" value="{{post.title}}">
+							</div>
+							<div class="form-group">
+								<label for="categorie">Categorie</label>
+								<select class="form-control" name="categories" id="categorie">
+
+
+									{% for category in categories %}
+										{% if category.id == post.categorie.id %}
+											<option value='{{category.id}}' selected>{{category.name}}</option>
+										{% else %}
+											<option value='{{category.id}}'>{{category.name}}</option>
+										{% endif %}
+
+
+									{% endfor %}
+								</select>
+							</div>
+
+							<div class="form-group">
+								<label for="categorie">Auteur</label>
+								<select class="form-control" name="author" id="author">
+
+
+									{% for user in users %}
+										{% if user.id == post.user.id %}
+
+
+											<option value='{{user.id}}' selected>{{user.username}}</option>
+										{% else %}
+											<option value='{{user.id}}'>{{user.username}}</option>
+
+										{% endif %}
+
+
+									{% endfor %}
+								</select>
+							</div>
+
+							<div class="form-group">
+								<label for="content">Content</label>
+
+								<textarea class="form-control" id="content" name="content" rows="3">{{post.content}}</textarea>
+							</div>
+							<button type="submit" class="btn btn-primary">Enregistrer</a>
+						</form>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+{% endblock %}
