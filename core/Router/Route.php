@@ -113,14 +113,7 @@ class Route
         if (is_string($this->callable)) {
             $params = explode(':', $this->callable);
             $controller = "App\\Controller\\" . $params[0] . "Controller";
-            $controller  = new $controller(
-                $this->container->get(Entity::class),
-                $this->container->get(Router::class),
-                $this->container->get(Twig::class),
-                $this->container,
-                $this->container->get(SessionFlash::class),
-                $this->container->get(Session::class)
-            );
+            $controller = $this->container->get($controller);
             $this->matches[] = $this->request;
             
             return call_user_func_array([$controller, $params[1]], $this->matches);

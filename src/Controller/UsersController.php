@@ -204,6 +204,7 @@ class UsersController extends Controller
 
         if ($this->entity->update($this->user)) {
             $this->setFlash(['type' => 'success', 'message' => 'Vous pouvez modifié votre mots de passe']);
+            $this->logout();
             return $this->router->redirect('users.resetpassword', ['token' => $this->user->getToken()]);
         }
     }

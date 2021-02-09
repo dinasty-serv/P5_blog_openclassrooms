@@ -37,6 +37,10 @@ class HomeController extends Controller
                 $this->setFlash(['type' => 'success',
                 'message' => 'Votre méssage à bien été envoyé, vous recevrez une réponse rapide !'
                 ]);
+            } else {
+                $this->setFlash(['type' => 'danger',
+                'message' => 'Une erreur est survenu lors de l\'envoie de votre méssage. '
+                ]);
             }
         }
         $this->renderview('front/contact.html.twig');
