@@ -20,8 +20,8 @@ class Config
     private $mailParams = array(
         'smtp' => 'smtp.hosts-game-server.com',
         'port' => 587,
-        'username' => 'contact@hosts-game-server.com',
-        'password' => 'Lyliana01@'
+        'username' => 'Email@email.com',
+        'password' => 'MDP@'
     );
     
     /**
