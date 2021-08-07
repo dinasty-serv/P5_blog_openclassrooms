@@ -25,8 +25,7 @@ class Entity
     /**
      * Return obsolute path entity file
      *
-     * @param  string $entity : Name entity
-     * @return void
+     * @return string
      */
     public function getPathEntity()
     {
@@ -143,12 +142,14 @@ class Entity
 
         return $this->leftJoin($this->database->execSqlAndFetch($this->sql, $this->getPathEntity(), ['id' => $id]), true);
     }
+
     /**
      * Construct sql request for findOnBy
      *
      * @param array $params
      * @param integer $limit
      * @return void
+     * @throws \Exception
      */
     public function findOneBy(array $params, $limit = 1)
     {
@@ -160,12 +161,14 @@ class Entity
 
         return $this->leftJoin($this->database->execSqlAndFetch($this->sql, $this->getPathEntity(), $params), true);
     }
+
     /**
      * Construct sql request for findAll
      *
      * @param integer|null $limit
      * @param string|null $order
      * @return void
+     * @throws \Exception
      */
     public function findAll(?int $limit = null, ?string $order = 'DESC')
     {
@@ -177,6 +180,7 @@ class Entity
        
         return $this->leftJoin($this->database->execSqlAndFetch($this->sql, $this->getPathEntity(), null), false);
     }
+
     /**
      * Construct sql request for findBy
      *
@@ -184,6 +188,7 @@ class Entity
      * @param string $order
      * @param integer $limit
      * @return void
+     * @throws \Exception
      */
     public function findBy(array $params, string $order = 'DESC', int $limit = null)
     {
@@ -197,12 +202,14 @@ class Entity
         
         return $this->leftJoin($this->database->execSqlAndFetch($this->sql, $this->getPathEntity(), $params), false);
     }
+
     /**
      * Construct sql request and set entity for foreign keys
      *
      * @param entity $entry
      * @param boolean $single if single return
      * @return void
+     * @throws \Exception
      */
     private function leftjoin($entry, bool $single)
     {

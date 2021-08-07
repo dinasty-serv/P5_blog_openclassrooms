@@ -27,17 +27,25 @@ class PostsController extends Controller
         
         
         $newComment = $this->entity->getEntity('comments');
-        
+        if (!empty($data['comment'])) {
+           
         //Set data
-        $newComment->entity->setContent($data['comment']);
-        $newComment->entity->setPost($id);
-        $newComment->entity->setUser($this->session->getSession('auth')['id']);
+            $newComment->entity->setContent($data['comment']);
+            $newComment->entity->setPost($id);
+            $newComment->entity->setUser($this->session->getSession('auth')['id']);
 
-        //Save Data
+            //Save Data
       
-        if ($this->entity->save($newComment->entity)) {
-            $this->setFlash(['type' => 'success',
+            if ($this->entity->save($newComment->entity)) {
+                $this->setFlash(['type' => 'success',
             'message' => 'Votre commentaire a bien été posté et est en attente d\'aprobation par un administrateur. '
+            ]);
+
+                $this->router->redirect('post.show', ['id' => $id, 'slug' => $slug]);
+            }
+        } else {
+            $this->setFlash(['type' => 'danger',
+            'message' => 'Vous devez entrer un commentaire.'
             ]);
 
             $this->router->redirect('post.show', ['id' => $id, 'slug' => $slug]);

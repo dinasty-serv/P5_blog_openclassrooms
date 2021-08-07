@@ -10,14 +10,13 @@ class Bdd
 {
     private $pdo;
     protected $query;
-   
 
 
     /**
      * Init badd class
      *
-     * @param array  $dbParams
-     * @param string $pathsModel
+     * @param array $dbParams
+     * @throws Exception
      */
     public function __construct(array $dbParams)
     {
@@ -34,30 +33,35 @@ class Bdd
     /**
      * Init mysql connection
      *
-     * @return mysql instence
+     * @return PDO instence
+     * @throws Exception
      */
     public function initMysql()
     {
         try {
             $pdo = new PDO(
-                'mysql:dbname=' . $this->dbBaseName . ';host=' . $this->dbHost,
+                'mysql:dbname=' . $this->dbBaseName . ';host=' . $this->dbHost.';port=3306',
                 $this->dbUser,
                 $this->dbPassword,
                 [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
             );
             return $pdo;
         } catch (Exception $e) {
+
             throw new Exception($e->getMessage());
         }
     }
+
     /**
      * Execute Sql query
      *
-     * @param  string $sql
-     * @param  string $pathEntity path entity
+     * @param string $sql
+     * @param string $pathEntity path entity
+     * @param null $data
      * @return void
+     * @throws Exception
      */
-    public function execSqlAndFetch($sql, $pathEntity, $data = null)
+    public function execSqlAndFetch(string $sql, string $pathEntity, $data = null)
     {
         try {
             $statement = $this->pdo->prepare($sql);
@@ -68,11 +72,13 @@ class Bdd
             throw new Exception($e->getMessage());
         }
     }
+
     /**
      * Execute simple sql request
      *
      * @param string $sql
      * @return void
+     * @throws Exception
      */
     public function execSimpleSql(string $sql, $data): bool
     {

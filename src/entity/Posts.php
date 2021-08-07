@@ -27,11 +27,11 @@ class Posts
 
 
         if (empty($this->created_at)) {
-            $this->updated_at =  $date->format('d/m/Y');
+            $this->created_at =  $date->format('d/m/Y');
         }
 
         if (empty($this->updatedAt)) {
-            $this->updated_at =  $date->format('d/m/Y');
+            $this->updated_at =  $this->created_at;
         }
     }
 

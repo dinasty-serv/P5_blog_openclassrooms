@@ -9,11 +9,13 @@ use ReflectionParameter;
 class Container implements ContainerInterface
 {
     private array $instances = [];
+
     /**
      * Get instance
      *
      * @param class $id
      * @return void
+     * @throws \ReflectionException
      */
     public function get($id)
     {

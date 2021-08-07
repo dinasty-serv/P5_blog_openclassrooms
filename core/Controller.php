@@ -66,7 +66,7 @@ class Controller
      * Generate slug for post
      *
      * @param string $title
-     * @return void
+     * @return array|string|string[]
      */
     public function generateSlug($title)
     {
@@ -88,7 +88,7 @@ class Controller
     /**
      * get Session into controller
      *
-     * @return void
+     * @return Session
      */
     public function getSession()
     {
@@ -97,7 +97,7 @@ class Controller
     /**
      * Generate token for password reset
      *
-     * @return void
+     * @return string
      */
     public function generateToken()
     {

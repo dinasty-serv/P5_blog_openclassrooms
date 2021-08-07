@@ -70,7 +70,7 @@ class Query
      * Set leftjoin parameters for sql request
      *
      * @param  array $leftjoin
-     * @return void
+     * @return Query
      */
     public function leftJoin(array $leftjoin)
     {

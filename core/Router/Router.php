@@ -36,12 +36,12 @@ class Router
     private $request;
 
     private $container;
-    
+
 
     /**
      * Init Router
-     * @param string  $url
      * @param Request $request
+     * @param Container $container
      */
 
     public function __construct(Request $request, Container $container)
@@ -59,11 +59,10 @@ class Router
      *
      * @param string $path
      * @param string $callable
-     * @param string $name
-     * @param Request $request
+     * @param string|null $name
      * @return Route
      */
-    public function get(string $path, string $callable, string $name = null)
+    public function get(string $path, string $callable, string $name = null): Route
     {
         return $this->addRoute($path, $callable, $name, 'GET');
     }
@@ -102,12 +101,14 @@ class Router
 
         return $route;
     }
+
     /**
      * Execute route
      *
-     * @return Route
+     * @return void
+     * @throws Exception
      */
-    public function run(): Route
+    public function run()
     {
         if (!isset($this->routes[$this->request->getMethod()])) {
             throw new Exception('REQUEST_METHOD does not exist');
@@ -117,19 +118,28 @@ class Router
             $csrf->checkToken($this->request);
         }
         foreach ($this->routes[$this->request->getMethod()] as $route) {
+
             if ($route->match($this->url)) {
-                return $route->call();
+
+                    return $route->call();
+
+
+
+
             }
         }
-       
         throw new Exception('No matching routes for ' . $this->url);
+
     }
+
     /**
      * Generate URL for route name and params
      *
      * @param string $name
      * @param array $params
+     * @param bool $absolut
      * @return string
+     * @throws Exception
      */
     public function url(string $name, array $params = [], bool $absolut = false): string
     {

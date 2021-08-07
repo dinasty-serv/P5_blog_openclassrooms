@@ -9,3 +9,7 @@ composer install
 Installer la base de données sur votre serveur serveur MYSQL via phpmyadmin ou Mysql Workbench, le script de la base données se trouve dans le dossier sql/bdd.sql
 
 Editer le fichier de configuration core/config/Config.php pour configurer la base de données et le serveur SMTP pour l'envoie d'email. 
+
+Après avoir configurer le CMS, créer un compte puis rendez-vous dans la table users sur phpmyadmin ou mysql workbench pour modifier votre utilisateurs et lui assignier le role admin. 
+
+Connectez-vous et vous redriez avoir accès au back-office du site.

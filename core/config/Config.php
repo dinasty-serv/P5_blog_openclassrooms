@@ -9,19 +9,18 @@ namespace Framework\config;
 class Config
 {
     private $dbParams = array(
-      'user'     => 'admin',
+      'user'     => 'root',
       'password' => 'Apizee22',
       'dbname'   => 'blog',
-      'host'     => 'localhost'
+      'host'     => '172.19.0.3'
     );
 
-    private $pathRootUrl = "http://blog.local:8080";
+    private $pathRootUrl = "http://blog.local";
 
     private $mailParams = array(
-        'smtp' => 'smtp.hosts-game-server.com',
-        'port' => 587,
-        'username' => 'Email@email.com',
-        'password' => 'MDP@'
+        'smtp' => '172.19.0.4',
+        'port' => 25,
+
     );
     
     /**

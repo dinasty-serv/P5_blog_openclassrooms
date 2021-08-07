@@ -10,10 +10,10 @@
 				<p>{{post.content}}</p>
 
 				<p>Mise en ligne le:
-					{{post.created_at}}</p>
+					{{post.createdAt}}</p>
 
 				<p>Mis à jours le:
-					{{post.updated_at}}</p>
+					{{post.updatedAt}}</p>
 				<p>Créer par:
 					{{post.user.username}}</p>
 
@@ -23,13 +23,13 @@
 
 					<div class="card">
 						<div class="card-header">
-							{{comment.user.username}}
-
+							{{comment.user.username}} Le
+							<smal>{{comment.created_at|date("d/m/y")}}</smal>
 
 						</div>
 						<div class="card-body">
 							<p class="card-text">{{comment.content}}</p>
-							<smal>{{comment.created_at}}</smal>
+
 						</div>
 					</div>
 				{% endfor %}
