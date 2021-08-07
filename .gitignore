@@ -4,3 +4,4 @@ appengine-generated/
 /vendor/
 /cache/
 /.vscode/
+.idea
