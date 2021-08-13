@@ -9,13 +9,14 @@ use Framework\Twig\Twig as Twig;
 
 class Controller
 {
-    protected $entity;
-    protected $twig;
-    protected $router;
-    protected $container;
-    protected $sessionFlash;
-    protected $session;
+    protected Entity $entity;
+    protected Twig $twig;
+    protected Router $router;
+    protected Container $container;
+    protected SessionFlash $sessionFlash;
+    protected Session $session;
     protected $user;
+
     /**
      * Constructor controller
      *
@@ -25,6 +26,7 @@ class Controller
      * @param Container $container
      * @param SessionFlash $sessionFlash
      * @param Session $session
+     * @throws \Exception
      */
     public function __construct(
         Entity $entity,

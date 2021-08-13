@@ -4,6 +4,7 @@ namespace Framework;
 
 use Psr\Container\ContainerInterface;
 use ReflectionClass;
+use ReflectionException;
 use ReflectionParameter;
 
 class Container implements ContainerInterface
@@ -15,7 +16,7 @@ class Container implements ContainerInterface
      *
      * @param class $id
      * @return void
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     public function get($id)
     {
@@ -60,7 +61,7 @@ class Container implements ContainerInterface
      * Set instance into container
      *
      * @param class $id
-     * @return void
+     * @return class
      */
     public function set($id)
     {

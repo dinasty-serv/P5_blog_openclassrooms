@@ -4,13 +4,34 @@ namespace App\Entity;
 
 class Users
 {
+    /**
+     * @var int $id
+     */
     private $id;
+    /**
+     * @var string $username
+     */
     private $username;
+    /**
+     * @var string $email
+     */
     private $email;
+    /**
+     * @var string  $password
+     */
     private $password;
+    /**
+     * @var string|null $reset_token
+     */
     private $reset_token;
+    /**
+     * @var DateTime|string $created_at
+     */
     private $created_at;
-    private $role = "membre";
+    /**
+     * @var string $role
+     */
+    private string $role = "membre";
     
     public function getArray()
     {

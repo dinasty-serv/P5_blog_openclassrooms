@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Users;
 use Framework\Controller;
+use Framework\Exception;
 use Framework\Mailer;
 use GuzzleHttp\Psr7\ServerRequest as Request;
 
@@ -112,12 +113,14 @@ class UsersController extends Controller
         }
         $this->renderview('front/lostPassword.html.twig');
     }
+
     /**
      * Reset password function
      *
      * @param string $token
      * @param Request $request
      * @return void
+     * @throws Exception
      */
     public function resetPassword(string $token, Request $request)
     {
@@ -131,7 +134,7 @@ class UsersController extends Controller
                 $data = $request->getParsedBody();
 
                 if ($data['password'] != $data['password1']) {
-                    $this->setFlash(['type' => 'danger', 'message' => 'Les mots de passe ne coresponde pas.']);
+                    $this->setFlash(['type' => 'danger', 'message' => 'Les mots de passe ne correspondent pas.']);
                     return $this->router->redirect('users.login');
                 } else {
                     $passHash = password_hash($data['password'], PASSWORD_DEFAULT);

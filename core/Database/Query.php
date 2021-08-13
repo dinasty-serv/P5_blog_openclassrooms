@@ -9,23 +9,42 @@ namespace Framework\Database;
  */
 class Query
 {
-    private $select;
-
-    private $table;
-
-    private $where;
-
-    private $action;
-
-    private $order;
-
-    private $limit;
-
-    private $insert;
-
-    private $update;
-
-    private $leftJoin;
+    /**
+     * @var string[] $select
+     */
+    private  $select;
+    /**
+     * @var string $table
+     */
+    private  $table;
+    /**
+     * @var array $where
+     */
+    private  $where;
+    /**
+     * @var string $action
+     */
+    private  $action;
+    /**
+     * @var string $order
+     */
+    private  $order;
+    /**
+     * @var int $limit
+     */
+    private  $limit;
+    /**
+     * @var array $insert
+     */
+    private  $insert;
+    /**
+     * @var array $update
+     */
+    private  $update;
+    /**
+     * @var string[] $leftJoin
+     */
+    private  $leftJoin;
 
     public function __construct($table)
     {
@@ -179,7 +198,7 @@ class Query
         if ($this->update) {
             $parts[] = $this->table;
             $parts[] = 'SET';
-            $parts[] = $this-> buildUpdate();
+            $parts[] = $this->buildUpdate();
             $parts[] = 'WHERE id=';
             $parts[] = $this->id;
         }
@@ -248,7 +267,7 @@ class Query
     /**
      * Build sql request for update
      *
-     * @return void
+     * @return string
      */
     private function buildUpdate()
     {
@@ -261,7 +280,7 @@ class Query
     /**
      * Build sql request for leftJoin
      *
-     * @return void
+     * @return string
      */
     private function buildLeftJoin()
     {
@@ -277,7 +296,7 @@ class Query
     /**
      * Build sql request for select leftJoin
      *
-     * @return void
+     * @return string
      */
     private function buildSelectLeftJoin()
     {

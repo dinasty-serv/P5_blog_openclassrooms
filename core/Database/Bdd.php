@@ -8,7 +8,7 @@ use Framework\config\Config;
 
 class Bdd
 {
-    private $pdo;
+    private PDO $pdo;
     protected $query;
 
 
@@ -58,7 +58,7 @@ class Bdd
      * @param string $sql
      * @param string $pathEntity path entity
      * @param null $data
-     * @return void
+     * @return array|false
      * @throws Exception
      */
     public function execSqlAndFetch(string $sql, string $pathEntity, $data = null)

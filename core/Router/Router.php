@@ -17,25 +17,25 @@ class Router
      * Url enter request
      * @var string
      */
-    private $url;
+    private string $url;
     /**
     * Array for routes
-    * @var Array
+    * @var array
     */
-    private $routes = [];
+    private array $routes = [];
     /**
     * Array for routesName
-    * @var Array
+    * @var array
     */
-    private $routeName = [];
+    private array $routeName = [];
     /**
      * Request
      *
      * @var Request $request
      */
-    private $request;
+    private Request $request;
 
-    private $container;
+    private Container $container;
 
 
     /**
@@ -66,13 +66,13 @@ class Router
     {
         return $this->addRoute($path, $callable, $name, 'GET');
     }
+
     /**
      * Init new route Post
      *
      * @param string $path
      * @param string $callable
-     * @param string $name
-     * @param Request $request
+     * @param string|null $name
      * @return Route
      */
     public function post(string $path, string $callable, string $name = null): Route
@@ -85,7 +85,7 @@ class Router
      *
      * @param string $path
      * @param string $callable
-     * @param string $name
+     * @param string|null $name
      * @param string $methode
      * @return Route
      */
@@ -106,7 +106,7 @@ class Router
      * Execute route
      *
      * @return void
-     * @throws Exception
+     * @throws Exception|\ReflectionException
      */
     public function run()
     {

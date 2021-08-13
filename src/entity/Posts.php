@@ -4,20 +4,37 @@ namespace App\Entity;
 
 class Posts
 {
+    /**
+     * @var int $id
+     */
     private $id;
-    
+    /**
+     * @var string $title
+     */
     private $title;
-
+    /**
+     * @var string $content
+     */
     private $content;
-
+    /**
+     * @var DateTime|string $created_at
+     */
     private $created_at;
-
+    /**
+     * @var DateTime|string
+     */
     private $updated_at;
-
+    /**
+     * @var string $slug
+     */
     private $slug;
-
+    /**
+     * @var int $user_id
+     */
     private $user_id;
-
+    /**
+     * @var int $categorie_id
+     */
     private $categorie_id;
 
 
@@ -35,30 +52,57 @@ class Posts
         }
     }
 
+    /**
+     * @return string
+     */
     public function getTitle()
     {
         return $this->title;
     }
+
+    /**
+     * @return string
+     */
     public function getContent()
     {
         return $this->content;
     }
+
+    /**
+     * @return DateTime|string
+     */
     public function getCreatedAt()
     {
         return $this->created_at;
     }
+
+    /**
+     * @return DateTime|string
+     */
     public function getUpdatedAt()
     {
         return $this->updated_at;
     }
+
+    /**
+     * @return string
+     */
     public function getSlug()
     {
         return $this->slug;
     }
+
+    /**
+     * @return int
+     */
     public function getUser()
     {
         return $this->user_id;
     }
+
+    /**
+     * @return int
+     */
     public function getCategorie()
     {
         return $this->categorie_id;
@@ -101,7 +145,7 @@ class Posts
     }
 
     /**
-     * Set the value of updated_at
+     * @description  the value of updated_at
      *
      * @return  self
      */
@@ -115,7 +159,7 @@ class Posts
     }
 
     /**
-     * Set the value of created_at
+     * @description  the value of created_at
      *
      * @return  self
      */
@@ -127,7 +171,7 @@ class Posts
     }
 
     /**
-     * Set the value of content
+     * @description  the value of content
      *
      * @return  self
      */
@@ -139,7 +183,7 @@ class Posts
     }
 
     /**
-     * Set the value of title
+     * @description  the value of title
      *
      * @return  self
      */
@@ -157,7 +201,7 @@ class Posts
     }
 
     /**
-     * Get the value of id
+     * @description  the value of id
      */
     public function getId()
     {
@@ -165,7 +209,7 @@ class Posts
     }
 
     /**
-     * Set the value of id
+     * @description  the value of id
      *
      * @return  self
      */

@@ -2,6 +2,7 @@
 
 namespace Framework;
 
+use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Framework\Router\Router;
 use Framework\Session\Session;
@@ -15,7 +16,7 @@ class App
      *
      * @var Object
      */
-    protected $bdd;
+    protected object $bdd;
     /**
      * Config instance
      *

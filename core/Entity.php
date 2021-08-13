@@ -8,14 +8,38 @@ use Framework\Database\Bdd;
 
 class Entity
 {
-    private $table;
-    public $query;
-    private $database;
+    /**
+     * @var string $table
+     */
+    private string $table;
+    /**
+     * @var Query $query
+     */
+    public Query $query;
+    /**
+     * @var Bdd $database
+     */
+    private Bdd $database;
+    /**
+     * @var $entity
+     */
     public $entity;
-    private $sql;
-    private $config;
-    private $leftJoin;
-    
+    /**
+     * @var string $sql
+     */
+    private string $sql;
+    /**
+     * @var Config $config
+     */
+    private Config $config;
+    /**
+     * @var array
+     */
+    private array $leftJoin;
+
+    /**
+     * @throws \Exception
+     */
     public function __construct(Config $config)
     {
         $this->config = $config;
@@ -27,7 +51,7 @@ class Entity
      *
      * @return string
      */
-    public function getPathEntity()
+    public function getPathEntity(): string
     {
         $modelname = ucwords($this->table);
         $path = $this->config->getPathsEntityConfig() . "\\" . $modelname;

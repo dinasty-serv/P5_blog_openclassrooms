@@ -8,9 +8,9 @@ use Framework\Exception;
 
 class Csrf
 {
-    private $token;
+    private string $token;
 
-    private $session;
+    private Session $session;
 
     public function __construct(Session $session)
     {
