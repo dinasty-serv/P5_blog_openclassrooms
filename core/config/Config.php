@@ -12,7 +12,7 @@ class Config
       'user'     => 'root',
       'password' => 'Apizee22',
       'dbname'   => 'blog',
-      'host'     => '172.19.0.3'
+      'host'     => 'dev_db'
     );
 
     private $pathRootUrl = "http://blog.local";
