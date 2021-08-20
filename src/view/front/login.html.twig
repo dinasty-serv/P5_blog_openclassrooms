@@ -1,0 +1,89 @@
+{% extends "/layout/front.html.twig" %}
+
+{% block content %}
+
+	<section class="py-5 text-center container">
+		<div class="row py-lg-5">
+			<div class="col-lg-6 col-md-8 mx-auto">
+				<h1 class="fw-light">Espace membre</h1>
+
+			</div>
+		</div>
+	</section>
+
+
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6">
+				<center>Se connecter</center>
+
+				<form name="login-form" id="login-form" method="POST" action="{{route('users.login-post')}}">
+					<input type="hidden" name="csrf_token" id="csrf_token" value="{{csrf_token}}">
+
+
+					<div class="form-group">
+						<label for="email">Email</label>
+						<input type="email" class="form-control" name="email" id="emailLogin" aria-describedby="emailHelp">
+					</div>
+
+					<div class="form-group">
+						<label for="password">Mots de passe</label>
+						<input type="password" class="form-control" name="password" id="password">
+						<slim>
+							<a href="{{route('users.lostPassword')}}">Mots de passe oublié ?</a>
+
+						</slim>
+					</div>
+
+					<button type="submit" class="btn btn-primary">Submit</button>
+				</form>
+
+
+			</div>
+
+
+			<div class="col-md-6">
+
+				<center>Créer un compte</center>
+
+				<form action="{{route('users.register-post')}}" method="POST">
+					<input type="hidden" name="csrf_token" id="csrf_token" value="{{csrf_token}}">
+
+
+					<div class="row">
+						<div class="col">
+							<label for="InputFirstName">Email</label>
+							<input type="email" class="form-control" name="email">
+
+						</div>
+						<div class="col">
+							<label for="InputLastname">Nom d'utilisateur</label>
+							<input type="text" class="form-control" name="username">
+
+						</div>
+					</div>
+
+
+					<div class="row">
+						<div class="col">
+							<label for="password1">Mots de passe</label>
+							<input type="password" class="form-control" name='password'>
+
+						</div>
+						<div class="col">
+							<label for="password2">Confirmer mots de passe</label>
+							<input type="password" class="form-control" name='password1'>
+
+						</div>
+					</div>
+					<button type="submit" class="btn btn-primary">Créer un compte</button>
+				</form>
+
+
+			</div>
+
+
+		</div>
+	</div>
+
+{% endblock %}

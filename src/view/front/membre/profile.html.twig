@@ -1,0 +1,105 @@
+{% extends "/layout/front.html.twig" %}
+
+{% block content %}
+
+	<section class="py-5 text-center container">
+		<div class="row py-lg-5">
+			<div class="col-lg-6 col-md-8 mx-auto">
+				<h1 class="fw-light">Espace membre</h1>
+
+			</div>
+		</div>
+	</section>
+
+
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6">
+				<center>
+					<h2>Vos commentaires</h2>
+				</center>
+				<table class="table">
+					<thead>
+
+
+						<tr>
+							<th scope="col">#</th>
+							<th scope="col">Contenu</th>
+							<th scope="col">Article</th>
+							<th scope="col">Date</th>
+
+							<th scope="col">Statut</th>
+						</tr>
+
+					</thead>
+					<tbody>
+						{% for comment in comments %}
+							<td>
+								<tr></tr>
+							</td>
+							<th scope="row">{{comment.id}}</th>
+							<td>{{comment.content}}</td>
+							<td>
+								<a href="{{route('post.show',{'slug': comment.post.slug, 'id': comment.post.id})}}" target="_blank" title="Voir l'article">
+
+									{{comment.post.title}}
+								</a>
+							</td>
+							<td>{{comment.created_at}}</td>
+							<td>
+								{% if comment.approve == true  %}
+									<span class="badge bg-success">Approuvé</span>
+
+								{% else %}
+
+									<span class="badge bg-warning">En attente</span>
+
+
+								{% endif %}
+
+							</td>
+						{% endfor %}
+
+
+					</tbody>
+
+
+				</table>
+
+
+			</div>
+
+
+			<div class="col-md-6">
+				<center>
+					<h2>Editer votre profile</h2>
+				</center>
+
+				<form action="{{route('users.profile.edit')}}" method="POST">
+
+					<div class="row">
+						<input type="hidden" name="csrf_token" id="csrf_token" value="{{csrf_token}}">
+
+
+						<label for="InputFirstName">Email</label>
+						<input type="email" class="form-control" value="{{auth.email}}" name="email" disabled>
+
+
+						<label for="InputLastname">Username</label>
+						<input type="text" class="form-control" value="{{auth.username}}" name="username">
+
+
+					</div>
+
+					<button type="submit" class="btn btn-primary">Editer</button>
+
+					<a href="{{route('users.resetpassword-profile')}}" class="btn btn-primary">Changer mon mots de passe</a>
+
+
+				</form>
+
+
+			</div>
+		</div>
+	</div>
+{% endblock %}

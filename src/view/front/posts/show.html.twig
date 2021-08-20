@@ -1,0 +1,60 @@
+{% extends "/layout/front.html.twig" %}
+
+{% block content %}
+	<div class="container">
+
+		<div class="row">
+			<div class="col-md-9">
+				<h1>{{post.title}}</h1>
+
+				<p>{{post.content}}</p>
+
+				<p>Mise en ligne le:
+					{{post.createdAt}}</p>
+
+				<p>Mis à jours le:
+					{{post.updatedAt}}</p>
+				<p>Créer par:
+					{{post.user.username}}</p>
+
+
+				<h2>Espace commentaires</h2>
+				{% for comment in comments %}
+
+					<div class="card">
+						<div class="card-header">
+							{{comment.user.username}} Le
+							<smal>{{comment.created_at|date("d/m/y")}}</smal>
+
+						</div>
+						<div class="card-body">
+							<p class="card-text">{{comment.content}}</p>
+
+						</div>
+					</div>
+				{% endfor %}
+				{% if auth == null%}
+					<div class="alert alert-warning" role="alert">
+						Vous devez vous connecter pour poster un commentaire.
+					</div>
+
+				{% else %}
+
+					<form action="{{route('post.comment',{'slug':post.slug, 'id':post.id} ) }}" method="POST" name="newComment" id="newComments">
+						<input type="hidden" name="csrf_token" id="csrf_token" value="{{csrf_token}}">
+
+
+						<input type="text" id="comment" class="form-control" name="comment">
+
+						<button type="submit" class="btn btn-primary">Envoyer</button>
+
+					</div>
+					<div class="col-md-3"></div>
+
+				</div>
+			</div>
+
+		{% endif %}
+
+
+	{% endblock %}

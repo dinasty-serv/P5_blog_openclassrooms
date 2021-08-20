@@ -1,0 +1,62 @@
+{% extends "/layout/front.html.twig" %}
+
+{% block content %}
+
+	<section class="py-5 text-center container">
+		<div class="row py-lg-5">
+			<div class="col-lg-6 col-md-8 mx-auto">
+				<h1 class="fw-light">Nicolas de Fontaine</h1>
+
+				<!-- <p class="lead text-muted"><img class="rounded-circle z-depth-2" alt="100x100" src="https://mdbootstrap.com/img/Photos/Avatars/img%20(31).jpg" data-holder-rendered="true"></p> -->
+				<p>P5 Openclassrooms</p>
+				<p>
+					<a href="#" class="btn btn-primary my-2">
+						<i class="fa fa-file"></i>
+						Télécharger mon CV
+
+
+					</a>
+					<a href="{{route('contact.page')}}" class="btn btn-secondary my-2">
+						<i class="fa fa-contact"></i>Me contacter</a>
+				</p>
+			</div>
+		</div>
+	</section>
+
+	<div class="album py-5 bg-light">
+		<div class="container">
+			<section class="py-5 text-center">
+				<h2>Derniers articles</h2>
+			</section>
+
+			<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+				{% for post in posts %}
+					<div class="col">
+						<div class="card shadow-sm">
+							<svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveaspectratio="xMidYMid slice" focusable="false">
+								<title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">{{post.title}}</text>
+							</svg>
+
+							<div class="card-body">
+								<p class="card-text">{{post.content|truncate(150)}}</p>
+
+								<div class="d-flex justify-content-between align-items-center">
+									<div class="btn-group">
+										<a href='{{route('post.show',{'slug': post.slug, 'id': post.id})}}' type="button" class="btn btn-sm btn-outline-secondary">Lire la suite</a>
+									</div>
+									<small class="text-muted">
+										Publier le:
+										{{post.createdAt}}
+									</small>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				{% endfor %}
+
+			</div>
+		</div>
+	</div>
+
+{% endblock %}
